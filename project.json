@@ -7,6 +7,10 @@
             "install": false
         },
         "requires": [
+            "tideways-php",
+            "mariadb-server",
+            "mariadb",
+            "graphviz",
             "programmes-rds-loadbalancer",
             "php71u-intl",
             "php71u-mbstring",

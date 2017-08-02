@@ -10,6 +10,7 @@
         "psr-4": { "Tests\\App\\": "tests/" }
     },
     "repositories": [
+        { "type": "vcs", "url": "git@github.com:bbc/programmes-xhprof.git" },
         { "type": "vcs", "url": "git@github.com:bbc/branding-client.git" },
         { "type": "vcs", "url": "git@github.com:bbc/gel-iconography-assets.git" },
         { "type": "vcs", "url": "git@github.com:bbc/DoctrineExtensions.git" },

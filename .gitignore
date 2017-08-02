@@ -1,6 +1,7 @@
 /build/
 /node_modules/
 /web/assets/
+/web/xhprof
 /composer.phar
 /assets/gelicons/
 /script/fixture.ini

@@ -17,3 +17,11 @@ framework:
                 # the only aim of default_lifetime is to prevent setting permanent keys, please don't use the default_lifetime in the code.
                 # PSR-6 consider "0" or NULL value as a way to store the key for as long as the implementation allows.
                 default_lifetime: 120
+
+jns_xhprof:
+    enabled: true
+    enable_xhgui: true
+    require_extension_exists: false
+    request_query_argument: "__profile"
+    entity_manager: profiler
+    server_id: frontend
