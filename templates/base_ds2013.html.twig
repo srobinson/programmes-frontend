@@ -114,7 +114,7 @@
         {{ branding.getBodyFirst()|raw }}
 
         <div class="{% block page_classes %}programmes-page text-base b-g-p{% endblock %}" role="main">
-            <div id="programmes-content" class="visually-hidden" tabindex="-1">Main content</div>
+            <div id="programmes-content" class="skip-to-content-destination" tabindex="-1">Main content</div>
             {% block body %}{% endblock %}
         </div>
         {% if programme is defined %}{{ ds2013('footer', programme) }}{% endif %}
