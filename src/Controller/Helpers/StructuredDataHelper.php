@@ -9,6 +9,7 @@ use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
 use BBC\ProgrammesPagesService\Domain\Entity\Series;
 use BBC\ProgrammesPagesService\Domain\Entity\Service;
 
@@ -56,7 +57,7 @@ class StructuredDataHelper
         return $this->schemaHelper->prepare($schemaToPrepare, $isArrayOfContexts);
     }
 
-    public function getSchemaForEpisode(Episode $programmeItem, bool $includeParent): array
+    public function getSchemaForEpisode(ProgrammeItem $programmeItem, bool $includeParent): array
     {
         $episode = $this->schemaHelper->getSchemaForEpisode($programmeItem);
         $parent = $programmeItem->getParent();

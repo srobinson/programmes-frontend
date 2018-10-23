@@ -82,7 +82,7 @@ class MusicSegmentsController extends BaseController
             EpisodeBuilder::any()->build(),
             $segmentEvents,
             null,
-            null
+            []
         );
     }
 }
