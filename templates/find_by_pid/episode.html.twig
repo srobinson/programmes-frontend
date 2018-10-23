@@ -222,11 +222,16 @@
                         </div>
                         <div class="component__body br-box-subtle">
                             <ul class="list-unstyled">
+
                                 {% for programme in relatedProgrammes %}
                                     <li>{{ ds2013('programme', programme.getProgramme(), {
                                             'title_options': {'title_tag': 'h3', 'title_format': 'item::ancestry', 'link_location_track': 'episode_suggested_item_' ~ loop.index },
                                             'body_options': {
-                                                'body_suffix': '<p class="programme__child-availability">' ~ tr(programme.getProgramme().getType() ~ '_is_related_to', {'%1': '<a class="block-link__link" href="' ~ path('topics_topic', {topic: programme.getRelatedByClasses()[0].getId()}) ~'" data-linktrack="episode_suggested_relationship">' ~ programme.getRelatedByClasses()[0].getTitle() ~ '</a></p>'}),
+                                                'body_suffix': render_twig_file(
+                                                    'find_by_pid/partial/programme_presenter_suffix_link.html.twig', {
+                                                        'programme': programme
+                                                    }
+                                                ),
                                                 'show_synopsis': false,
                                                 'show_duration': false,
                                             },
