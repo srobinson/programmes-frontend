@@ -9,6 +9,9 @@ use App\Builders\ExternalApi\Recipes\RecipeBuilder;
 use App\Builders\VersionBuilder;
 use App\Ds2013\PresenterFactory;
 use App\Ds2013\Presenters\Domain\Broadcast\BroadcastPresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipPlayable\ClipPlayablePresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStandalone\ClipStandalonePresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStream\ClipStreamPresenter;
 use App\Ds2013\Presenters\Domain\CoreEntity\Programme\ProgrammePresenter;
 use App\Ds2013\Presenters\Domain\Recipe\RecipePresenter;
 use App\Ds2013\Presenters\Section\Clip\Details\ClipDetailsPresenter;
@@ -18,6 +21,9 @@ use App\Ds2013\Presenters\Utilities\Calendar\CalendarPresenter;
 use App\Ds2013\Presenters\Utilities\DateList\DateListPresenter;
 use App\Ds2013\Presenters\Utilities\Download\DownloadPresenter;
 use App\DsShared\Helpers\HelperFactory;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStandAlone;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStream;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\StreamItem;
 use App\Translate\TranslateProvider;
 use App\ValueObject\CosmosInfo;
 use BBC\ProgrammesPagesService\Domain\Entity\Broadcast;
@@ -176,6 +182,42 @@ class PresenterFactoryTest extends TestCase
 
         $this->assertInstanceOf(DownloadPresenter::class, $presenter);
     }
+
+    /**
+     * @group isite_clips
+     */
+    public function testItRepresentsAnStream()
+    {
+        $givenStream = new ClipStream(
+            'title 1',
+            [
+                new StreamItem('caption 1', ClipBuilder::any()->build()),
+                new StreamItem('caption 2', ClipBuilder::any()->build()),
+            ]
+        );
+
+        $presenter = $this->factory->contentBlockPresenter($givenStream);
+
+        $this->assertInstanceOf(ClipStreamPresenter::class, $presenter);
+    }
+
+    /**
+     * @group isite_clips
+     */
+    public function testItRepresentAnStandAloneClipDifferentToAnStream()
+    {
+        $givenStandAloneClip = new ClipStandAlone(
+            'title 1',
+            'caption 1',
+            ClipBuilder::any()->build(),
+            VersionBuilder::any()->build()
+        );
+
+        $presenter = $this->factory->contentBlockPresenter($givenStandAloneClip);
+
+        $this->assertInstanceOf(ClipStandalonePresenter::class, $presenter);
+    }
+
 
     /**
      * helpers

@@ -38,7 +38,7 @@ class BroadcastProgrammeTitlePresenter extends CoreEntityTitlePresenter
         if ($timezone->getName() === 'UTC') {
             $title .= ' GMT';
         }
-        $title .= ': ' . $this->getMainTitleProgramme()->getTitle();
+        $title .= ': ' . $this->getMainTitle();
         if ($this->getOption('show_subtitle') && $this->getSubTitlesProgrammes()) {
             foreach ($this->getSubTitlesProgrammes() as $subTitle) {
                 $title .= ', ' . $subTitle->getTitle();

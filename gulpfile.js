@@ -30,6 +30,7 @@ gulp.task('js', ['js:clean'], function () {
 
     const modulesToOptimize = [
         staticPathSrc + '/js/**/rv-bootstrap.js',
+        staticPathSrc + '/js/**/stream.js',
         staticPathSrc + '/js/**/dsamen-bootstrap.js',
         staticPathSrc + '/js/**/timezone-notification.js',
         staticPathSrc + '/js/**/episode-guide.js',

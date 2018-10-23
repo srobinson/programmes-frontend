@@ -14,6 +14,24 @@
     {% endif %}
 {% endblock %}
 
+{% block twitter_tags %}
+    {% if programme.isExternallyEmbeddable() %}
+        {#
+           twitter:title and twitter:description tags are not needed as Twitter falls back to look
+           at the og:title and og:description tags, which are already defined in base_ds2013.html.twig
+        #}
+        <meta property="twitter:card" content="player"/>
+        <meta property="twitter:image" content="{{ programme.getImage().getUrl(640, 360) }}"/>
+        <meta property="twitter:image:width" content="640"/>
+        <meta property="twitter:image:height" content="360"/>
+        <meta property="twitter:player" content="{{ url('programme_player', {'pid' : programme.getPid()}) }}?chromeless"/>
+        <meta property="twitter:player:width" content="576"/>
+        <meta property="twitter:player:height" content="324"/>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {{ advert('leaderboard', [1,2,3,4], 'programme-advert--leaderboard-wrap') }}
 
@@ -157,28 +175,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    {% set favouriteButtons = get_buttons() %}
-    {% if favouritesButton and favouriteButtons %}
-        {{ favouritesButton.getBodyLast()|raw }}
-        <script>{{ favouritesButton.getScript()|raw }}</script>
-        <script>
-            require(['plugins/musicfavourite'], function (fav) {
-                {% for button in favouriteButtons %}
-                var elem = document.getElementById('{{ button['element_id'] }}');
-                fav.render(elem, {
-                    'appid': 'radio',
-                    'type': '{{ button['type'] }}',
-                    'id': '{{ button['id'] }}',
-                    'title': '{{ programme.getTitle() }}',
-                    'variant': 'small',
-                    'lang': '{{ tr('language_code')|lower }}',
-                    'platform': 'responsiveweb',
-                    'context-type': 'network_pid',
-                    'context-id': '{{ button['context_id'] }}'
-                });
-                {% endfor %}
-            });
-        </script>
-    {% endif %}
+    {% include 'shared/favourites_js.html.twig' with {'favouritesButton': favouritesButton} %}
 {% endblock %}

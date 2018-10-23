@@ -46,7 +46,7 @@ class ShowController extends BaseController
         if ('' !== $profile->getParentPid()) {
             $context = $coreEntitiesService->findByPidFull(new Pid($profile->getParentPid()));
 
-            if ($profile->getProjectSpace() !== $context->getOption('project_space')) {
+            if ($context && $profile->getProjectSpace() !== $context->getOption('project_space')) {
                 throw $this->createNotFoundException('Project space Profile-Programme not matching');
             }
         }

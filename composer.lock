@@ -465,12 +465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bbc/programmes-pages-service.git",
-                "reference": "f6b4f2d08ad2dd66129ae67e12386a5176993b79"
+                "reference": "e0ebdc91a5cb9c79db9c0e3613e66a809f3e3a35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bbc/programmes-pages-service/zipball/f6b4f2d08ad2dd66129ae67e12386a5176993b79",
-                "reference": "f6b4f2d08ad2dd66129ae67e12386a5176993b79",
+                "url": "https://api.github.com/repos/bbc/programmes-pages-service/zipball/e0ebdc91a5cb9c79db9c0e3613e66a809f3e3a35",
+                "reference": "e0ebdc91a5cb9c79db9c0e3613e66a809f3e3a35",
                 "shasum": ""
             },
             "require": {
@@ -513,7 +513,7 @@
                 "source": "https://github.com/bbc/programmes-pages-service/tree/master",
                 "issues": "https://github.com/bbc/programmes-pages-service/issues"
             },
-            "time": "2018-10-05T17:42:31+00:00"
+            "time": "2018-10-16T10:47:14+00:00"
         },
         {
             "name": "behat/transliterator",

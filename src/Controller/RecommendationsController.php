@@ -56,7 +56,11 @@ class RecommendationsController extends BaseController
     ): ?Episode {
         if ($programme instanceof ProgrammeContainer && $programme->getAvailableEpisodesCount()) {
             $onDemandEpisodes = $programmeAggregationService->findStreamableOnDemandEpisodes($programme, 1);
-            return reset($onDemandEpisodes);
+            if (!empty($onDemandEpisodes)) {
+                // Theoretically if getAvailableEpisodesCount returns > 0, then we should have onDemandEpisodes
+                // but cache lifetimes can mismatch.
+                return reset($onDemandEpisodes);
+            }
         }
 
         if ($programme instanceof Episode && $programme->hasPlayableDestination()) {

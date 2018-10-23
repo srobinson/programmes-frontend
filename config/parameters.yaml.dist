@@ -14,7 +14,7 @@ parameters:
     cosmos_environment: sandbox
     cosmos_component_release: 0
 
-    redis_endpoint: sandbox.bbc.co.uk:6379
+    redis_endpoint: 127.0.0.1:6379
     fixture_database_host: 192.168.193.1
     fixture_database_port: 3306
     fixture_database_name: programmes

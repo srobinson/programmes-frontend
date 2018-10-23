@@ -128,7 +128,7 @@ class ImagePresenter extends Presenter
     }
 
     /**
-     * @param string|int[] $sizes
+     * @param array|string $sizes
      * @return string
      */
     private function buildSizes($sizes): string

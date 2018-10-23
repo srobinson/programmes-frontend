@@ -1,0 +1,23 @@
+{% set streams_clips_ids = get_streams() %}
+{%- if streams_clips_ids -%}
+    <script>
+        require(['jquery-1.9','stream'], function($, Stream) {
+            {% for stream_clip_id in streams_clips_ids %}
+                var params = {
+                    'panel_class': '',
+                    'next_button_text': '{{ gelicon('basics', 'next', 'gelicon--half-container') }}' ,
+                    'previous_button_text': '{{ gelicon('basics', 'previous', 'gelicon--half-container') }}',
+                    'panel_class': 'br-box-subtle',
+                    'set_to_same': '.programme__body' ,
+                    'match_button_height': '.programme__img',
+                    'items_in_window': [
+                        {'threshold': 0, 'number': 1}
+                    ]
+                };
+
+                new Stream('#clips-p{{ stream_clip_id }}-items', params);
+            {%- endfor -%}
+        });
+    </script>
+{%- endif -%}
+

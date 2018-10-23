@@ -4,13 +4,13 @@
     <{{ title_tag }} class="programme__titles">
         <a href="{{ core_entity_title.getTitleLinkUrl() }}" class="br-blocklink__link block-link__target" data-linktrack="{{ core_entity_title.getOption('link_location_track') }}" {% block aria_title %}{% endblock %}>
             <span class="programme__title {{ core_entity_title.getOption('title_classes') }}">
-                {{ self.render_title(core_entity_title.getMainTitleProgramme(), core_entity_title) }}
+                {{ self.render_title(core_entity_title.getMainTitle(), core_entity_title) }}
             </span>
             {% if core_entity_title.getOption('show_subtitle') and core_entity_title.getSubTitlesProgrammes() %}
                 <span class="hidden">&mdash;</span>
                 <span class="programme__subtitle centi">
                     {%- for subtitleProgramme in core_entity_title.getSubTitlesProgrammes() -%}
-                        {{ not loop.first ? ', ' }}{{ self.render_title(subtitleProgramme, core_entity_title) }}
+                        {{ not loop.first ? ', ' }}{{ self.render_title(subtitleProgramme.getTitle(), core_entity_title) }}
                     {%- endfor -%}
                 </span>
             {% endif %}
@@ -18,8 +18,8 @@
     </{{ title_tag }}>
 {% endspaceless %}
 
-{% macro render_title(programme, presenter) %}
+{% macro render_title(title, presenter) %}
 {% spaceless %}
-        <span>{{ truncate(programme.getTitle(), presenter.getOption('truncation_length'))}}</span>
+        <span>{{ truncate(title, presenter.getOption('truncation_length'))}}</span>
 {% endspaceless %}
 {% endmacro %}

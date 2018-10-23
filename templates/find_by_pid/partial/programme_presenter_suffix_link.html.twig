@@ -1,0 +1,24 @@
+{% macro related_programme_link_macro(programme, aria_related_text) %}
+    <a
+        aria-label="{{ aria_related_text }}"
+        class="block-link__link"
+        href="{{ path('topics_topic', {topic: programme.getRelatedByClasses()[0].getId()}) }}"
+        data-linktrack="episode_suggested_relationship"
+    >
+        {{ programme.getRelatedByClasses()[0].getTitle() }}
+    </a>
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% set programme_title = programme.getRelatedByClasses()[0].getTitle() %}
+{% set programme_type = programme.getProgramme().getType() %}
+{% set aria_label = tr(programme_type ~ '_is_related_to', {'%1': programme_title}) %}
+
+<p class="programme__child-availability">
+    {# As a english speaker you might be wondering why you need to pass the content of the <a> tag in the TR #}
+    {# function. Well, we need this because in some languages subjects, verbs and complement are ordered in a #}
+    {# different way #}
+
+    {{ tr(programme_type ~ '_is_related_to', {'%1': macros.related_programme_link_macro(programme, aria_label)})|raw }}
+</p>

@@ -139,7 +139,7 @@ class TwigEnvironmentProvider
 
         $twig->addExtension(new GelIconExtension());
 
-        $twig->addExtension(new HtmlUtilitiesExtension($assetPackages));
+        $twig->addExtension(new HtmlUtilitiesExtension($assetPackages, $twig));
 
         $twig->addExtension(new FavouriteButtonExtension());
 

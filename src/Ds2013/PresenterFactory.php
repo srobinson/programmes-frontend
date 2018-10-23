@@ -5,6 +5,8 @@ namespace App\Ds2013;
 use App\Ds2013\Presenters\Domain\Article\ArticlePresenter;
 use App\Ds2013\Presenters\Domain\Broadcast\BroadcastPresenter;
 use App\Ds2013\Presenters\Domain\BroadcastEvent\BroadcastEventPresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStandalone\ClipStandalonePresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStream\ClipStreamPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Faq\FaqPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Galleries\GalleriesPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\InteractiveActivity\InteractiveActivityPresenter;
@@ -45,6 +47,8 @@ use App\DsShared\Helpers\HelperFactory;
 use App\ExternalApi\Electron\Domain\SupportingContentItem;
 use App\ExternalApi\Isite\Domain\Article;
 use App\ExternalApi\Isite\Domain\ContentBlock\AbstractContentBlock;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStandAlone;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStream;
 use App\ExternalApi\Isite\Domain\ContentBlock\Faq;
 use App\ExternalApi\Isite\Domain\ContentBlock\Galleries;
 use App\ExternalApi\Isite\Domain\ContentBlock\InteractiveActivity;
@@ -283,6 +287,12 @@ class PresenterFactory
         }
         if ($contentBlock instanceof Table) {
             return new TablePresenter($contentBlock, $inPrimaryColumn, $options);
+        }
+        if ($contentBlock instanceof ClipStream) {
+            return new ClipStreamPresenter($contentBlock, $inPrimaryColumn, $options);
+        }
+        if ($contentBlock instanceof ClipStandalone) {
+            return new ClipStandalonePresenter($contentBlock, $inPrimaryColumn, $options);
         }
         if ($contentBlock instanceof Telescope) {
             return new TelescopePresenter($contentBlock, $inPrimaryColumn, $options);

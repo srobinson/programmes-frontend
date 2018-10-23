@@ -48,6 +48,7 @@
                     'snippets': "{{ asset_js("js/snippets.js") }}",
                     'bump-3': "//emp.bbci.co.uk/emp/bump-3/bump-3",
                     'smp/smpFactory': "{{ asset_js("js/smp/smpFactory.js") }}",
+                    'stream': "{{ asset_js("js/stream.js") }}",
                     'smp/smp': "{{ asset_js("js/smp/smp.js") }}",
                     'smp/recommendationsBump': "{{ asset_js("js/smp/recommendationsBump.js") }}",
                     'smp/uasService': "{{ asset_js("js/smp/uasService.js") }}",
@@ -92,7 +93,9 @@
         <meta property="og:image" content="{{ meta_context.image().getUrl(1200, 675) }}">
 
         {#- Twitter-specific tags -#}
-        <meta name="twitter:card" content="summary_large_image">
+        {% block twitter_tags %}
+            <meta name="twitter:card" content="summary_large_image">
+        {% endblock %}
 
         {#- This image 272px not 150px wide because Microsoft suggests the image
             dimensions be 1.8x larger than the rendered size to allow for scaling.
@@ -111,11 +114,10 @@
         {{ branding.getBodyFirst()|raw }}
 
         <div class="{% block page_classes %}programmes-page text-base b-g-p{% endblock %}" role="main">
-            <div id="programmes-content" class="visually-hidden" tabindex="-1">Main content</div>
+            <div id="programmes-content" class="skip-to-content-destination" tabindex="-1">Main content</div>
             {% block body %}{% endblock %}
         </div>
         {% if programme is defined %}{{ ds2013('footer', programme) }}{% endif %}
-        {{ gelicons_source() }}
         <script>
             require(['rv-bootstrap']);
         </script>
@@ -125,6 +127,7 @@
             </script>
         {% endif %}
         {% block javascripts %}{% endblock %}
+        {{ gelicons_source() }}
         {% include 'base_ds_common_js_partial.html.twig' with {'title': block('title')} %}
         {{ branding.getBodyLast()|raw }}
         {% if soundsNav is defined  %}

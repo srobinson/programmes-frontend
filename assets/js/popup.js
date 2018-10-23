@@ -13,7 +13,7 @@ define(['jquery-1.9'], function ($) {
     popup.prototype = {
         initial_options: {
             containerSelector: '.popup',
-            attachSelector: '#programmes-content', // The branding gets knackered if you attach this higher up
+            attachSelector: '.programmes-page', // The branding/css style is lost if you attach this higher up
             bodySelector: '#orb-modules', // We use this rather than <html> because iOS doesn't bubble clicks up to the body
             fadeTime: 300,
             removeOnLinkClicked: true,

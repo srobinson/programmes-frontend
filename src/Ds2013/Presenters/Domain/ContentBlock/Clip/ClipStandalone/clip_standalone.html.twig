@@ -1,0 +1,40 @@
+{% extends "@Ds2013/Presenters/Domain/ContentBlock/content_block.html.twig" %}
+
+{% block extraClasses %}
+    {% if content_block.isInPrimaryColumn() == false %}
+        component--box-flushbody
+    {% endif %}
+{% endblock %}
+
+{% set id = random() %}
+
+{% block blockContent %}
+    <div id="clips-p{{ id }}-player" class="smp">
+        <div class="stream__item-inner br-page-bg-onborder">
+            {{ ds2013('smp', content_block.getClip(), content_block.getStreamableVersion(), [], '', [], {'autoplay': 'false'}) }}
+        </div>
+    </div>
+
+    <div id="clips-p{{ id }}-detail">
+        <div class="island br-box-subtle">
+            {% if content_block.isInPrimaryColumn() %}
+                <h3 class="no-margin">
+                    <a href="{{ path('find_by_pid', {'pid': content_block.getClip().getPid()}) }}">
+                        {{ content_block.getClip().getTitle() }}
+                    </a>
+                </h3>
+
+                <p>{{ content_block.getClip().getShortSynopsis() }}</p>
+            {% else %}
+                <h3 class="programme__titles text-base delta">
+                    <span class="programme__title">
+                        <a href="{{ path('find_by_pid', {'pid': content_block.getClip().getPid()}) }}">
+                            {{ content_block.getClip().getTitle() }}
+                        </a>
+                    </span>
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

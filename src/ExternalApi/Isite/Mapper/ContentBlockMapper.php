@@ -4,6 +4,9 @@ declare(strict_types = 1);
 namespace App\ExternalApi\Isite\Mapper;
 
 use App\Controller\Helpers\IsiteKeyHelper;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStandAlone;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStream;
+use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\StreamItem;
 use App\ExternalApi\IdtQuiz\IdtQuizService;
 use App\ExternalApi\Isite\Domain\ContentBlock\AbstractContentBlock;
 use App\ExternalApi\Isite\Domain\ContentBlock\Faq;
@@ -39,7 +42,7 @@ class ContentBlockMapper extends Mapper
     /** @var ProgrammesService */
     private $programmesService;
 
-    /**  @var VersionsService  */
+    /** @var VersionsService */
     private $versionsService;
 
     /** @var LoggerInterface */
@@ -182,6 +185,47 @@ class ContentBlockMapper extends Mapper
                     $this->getString($contentBlockData->title),
                     $links
                 );
+                break;
+            case 'clips':
+                $contentBlockData = $form->content;
+                if (count($contentBlockData->clips) > 1) {
+                    $streamableItems = [];
+                    foreach ($contentBlockData->clips as $isiteClip) {
+                        if (isset($this->streamableVersions[$this->getString($isiteClip->pid)])) {
+                            $streamableItems[] = new StreamItem(
+                                $this->getString($isiteClip->caption),
+                                $this->clips[$this->getString($isiteClip->pid)]
+                            );
+                        }
+                    }
+
+                    if (count($streamableItems) > 1) {
+                        $contentBlock = new ClipStream(
+                            $this->getString($contentBlockData->title),
+                            $streamableItems
+                        );
+                    } elseif (count($streamableItems) == 1) {
+                        $contentBlock = new ClipStandAlone(
+                            $this->getString($contentBlockData->title),
+                            $streamableItems[0]->getTitle(),
+                            $streamableItems[0]->getClip(),
+                            $this->streamableVersions[(string) $streamableItems[0]->getClip()->getPid()]
+                        );
+                    }
+
+                    break;
+                }
+
+                // is not possible to create a block without one clip at least
+                if (isset($this->streamableVersions[$this->getString($contentBlockData->clips->pid)])) {
+                    $contentBlock = new ClipStandAlone(
+                        $this->getString($contentBlockData->title),
+                        $this->getString($contentBlockData->clips->caption),
+                        $this->clips[$this->getString($contentBlockData->clips->pid)],
+                        $this->streamableVersions[$this->getString($contentBlockData->clips->pid)]
+                    );
+                }
+
                 break;
             case 'promotions':
                 $contentBlockData = $form->content;

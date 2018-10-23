@@ -6,7 +6,7 @@
                 <p>{{ paragraph|raw }}</p>
             {% endfor %}
             <label class="synopsis-toggle__button br-pseudolink" for="{{ synopsis.getId() }}">
-                <span>{{ tr('show_more') }}</span>
+                <span tabindex="0" role="button">{{ tr('show_more') }}</span>
             </label>
         </div>
         <div class="synopsis-toggle__long">
@@ -14,7 +14,7 @@
                 <p>{{ paragraph|raw }}</p>
             {% endfor %}
             <label class="synopsis-toggle__button br-pseudolink" for="{{ synopsis.getId() }}">
-                <span>{{ tr('show_less') }}</span>
+                <span tabindex="0" role="button">{{ tr('show_less') }}</span>
             </label>
         </div>
     </div>

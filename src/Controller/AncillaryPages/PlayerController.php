@@ -23,6 +23,8 @@ class PlayerController extends BaseController
         VersionsService $versionsService,
         Clip $clip
     ) {
+        // This frame needs to display off the BBC site
+        $this->response()->headers->remove('X-Frame-Options');
         $suffix = ' - BBC';
         if ($clip->getTleo()->getNetwork()) {
             $suffix = ' - ' . $clip->getTleo()->getNetwork()->getName();

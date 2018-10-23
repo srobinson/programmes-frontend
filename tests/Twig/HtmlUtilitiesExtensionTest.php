@@ -15,14 +15,17 @@ class HtmlUtilitiesExtensionTest extends TestCase
             ->with('some/example/path.js')
             ->willReturn('some/example/path-123');
 
-        $extension = new HtmlUtilitiesExtension($mockPackages);
+        $mockTwig = $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock();
+
+        $extension = new HtmlUtilitiesExtension($mockPackages, $mockTwig);
         $this->assertSame('some/example/path-123', $extension->assetJs('some/example/path.js'));
     }
 
     public function testBuildCssClasses()
     {
         $extension = new HtmlUtilitiesExtension(
-            $this->createMock(Packages::class)
+            $this->createMock(Packages::class),
+            $this->createMock(\Twig_Environment::class)
         );
 
         $this->assertSame('foo baz qux', $extension->buildCssClasses([

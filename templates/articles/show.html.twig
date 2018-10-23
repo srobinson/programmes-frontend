@@ -94,3 +94,8 @@
         </div>
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'shared/stream_clips.html.twig' %}
+{% endblock %}

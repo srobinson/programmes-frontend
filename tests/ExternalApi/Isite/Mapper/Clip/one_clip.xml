@@ -1,0 +1,26 @@
+<secondary-blocks>
+    <result xmlns="https://production.bbc.co.uk/isite2/contentreader/xml/result">
+        <metadata>
+            <modifiedDateTime>2018-09-18T11:28:34.824695Z</modifiedDateTime>
+            <creationDateTime>2015-01-12T12:25:18.361123Z</creationDateTime>
+            <type>programmes-content-clips</type>
+            <fileId>programmes-content-1421065505</fileId>
+            <guid>9fefe4d0-dcb5-43ba-95c4-2d440745b1b2</guid>
+        </metadata>
+        <document>
+            <form xmlns="https://production.bbc.co.uk/isite2/project/progs-drwho/programmes-content-clips">
+                <metadata>
+                    <name>test-clip-block-eleventyone</name>
+                    <file_id>1421065505</file_id>
+                </metadata>
+                <content>
+                    <clips>
+                        <pid>p01f10w1</pid>
+                        <caption/>
+                    </clips>
+                    <title/>
+                </content>
+            </form>
+        </document>
+    </result>
+</secondary-blocks>

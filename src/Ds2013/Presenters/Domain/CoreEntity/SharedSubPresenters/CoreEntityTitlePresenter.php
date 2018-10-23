@@ -39,6 +39,7 @@ class CoreEntityTitlePresenter extends Presenter
         'truncation_length' => null,
         'link_location_track' => 'programmeobjectlink=title',
         'link_to' => null,
+        'override_title' => null,
     ];
 
     /** @var TitleLogicHelper */
@@ -77,12 +78,17 @@ class CoreEntityTitlePresenter extends Presenter
         return $this->router->generate('find_by_pid', ['pid' => $this->coreEntity->getPid()], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    public function getMainTitleProgramme(): CoreEntity
+    public function getMainTitle(): string
     {
+        if (!is_null($this->getOption('override_title'))) {
+            return $this->getOption('override_title');
+        }
+
         if (!isset($this->mainTitleProgramme)) {
             $this->setTitleProgrammes();
         }
-        return $this->mainTitleProgramme;
+
+        return $this->mainTitleProgramme->getTitle();
     }
 
     /**

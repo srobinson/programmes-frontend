@@ -1,0 +1,36 @@
+{% extends "@Ds2013/Presenters/Domain/ContentBlock/content_block.html.twig" %}
+
+{% set id = random() %}
+
+{% block blockContent %}
+    {{ add_stream(id) }}
+    {# Carousel stream #}
+    <div id="clips-p{{ id }}-items">
+        <ul class="list-unstyled article-clips grid-wrapper stream__list">
+
+            {%- for carouselItem in content_block.getStreamItems() -%}
+            <li class="stream__item grid 1/2">
+                <div class="stream__item-inner br-page-bg-onborder">
+                    {{ ds2013('programme', carouselItem.clip(), {
+                        'title_options': {
+                            'override_title':  carouselItem.getTitle(),
+                            'show_subtitle': false,
+                            'title_tag': 'h3',
+                            'title_classes': 'delta'
+                        },
+                        'body_options': {
+                            'show_synopsis': false,
+                            'show_duration': false,
+                        },
+                        'image_options': {
+                            'classes': '1/1',
+                        },
+                        'container_classes': 'programme--grid highlight-box--grid br-keyline br-blocklink-page br-page-linkhover-onbg015--hover',
+                    }) }}
+                </div>
+            </li>
+            {%- endfor -%}
+
+        </ul>
+    </div>
+{% endblock %}

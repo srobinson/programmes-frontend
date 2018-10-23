@@ -147,7 +147,15 @@
 {% block body %}
     <div class="episode-playout">
         {% if available %}
-            {{ ds2013('smp', clip, streamable_version, segment_events, '', {'app_name': 'programmes', 'prod_name': 'programmes'}, {'autoplay': false, 'uas': false, 'sizes': {1: 1/1}}) }}
+            {{ ds2013(
+                'smp',
+                clip,
+                streamable_version,
+                segment_events,
+                '',
+                {'app_name': 'programmes', 'prod_name': 'programmes'},
+                {'autoplay': has_chrome ? false : true, 'uas': false, 'sizes': {1: 1/1}}
+            ) }}
         {% else %}
             {{ ds_shared('imageEntity', clip.getImage(), 640, {1: 1/1} ,{'is_lazy_loaded': false}) }}
             <div class="smp">

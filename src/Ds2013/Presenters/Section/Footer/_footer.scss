@@ -30,6 +30,8 @@
 
 .footer__service__navitem {
     margin-bottom: $basic-spacing;
+    hyphens: auto;
+    word-break: break-all;
 }
 
 .footer__watch-live {

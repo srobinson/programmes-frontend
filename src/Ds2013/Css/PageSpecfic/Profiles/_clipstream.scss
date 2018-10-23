@@ -1,0 +1,81 @@
+.stream {
+    position: relative;
+    overflow: hidden;
+}
+
+.stream__button--edges:hover,
+.stream__button--edges:active,
+.stream__button--edges:focus {
+    background: #000000;
+}
+
+.stream__button--edges.stream__button--prev {
+    left: 0;
+    border-right: solid 1px #ffffff;
+    width: 9.5%;
+    height: 109px;
+}
+
+.stream__button--edges.stream__button--next {
+    right: 0;
+    border-left: solid 1px #ffffff;
+    width: 9.5%;
+    height: 109px;
+}
+
+.stream__button[disabled]:focus {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.stream__button:hover,
+.stream__button:active,
+.stream__button:focus {
+    opacity: 1 !important;
+}
+
+.stream__button {
+    border: 0;
+    border-right-color: currentcolor;
+    border-right-style: none;
+    border-right-width: medium;
+    display: block;
+    z-index: 100;
+    opacity: 1;
+}
+
+.stream__button--edges {
+    position: absolute;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.stream__window .stream__item {
+    display: inline-block;
+}
+
+.stream__panel {
+    display: block;
+}
+
+.stream__item {
+    max-width: 992px;
+    position: relative;
+}
+
+.stream__window {
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    touch-action: pan-x;
+}
+
+.stream__button[disabled]:hover,
+.stream__button[disabled]:active,
+.stream__button[disabled]:focus {
+    background: #000000;
+    background: rgba(0, 0, 0, 0.5);
+}
