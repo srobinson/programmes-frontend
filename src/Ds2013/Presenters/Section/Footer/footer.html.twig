@@ -22,7 +22,7 @@
                     </div>
                 {%- endif -%}
             </div></div>
-            <div class="grid grid--flush 1/2@bpw 1/4@bpw2 1/3@bpe">
+            <div class="grid grid--flush 1/2@bpw 1/4@bpw2 1/4@bpe">
             {%- if footer.getGenres() or footer.getFormats() -%}
                 <div class="footer__similar b-g-p component">
                     <h3 class="beta">{{ tr('similar_programmes') }}</h3>
@@ -64,7 +64,7 @@
             </div>
             {%- if footer.hasNetwork() -%}
                 {%- if footer.getNetworkUrlKey() -%}
-                    <div class="grid grid--flush 1/2 1/6@bpw2 1/8@bpe footer__service centi"><div class="footer__service-island br-service-brand-box fauxcolumn">
+                    <div class="grid grid--flush 1/2 1/6@bpw2 1/6@bpe footer__service centi"><div class="footer__service-island br-service-brand-box fauxcolumn">
                         <a class="islet--vertical footer__service__logo text--center@bpw" href="{{ path('network', { 'networkUrlKey': footer.getNetworkUrlKey() }) }}">
                             <img alt="{{ tr('programme_homepage', { '%1': footer.getNetworkName() }) }}" src="{{ get_network_logo(footer.getNid(), '112x63') }}">
                         </a>
@@ -78,7 +78,7 @@
                         </div>
                     </div></div>
                 {%- endif -%}
-                <div class="grid grid--flush 1/2 1/6@bpw2 1/8@bpe footer__service-nav centi"><div class="footer__service__nav">
+                <div class="grid grid--flush 1/2 1/6@bpw2 1/6@bpe footer__service-nav centi"><div class="footer__service__nav">
                     {%- set networkUrlKey = footer.getNetworkUrlKey() -%}
                     {%- if networkUrlKey or footer.getNavigationLinks() -%}
                     <div class="br-service-brand-box--alt fauxcolumn">
