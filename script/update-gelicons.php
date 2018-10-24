@@ -5,22 +5,27 @@ declare(strict_types = 1);
 $rootPath = dirname(__DIR__);
 
 $vendorPath = $rootPath . join(DIRECTORY_SEPARATOR, ['', 'vendor', 'bbc', 'gel-iconography-assets', 'dist']);
+$customPath = $rootPath . join(DIRECTORY_SEPARATOR, ['', 'assets', 'progs-icons']);
 $outputPath = $rootPath . join(DIRECTORY_SEPARATOR, ['', 'assets', 'gelicons']);
 
-$update = new UpdateGelicons($vendorPath, $outputPath);
+$update = new UpdateGelicons($vendorPath, $customPath, $outputPath);
 $update->fixAllSvgs();
+$update->copyCustomSvgs();
 
 class UpdateGelicons
 {
-    private const REGEX = '#dist/([^/]+)/individual/([^/]+).svg#';
+    private const REGEX = '#dist/([^/]+)/individual/([^/]+)\.svg#';
 
     private $vendorPath;
 
     private $outputPath;
 
-    public function __construct(string $vendorPath, string $outputPath)
+    private $customPath;
+
+    public function __construct(string $vendorPath, string $customPath, string $outputPath)
     {
         $this->vendorPath = $vendorPath;
+        $this->customPath = $customPath;
         $this->makeDir($outputPath);
         $this->deleteAllFilesUnder($outputPath);
         $this->outputPath = $outputPath;
@@ -35,6 +40,20 @@ class UpdateGelicons
 
         foreach ($regex as $path => $fileInfo) {
             $this->fixSvg($path);
+        }
+    }
+
+    public function copyCustomSvgs()
+    {
+        $directoryIterator = new RecursiveDirectoryIterator($this->customPath);
+        $iterator = new RecursiveIteratorIterator($directoryIterator);
+        $regex = new RegexIterator($iterator, '#.*\.svg$#');
+        $this->makeDir(join(DIRECTORY_SEPARATOR, [$this->outputPath, 'progs-icons']));
+        foreach ($regex as $path => $fileInfo) {
+            $destination = join(DIRECTORY_SEPARATOR, [$this->outputPath, 'progs-icons', basename($path)]);
+            if (!copy($path, $destination)) {
+                throw new RuntimeException("Cannot copy $path to $destination");
+            }
         }
     }
 

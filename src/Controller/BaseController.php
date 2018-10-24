@@ -283,15 +283,16 @@ abstract class BaseController extends AbstractController
      *  * This picks up the default cache configuration of $this->response that was
      * set in the constructor, unlike ->redirect()
      *
-     * @param string $route      The name of the route
-     * @param array  $parameters An array of parameters
-     * @param int    $status     The status code to use for the Response
+     * @param string $route The name of the route
+     * @param array $parameters An array of parameters
+     * @param int $status The status code to use for the Response
+     * @param int|null $lifetime The varnish cache lifetime
      *
      * @return RedirectResponse
      */
-    protected function cachedRedirectToRoute($route, array $parameters = array(), $status = 302): RedirectResponse
+    protected function cachedRedirectToRoute($route, array $parameters = array(), $status = 302, int $lifetime = null): RedirectResponse
     {
-        return $this->cachedRedirect($this->generateUrl($route, $parameters), $status);
+        return $this->cachedRedirect($this->generateUrl($route, $parameters), $status, $lifetime);
     }
 
     /**

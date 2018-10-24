@@ -26,7 +26,7 @@ use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
 use BBC\ProgrammesPagesService\Service\ProgrammesService;
 use BBC\ProgrammesPagesService\Service\VersionsService;
-use Exception;
+use App\Exception\HasContactFormException;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
@@ -373,6 +373,8 @@ class ContentBlockMapper extends Mapper
                 );
                 // @codingStandardsIgnoreEnd
                 break;
+            case 'contactform':
+                throw new HasContactFormException('Contact form found');
             default:
 //                throw new Exception('Invalid content block type. Found ' . $type);
                 break;
