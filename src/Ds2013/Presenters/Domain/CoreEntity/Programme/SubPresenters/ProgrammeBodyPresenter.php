@@ -28,7 +28,6 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
 
     /** @var PlayTranslationsHelper */
     protected $playTranslationsHelper;
-
     public function __construct(
         UrlGeneratorInterface $router,
         PlayTranslationsHelper $playTranslationsHelper,

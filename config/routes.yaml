@@ -99,7 +99,7 @@ programme_segments:
 # Podcast
 programme_podcast_episodes_download:
     path: /programmes/{pid}/episodes/downloads
-    defaults: { _controller: App\Controller\Podcast\EpisodesDownloadsController }
+    defaults: { _controller: App\Controller\Podcast\PodcastController }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # SMP Playlist page

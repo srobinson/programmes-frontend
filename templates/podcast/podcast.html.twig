@@ -1,10 +1,117 @@
+{% import _self as self %}
 {% extends 'base_ds2013.html.twig' %}
 
-{% block title %}{{ meta_context.titlePrefix() }} - {{ tr('podcast') }}{% endblock %}
+{% block title %}{{ meta_context.titlePrefix() }} - {{ tr('downloads') }}{% endblock %}
 {% block page_classes %}text-base programmes-page--smallpush prog-layout{% endblock %}
 
 {%- block body -%}
-    <div class="programmes-page prog-layout__primary br-box-page">
-        THIS IS A PODCAST FULL PAGE
+    {% if entity.isPodcastable %}
+        <div class="grid-wrapper grid-wrapper--flush map map--episode map--count-2">
+            <div class="grid 2/3@bpw2 3/4@bpe map__column map__column--first">
+                <div class="map__inner  br-box-secondary">
+                    <div class="island">
+                        <h1><span class="visually-hidden">{{ entity.title }} </span><span class="deemphasize block-link">Podcast</span></h1>
+                        <div class="map__intro__synopsis centi">
+                            {{ ds_shared('synopsis', entity.synopses, 300) }}
+                        </div>
+                        {% if podcast.isUkOnly %}  <p>{{ tr('uk_only') }}</p> {% endif %}
+                        <div class="grid-wrapper micro">
+                            <div class="grid 1/2">
+                                <div class=""> <strong>Updated: </strong> <span class="nowrap">{{ tr('updated_'~podcast.FREQUENCY)}}</span> </div>
+                            </div>
+                            <div class="grid 1/2">
+                                <div> <strong>Episodes available: </strong><span class="nowrap">
+                                        {% if podcast.availability == -1 %} {{ tr('iplayer_time_indefinitely') }} {% endif %}
+                                        {% if podcast.availability == 7 %} {{ tr('iplayer_time_weeks', 1) }} {% endif %}
+                                        {% if podcast.availability == 14 %} {{ tr('iplayer_time_weeks', 2) }} {% endif %}
+                                        {% if podcast.availability == 30 %} {{ tr('iplayer_time_months', 1) }} {% endif %}
+                                        {% if podcast.availability == 60 %} {{ tr('iplayer_time_months', 2) }} {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid 1/3@bpw2 1/4@bpe map__column map__column--2 map__column--last">
+                <div class=" map__inner  br-box-secondary">
+                    <div class="island">
+                        <div class="popup">
+                            <input class="popup__status" type="checkbox" id="popup-2" checked>
+                            <h2 class="gamma popup__button popup__button--subscribe br-pseudolink br-linkinvert">
+                                <label for="popup-2">
+                                    {{ gelicon('basics', 'podcast', 'gelicon--gamma') }}
+                                    {{ tr('subscribe') }}
+                                </label>
+                            </h2>
+                            <div class="popup__holder" id="popup-2-holder">
+                                <div class="popup__content popup__content--subscribe br-box-secondary br-secondary-link-onbg br-secondary-link-onborder br-secondary-link-onborder--beforeafter">
+                                    <h3 class="popup__header br-secondary-link-onborder--beforeafter br-secondary-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                                        <label class="popup__close island--squashed br-secondary-bg-onborder br-linkinvert" for="popup-2">
+                                            <span class="pull--right-spaced">
+                                            {{ gelicon('basics', 'no', 'gelicon--gamma') }}
+                                            </span>
+                                            {{ tr('subscribe_to_podcast')}}
+                                        </label>
+                                    </h3>
+                                    <ul class="list-unstyled popup__list">
+                                        {{ self.subscribeLink( 'pcast', entity, 'itunes', 'iTunes / iOS', 'progs-icons', 'apple')  }}
+                                        {{ self.subscribeLink('https', entity, 'android', 'Android / Google Play', 'progs-icons', 'android')  }}
+                                        {{ self.subscribeLink('pcast', entity, 'windows', 'Windows / Phone', 'progs-icons', 'windows') }}
+                                        {{ self.subscribeLink('https', entity, 'rss', 'RSS', 'basics', 'rss')  }}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="programmes-page">
+        <div class="grid-wrapper grid-wrapper--center">
+            <div class="grid 2/3@bpw2 2/3@bpe">
+                <div class="br-box-page prog-box">
+                    <div class="component component--box component--box-flushbody component--box--primary">
+                        <div class="component__header br-box-page">
+                            <h2>Episodes to download</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="grid 1/3@bpw2 1/3@bpe">
+                <div class="component component--box component--box--striped component--box-flushbody component--box--secondary">
+                    <div class="component__header br-box-highlight">
+                        <h2 data-linktrack="superpromo_title">Who knows their character best?</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <div class="superpromo">
+                        </div>
+                    </div>
+                </div>
+                {#needs the list of other related podcasts#}
+            </div>
+        </div>
     </div>
+
+    <script type="text/javascript">
+        require(['popup'], function(popup) {
+            new popup({containerSelector: '.popup', useParentContainerWidth: true});
+        });
+    </script>
+
 {%- endblock -%}
+
+{% macro subscribeLink(protocol, coreEntity, type, name, iconset, icon) %}
+     {#need to fix icons as android, windows and apple don't exist#}
+    {%  set url = protocol ~ '://podcast.files.bbci.co.uk/' ~ coreEntity.getPid() ~ '.rss'%}
+    <li>
+        <a data-istats-track="programmes_podcast_series_subscribe_{{ type }}" class="link-complex popup__list__item island--squashed br-secondary-bg-ontext br-secondary-bg-onbg--hover br-secondary-link-ontext--hover" href="{{ url }}">
+            {{ gelicon(iconset, icon, 'gelicon--gamma gelicon--leading') }}
+            <span class="link-complex__target">
+             {{ name }}
+            </span>
+        </a>
+    </li>
+{% endmacro %}
