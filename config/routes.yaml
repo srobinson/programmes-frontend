@@ -93,7 +93,14 @@ programme_recipes_ds2013:
 
 programme_segments:
     path: /programmes/{pid}/segments
-    defaults: { _controller: App\Controller\AncillaryPages\SegmentsController }
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
+programme_suggestions:
+    path: /programmes/{pid}/suggestions
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # Podcast
