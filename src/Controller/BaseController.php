@@ -218,18 +218,11 @@ abstract class BaseController extends AbstractController
         $istatsAnalyticsLabels = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
         $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
 
-        $searchScope = $this->orbitSearchScope;
-        // @TODO please remove this once sounds has been live for a while. We don't need it cluttering up the
-        // code, but it can't go before their launch
-        if ($this->container->get(Dials::class)->get('sounds-nav') !== 'true') {
-            $searchScope = $this->branding->getOrbitSearchScope();
-        }
-
         $orb = $this->container->get(OrbitClient::class)->getContent([
             'variant' => $this->branding->getOrbitVariant(),
             'language' => $this->branding->getLanguage(),
         ], [
-            'searchScope' => $searchScope,
+            'searchScope' => $this->orbitSearchScope,
             'skipLinkTarget' => 'programmes-content',
             'analyticsCounterName' => $analyticsCounterName,
             'analyticsLabels' => $istatsAnalyticsLabels->orbLabels(),
