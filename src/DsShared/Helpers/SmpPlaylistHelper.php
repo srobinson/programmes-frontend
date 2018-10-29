@@ -97,7 +97,7 @@ class SmpPlaylistHelper
             'embedRights' => $programmeItem->isExternallyEmbeddable() ? 'allowed' : 'blocked',
         ];
         if ($version->hasCompetitionWarning()) {
-            $feed['items'][] = $this->getCompetitionWarning($programmeItem);
+            $feed['items'][] = $this->getCompetitionWarning($version);
         }
 
         $feed['items'][] = [
@@ -167,11 +167,12 @@ class SmpPlaylistHelper
         return $this->guidanceWarningHelper->getText($codes);
     }
 
-    private function getCompetitionWarning(ProgrammeItem $programmeItem): array
+    private function getCompetitionWarning(Version $version): array
     {
         $warningPid = self::DEFAULT_WARNING_VPID;
-        if ($programmeItem->getMasterBrand() && $programmeItem->getMasterBrand()->getCompetitionWarning()) {
-            $warningPid = (string) $programmeItem->getMasterBrand()->getCompetitionWarning()->getPid();
+        $masterBrand = $version->getProgrammeItem()->getMasterBrand();
+        if ($masterBrand && $masterBrand->getCompetitionWarning()) {
+            $warningPid = (string) $masterBrand->getCompetitionWarning()->getPid();
         }
         return [
             'vpid' => $warningPid,
