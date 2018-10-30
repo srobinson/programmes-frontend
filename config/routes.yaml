@@ -94,7 +94,7 @@ programme_recipes_ds2013:
 programme_segments:
     path: /programmes/{pid}/segments
     controller: App\Controller\RedirectAndCacheController::redirectAction
-    defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
+    defaults: { route: find_by_pid, _fragment: 'segments', permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 programme_suggestions:
@@ -116,7 +116,6 @@ programme_smp_playlist:
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # Schedules
-
 schedules_home:
     path: /schedules
     defaults: { _controller: App\Controller\Schedules\HomeController }
