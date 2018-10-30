@@ -5,7 +5,9 @@ namespace App\Ds2013\Presenters\Section\Segments\SegmentItem;
 
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
+use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\MusicSegment;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
 use BBC\ProgrammesPagesService\Domain\Entity\SegmentEvent;
 
 abstract class AbstractMusicSegmentItemPresenter extends AbstractSegmentItemPresenter
@@ -36,7 +38,11 @@ abstract class AbstractMusicSegmentItemPresenter extends AbstractSegmentItemPres
     /** @var CollapsedBroadcast|null */
     private $collapsedBroadcast;
 
+    /** @var ProgrammeItem */
+    private $context;
+
     public function __construct(
+        ProgrammeItem $context,
         SegmentEvent $segmentEvent,
         string $timingType,
         ?CollapsedBroadcast $collapsedBroadcast,
@@ -45,12 +51,25 @@ abstract class AbstractMusicSegmentItemPresenter extends AbstractSegmentItemPres
         parent::__construct($segmentEvent, $options);
         $this->timingType = $timingType;
         $this->collapsedBroadcast = $collapsedBroadcast;
+        $this->context = $context;
 
         /** @var MusicSegment $segment */
         $segment = $this->segmentEvent->getSegment();
         $this->segment = $segment;
 
         $this->setupContributions();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageType(): string
+    {
+        if ($this->context instanceof Episode) {
+            return 'Episode';
+        }
+
+        return 'Clip';
     }
 
     public function getImageUrl(): string

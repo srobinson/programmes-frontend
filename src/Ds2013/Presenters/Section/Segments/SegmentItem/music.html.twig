@@ -13,7 +13,12 @@
             </div>
             <div class="segment__track">
                 {% if music.hasTiming() %}
-                    <div class="text--subtle pull--right-spaced">{{ music.getTiming() }}</div>
+                    <div
+                        aria-label="Track plays {{ music.getTiming() }} into {{ music.getPageType() }}"
+                        class="text--subtle pull--right-spaced"
+                    >
+                        {{ music.getTiming() }}
+                    </div>
                 {% endif %}
 
                 {# Title Artist #}

@@ -10,7 +10,10 @@ use App\Builders\MusicSegmentBuilder;
 use App\Builders\SegmentBuilder;
 use App\Builders\SegmentEventBuilder;
 use App\Ds2013\Presenters\Section\Segments\SegmentItem\AbstractMusicSegmentItemPresenter;
+use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
+use BBC\ProgrammesPagesService\Domain\Entity\Episode;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
 use BBC\ProgrammesPagesService\Domain\Entity\Segment;
 use BBC\ProgrammesPagesService\Domain\Entity\SegmentEvent;
 use Cake\Chronos\Chronos;
@@ -19,6 +22,14 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractMusicSegmentItemPresenterTest extends TestCase
 {
+    /** @var ProgrammeItem */
+    private $mockContext;
+
+    public function setUp()
+    {
+        $this->mockContext = $this->getMockBuilder(Episode::class)->disableOriginalConstructor()->getMock();
+    }
+
     public function tearDown()
     {
         Chronos::setTestNow();
@@ -28,7 +39,15 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
     public function testHasTiming(bool $expected, ?int $offset, string $timingType)
     {
         $segmentEvent = SegmentEventBuilder::any()->with(['offset' => $offset])->build();
-        $stub = $this->getMockForAbstractClass(AbstractMusicSegmentItemPresenter::class, [$segmentEvent, $timingType, null]);
+        $stub = $this->getMockForAbstractClass(
+            AbstractMusicSegmentItemPresenter::class,
+            [
+                $this->mockContext,
+                $segmentEvent,
+                $timingType,
+                null,
+            ]
+        );
 
         $this->assertSame($expected, $stub->hasTiming());
     }
@@ -46,10 +65,39 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
         ];
     }
 
+    /** @dataProvider getTestPageTypeData */
+    public function testPageType($contextClass, $expectedPageType)
+    {
+        $mockContext = $this->getMockBuilder($contextClass)->disableOriginalConstructor()->getMock();
+        $segmentEvent = SegmentEventBuilder::any()->build();
+        $presenter = $this->getPresenter(
+            $mockContext,
+            $segmentEvent,
+            'anything',
+            null,
+            false
+        );
+        $this->assertEquals($expectedPageType, $presenter->getPageType());
+    }
+
+    public function getTestPageTypeData()
+    {
+        return [
+            'episode' => [Episode::class, 'Episode'],
+            'clip' => [Clip::class, 'Clip'],
+        ];
+    }
+
     public function testTiming()
     {
         $segmentEvent = SegmentEventBuilder::any()->build();
-        $stub = $this->getPresenter($segmentEvent, 'anything', null, false);
+        $stub = $this->getPresenter(
+            $this->mockContext,
+            $segmentEvent,
+            'anything',
+            null,
+            false
+        );
 
         $this->assertNull($stub->getTiming());
     }
@@ -60,7 +108,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
         $collapsedBroadcast = CollapsedBroadcastBuilder::any()->with(['startAt' => $start])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['offset' => 359])->build();
         $timingType = AbstractMusicSegmentItemPresenter::TIMING_PRE;
-        $stub = $this->getPresenter($segmentEvent, $timingType, $collapsedBroadcast);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, $timingType, $collapsedBroadcast);
 
         $this->assertSame('08:05', $stub->getTiming());
     }
@@ -69,7 +117,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
     {
         $segmentEvent = SegmentEventBuilder::any()->with(['offset' => 3959])->build();
         $timingType = AbstractMusicSegmentItemPresenter::TIMING_POST;
-        $stub = $this->getPresenter($segmentEvent, $timingType, null);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, $timingType, null);
 
         $this->assertSame('01:05', $stub->getTiming());
     }
@@ -82,7 +130,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
         $segment = MusicSegmentBuilder::any()->with(['duration' => 300])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['offset' => 600, 'segment' => $segment])->build();
         $timingType = AbstractMusicSegmentItemPresenter::TIMING_DURING;
-        $stub = $this->getPresenter($segmentEvent, $timingType, $collapsedBroadcast);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, $timingType, $collapsedBroadcast);
 
         $this->assertSame('Now', $stub->getTiming());
     }
@@ -95,7 +143,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
         $segment = MusicSegmentBuilder::any()->with(['duration' => 300])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['offset' => 600, 'segment' => $segment])->build();
         $timingType = AbstractMusicSegmentItemPresenter::TIMING_DURING;
-        $stub = $this->getPresenter($segmentEvent, $timingType, $collapsedBroadcast);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, $timingType, $collapsedBroadcast);
 
         $this->assertSame('4 minutes ago', $stub->getTiming());
     }
@@ -104,7 +152,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
     {
         $segment = MusicSegmentBuilder::any()->with(['musicRecordId' => 'recordId'])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['segment' => $segment])->build();
-        $stub = $this->getPresenter($segmentEvent, 'anything', null);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, 'anything', null);
 
         $this->assertSame('https://www.bbc.co.uk/music/images/records/96x96/recordId', $stub->getImageUrl());
     }
@@ -115,7 +163,7 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
         $contribution = ContributionBuilder::any()->with(['contributor' => $contributor])->build();
         $segmentEvent = SegmentEventBuilder::any()->build();
         // @TODO can I refactor the below?
-        $stub = $this->getPresenter($segmentEvent, 'anything', null);
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, 'anything', null);
         $stub->expects($this->any())
             ->method('getPrimaryContribution')
             ->willReturn($contribution);
@@ -126,7 +174,8 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
     public function testDefaultImage()
     {
         $segmentEvent = SegmentEventBuilder::any()->build();
-        $stub = $this->getPresenter($segmentEvent, 'anything', null);
+
+        $stub = $this->getPresenter($this->mockContext, $segmentEvent, 'anything', null);
         $stub->expects($this->any())
             ->method('getPrimaryContribution')
             ->willReturn(null);
@@ -150,9 +199,10 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
 
         $segment = SegmentBuilder::any()->with(['contributions' => [$contribution1], 'title' => 'SegmentTitle'])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['segment' => $segment])->build();
+
         $stub = $this->getMockForAbstractClass(
             AbstractMusicSegmentItemPresenter::class,
-            [$segmentEvent, 'anything', null],
+            [$this->mockContext, $segmentEvent, 'anything', null],
             '',
             true,
             true,
@@ -177,15 +227,37 @@ class AbstractMusicSegmentItemPresenterTest extends TestCase
     }
 
     /**
+     * @param ProgrammeItem $context
      * @param SegmentEvent $segmentEvent
      * @param string $timingType
      * @param CollapsedBroadcast|null $collapsedBroadcast
      * @param bool $hasTiming
      * @return AbstractMusicSegmentItemPresenter|MockObject
      */
-    private function getPresenter(SegmentEvent $segmentEvent, string $timingType, ?CollapsedBroadcast $collapsedBroadcast, bool $hasTiming = true)
-    {
-        $stub = $this->getMockForAbstractClass(AbstractMusicSegmentItemPresenter::class, [$segmentEvent, $timingType, $collapsedBroadcast], '', true, true, true, ['hasTiming', 'getPrimaryContribution']);
+    private function getPresenter(
+        ProgrammeItem $context,
+        SegmentEvent $segmentEvent,
+        string $timingType,
+        ?CollapsedBroadcast $collapsedBroadcast,
+        bool $hasTiming = true
+    ) {
+        $stub = $this->getMockForAbstractClass(
+            AbstractMusicSegmentItemPresenter::class,
+            [
+                $context,
+                $segmentEvent,
+                $timingType,
+                $collapsedBroadcast,
+            ],
+            '',
+            true,
+            true,
+            true,
+            [
+                'hasTiming',
+                'getPrimaryContribution',
+            ]
+        );
         $stub->expects($this->any())
             ->method('hasTiming')
             ->willReturn($hasTiming);
