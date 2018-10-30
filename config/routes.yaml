@@ -103,6 +103,12 @@ programme_suggestions:
     defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+programme_episode_downloads_rss:
+    path: /programmes/{pid}/episodes/downloads.rss
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: podcast_download_rss, permanent: true }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # Podcast
 programme_podcast_episodes_download:
     path: /programmes/{pid}/episodes/downloads
