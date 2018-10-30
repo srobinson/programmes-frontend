@@ -23,7 +23,7 @@ class SmpPlaylistController extends BaseController
     ) {
         // Yes there is a reason for not using the ArgumentResolver, we want to avoid the redirect that it does
         // on programme options. It doesn't apply here.
-        $programmeItem = $programmesService->findProgrammeItemByPidForPlayout(new Pid($pid));
+        $programmeItem = $programmesService->findByPidFull(new Pid($pid), 'ProgrammeItem');
         if (!$programmeItem) {
             throw new NotFoundHttpException(sprintf(
                 'The item of type "%s" with PID "%s" was not found',

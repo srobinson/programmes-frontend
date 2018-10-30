@@ -277,9 +277,9 @@ class SegmentsListPresenter extends Presenter
                 $options['context_pid'] = (string) $this->context->getPid();
 
                 if ($this->isClassicalMusicSegment($segmentEvent->getSegment())) {
-                    $presenters[] = new ClassicalMusicPresenter($segmentEvent, $this->getTimingType(), $this->firstBroadcast, $options);
+                    $presenters[] = new ClassicalMusicPresenter($this->context, $segmentEvent, $this->getTimingType(), $this->firstBroadcast, $options);
                 } else {
-                    $presenters[] = new PopularMusicPresenter($segmentEvent, $this->getTimingType(), $this->firstBroadcast, $options);
+                    $presenters[] = new PopularMusicPresenter($this->context, $segmentEvent, $this->getTimingType(), $this->firstBroadcast, $options);
                 }
             } else {
                 if ($segmentEvent->getSegment()->getType() === 'chapter') {

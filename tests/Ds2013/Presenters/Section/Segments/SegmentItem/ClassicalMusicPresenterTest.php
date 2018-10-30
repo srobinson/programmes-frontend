@@ -6,7 +6,9 @@ namespace Tests\App\Ds2013\Presenters\Section\Segments\SegmentItem;
 use App\Builders\MusicSegmentBuilder;
 use App\Builders\SegmentEventBuilder;
 use App\Ds2013\Presenters\Section\Segments\SegmentItem\ClassicalMusicPresenter;
+use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
+use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\Segment;
 use BBC\ProgrammesPagesService\Domain\Entity\SegmentEvent;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
@@ -20,9 +22,10 @@ class ClassicalMusicPresenterTest extends BaseTemplateTestCase
             'getCreditRole' => 'composer',
             'getPid' => new Pid('cnt000001'),
         ]);
+        $mockContext = $this->getMockBuilder(Episode::class)->disableOriginalConstructor()->getMock();
         $segment = MusicSegmentBuilder::any()->with(['contributions' => [$composer]])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['segment' => $segment])->build();
-        $crawler = $this->presenterCrawler(new ClassicalMusicPresenter($segmentEvent, 'anything', null));
+        $crawler = $this->presenterCrawler(new ClassicalMusicPresenter($mockContext, $segmentEvent, 'anything', null));
 
         $this->assertCount(1, $crawler->filter('div.segment--music'));
     }
@@ -36,7 +39,8 @@ class ClassicalMusicPresenterTest extends BaseTemplateTestCase
     ) {
         $segment = $this->createConfiguredMock(Segment::class, ['getContributions' => $providedContributions]);
         $segmentEvent = $this->createConfiguredMock(SegmentEvent::class, ['getSegment' => $segment]);
-        $presenter = new ClassicalMusicPresenter($segmentEvent, 'anything', null);
+        $context = $this->getMockBuilder(Episode::class)->disableOriginalConstructor()->getMock();
+        $presenter = new ClassicalMusicPresenter($context, $segmentEvent, 'anything', null);
 
         $this->assertEquals($expectedPrimaryContributions, $presenter->getPrimaryContributions());
         $this->assertEquals($expectedSecondaryContributions, $presenter->getOtherContributions());

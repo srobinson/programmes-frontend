@@ -94,7 +94,7 @@ programme_recipes_ds2013:
 programme_segments:
     path: /programmes/{pid}/segments
     controller: App\Controller\RedirectAndCacheController::redirectAction
-    defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
+    defaults: { route: find_by_pid, _fragment: 'segments', permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 programme_suggestions:
@@ -103,10 +103,22 @@ programme_suggestions:
     defaults: { route: find_by_pid, _fragment: 'related_programmes', permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+programme_episode_downloads_rss:
+    path: /programmes/{pid}/episodes/downloads.rss
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: podcast_download_rss, permanent: true }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # Podcast
 programme_podcast_episodes_download:
     path: /programmes/{pid}/episodes/downloads
     defaults: { _controller: App\Controller\Podcast\PodcastController }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
+programme_podcasts:
+    path: /programmes/{pid}/podcasts
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: programme_podcast_episodes_download, permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # SMP Playlist page
@@ -116,7 +128,6 @@ programme_smp_playlist:
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # Schedules
-
 schedules_home:
     path: /schedules
     defaults: { _controller: App\Controller\Schedules\HomeController }

@@ -8,6 +8,8 @@ use App\Builders\SegmentEventBuilder;
 use App\Ds2013\Presenters\Section\Segments\SegmentItem\PopularMusicPresenter;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
 use BBC\ProgrammesPagesService\Domain\Entity\Contributor;
+use BBC\ProgrammesPagesService\Domain\Entity\Episode;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
 use BBC\ProgrammesPagesService\Domain\Entity\Segment;
 use BBC\ProgrammesPagesService\Domain\Entity\SegmentEvent;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
@@ -15,6 +17,14 @@ use Tests\App\BaseTemplateTestCase;
 
 class PopularMusicPresenterTest extends BaseTemplateTestCase
 {
+    /** @var ProgrammeItem */
+    private $mockContext;
+
+    public function setUp()
+    {
+        $this->mockContext = $this->getMockBuilder(Episode::class)->disableOriginalConstructor()->getMock();
+    }
+
     public function testTemplate()
     {
         $composer = $this->createConfiguredMock(Contribution::class, [
@@ -23,7 +33,7 @@ class PopularMusicPresenterTest extends BaseTemplateTestCase
         ]);
         $segment = MusicSegmentBuilder::any()->with(['contributions' => [$composer]])->build();
         $segmentEvent = SegmentEventBuilder::any()->with(['segment' => $segment])->build();
-        $crawler = $this->presenterCrawler(new PopularMusicPresenter($segmentEvent, 'anything', null));
+        $crawler = $this->presenterCrawler(new PopularMusicPresenter($this->mockContext, $segmentEvent, 'anything', null));
 
         $this->assertCount(1, $crawler->filter('div.segment--music'));
     }
@@ -37,7 +47,7 @@ class PopularMusicPresenterTest extends BaseTemplateTestCase
     ) {
         $segment = $this->createConfiguredMock(Segment::class, ['getContributions' => $providedContributions]);
         $segmentEvent = $this->createConfiguredMock(SegmentEvent::class, ['getSegment' => $segment]);
-        $presenter = new PopularMusicPresenter($segmentEvent, 'anything', null);
+        $presenter = new PopularMusicPresenter($this->mockContext, $segmentEvent, 'anything', null);
 
         $this->assertEquals($expectedPrimaryContributions, $presenter->getPrimaryContributions());
         $this->assertEquals($expectedSecondaryContributions, $presenter->getOtherContributions());
