@@ -109,6 +109,12 @@ programme_podcast_episodes_download:
     defaults: { _controller: App\Controller\Podcast\PodcastController }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+programme_podcasts:
+    path: /programmes/{pid}/podcasts
+    controller: App\Controller\RedirectAndCacheController::redirectAction
+    defaults: { route: programme_podcast_episodes_download, permanent: true }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # SMP Playlist page
 programme_smp_playlist:
     path: /programmes/{pid}/playlist.json
