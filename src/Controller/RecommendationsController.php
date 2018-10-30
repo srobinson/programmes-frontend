@@ -59,7 +59,10 @@ class RecommendationsController extends BaseController
             if (!empty($onDemandEpisodes)) {
                 // Theoretically if getAvailableEpisodesCount returns > 0, then we should have onDemandEpisodes
                 // but cache lifetimes can mismatch.
-                return reset($onDemandEpisodes);
+                $onDemandEpisode = reset($onDemandEpisodes);
+                if ($onDemandEpisode instanceof Episode) {
+                    return $onDemandEpisode;
+                }
             }
         }
 
