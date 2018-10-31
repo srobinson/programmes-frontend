@@ -14,3 +14,4 @@ parameters:
         - '#Call to an undefined method BBC\\ProgrammesPagesService\\Domain\\Entity\\CoreEntity::getDuration()#'
         - '#Call to an undefined method Tests\\App\\Translate\\TranslatableTraitTest::tr().#'
         - '#Call to an undefined method Tests\\App\\Translate\\TranslatableTraitTest::localDateIntl().#'
+        - '#Call to an undefined method BBC\\ProgrammesPagesService\\Domain\\Entity\\Programme::getSegmentEventCount().#'
