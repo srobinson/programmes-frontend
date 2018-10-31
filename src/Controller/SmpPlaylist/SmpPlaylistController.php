@@ -6,6 +6,7 @@ namespace App\Controller\SmpPlaylist;
 use App\Controller\BaseController;
 use App\Controller\Helpers\SmpPlaylistHelper;
 use App\DsShared\Helpers\HelperFactory;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Service\ProgrammesService;
 use BBC\ProgrammesPagesService\Service\SegmentEventsService;
@@ -23,6 +24,7 @@ class SmpPlaylistController extends BaseController
     ) {
         // Yes there is a reason for not using the ArgumentResolver, we want to avoid the redirect that it does
         // on programme options. It doesn't apply here.
+        /** @var ProgrammeItem */
         $programmeItem = $programmesService->findByPidFull(new Pid($pid), 'ProgrammeItem');
         if (!$programmeItem) {
             throw new NotFoundHttpException(sprintf(
