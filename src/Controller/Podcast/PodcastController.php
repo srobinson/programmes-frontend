@@ -13,6 +13,7 @@ use BBC\ProgrammesPagesService\Service\PodcastsService;
 use BBC\ProgrammesPagesService\Service\ProgrammesAggregationService;
 use BBC\ProgrammesPagesService\Service\PromotionsService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Podcast full page. Future implementation.
@@ -49,12 +50,22 @@ class PodcastController extends BaseController
 
         $programmeItems = $programmesAggregationService->findStreamableOnDemandEpisodes($coreEntity);
 
+        $promotions = $promotionsService->findActivePromotionsByEntityGroupedByType($coreEntity);
+
+        $genres = $programme->getGenres();
+        $genre = reset($genres);
+        if ($genre) {
+            $genre = $genre->getTopLevel();
+        }
+
 
         return $this->renderWithChrome('podcast/podcast.html.twig', [
             'programme' => $programme,
             'entity' => $coreEntity,
             'podcast' => $podcast,
             'programmeItems' => $programmeItems,
+            'promotions' => $promotions,
+            'genre' => $genre,
         ]);
     }
 }

@@ -10,17 +10,17 @@
             <div class="grid 2/3@bpw2 3/4@bpe map__column map__column--first">
                 <div class="map__inner  br-box-secondary">
                     <div class="island">
-                        <h1><span class="visually-hidden">{{ entity.title }} </span><span class="deemphasize block-link">Podcast</span></h1>
+                        <h1><span class="visually-hidden">{{ entity.title }} </span><span class="deemphasize block-link">{{ tr('podcasts',1) }}</span></h1>
                         <div class="map__intro__synopsis centi">
                             {{ ds_shared('synopsis', entity.synopses, 300) }}
                         </div>
                         {% if podcast.isUkOnly %}  <p>{{ tr('uk_only') }}</p> {% endif %}
                         <div class="grid-wrapper micro">
                             <div class="grid 1/2">
-                                <div class=""> <strong>Updated: </strong> <span class="nowrap">{{ tr('updated_'~podcast.FREQUENCY)}}</span> </div>
+                                <div class=""> <strong>{{ tr('updated') }} </strong> <span class="nowrap">{{ tr('updated_'~podcast.FREQUENCY)}}</span> </div>
                             </div>
                             <div class="grid 1/2">
-                                <div> <strong>Episodes available: </strong><span class="nowrap">
+                                <div> <strong>{{ tr('episodes_available') }} </strong><span class="nowrap">
                                         {% if podcast.availability == -1 %} {{ tr('iplayer_time_indefinitely') }} {% endif %}
                                         {% if podcast.availability == 7 %} {{ tr('iplayer_time_weeks', 1) }} {% endif %}
                                         {% if podcast.availability == 14 %} {{ tr('iplayer_time_weeks', 2) }} {% endif %}
@@ -74,7 +74,7 @@
                 <div class="br-box-page prog-box">
                     <div class="component component--box component--box-flushbody component--box--primary">
                         <div class="component__header br-box-page">
-                            <h2>Episodes to download</h2>
+                            <h2>{{ tr('podcasts_desc') }}</h2>
                         </div>
 
                     </div>
@@ -82,15 +82,45 @@
             </div>
             <div class="grid 1/3@bpw2 1/3@bpe">
                 <div class="component component--box component--box--striped component--box-flushbody component--box--secondary">
+                    {% for promo in promotions.super %}
+                        {{ ds2013('superpromo', promo, {
+                            'img_default_width': 320,
+                            'img_sizes': {0: 1/1, 768: 1/2, 1008: '438px'},
+                        }) }}
+                    {% endfor %}
+                </div>
+                <div class="component component--box component--box--striped component--box-flushbody component--box--secondary">
                     <div class="component__header br-box-highlight">
-                        <h2 data-linktrack="superpromo_title">Who knows their character best?</h2>
+                        <h2>{{ tr('podcast_belongs') }}</h2>
                     </div>
                     <div class="component__body br-box-subtle">
-                        <div class="superpromo">
-                        </div>
+                        <ul class="list-unstyled">
+                            <li class="">
+                                {{  ds2013('programme', programme, {
+                                    'highlight_box_classes': 'highlight-box--list',
+                                    'body_options':{
+                                        'show_synopsis': false,
+                                    },
+                                    'image_options': {
+                                        'classes' : '1/3@bpb1 1/4@bpb2 1/3@bpw hidden@bpw2'
+                                    },
+                                }) }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {#needs the list of other related podcasts#}
+                <div class="istats--podcasts">
+                    <div class="icon-box br-box-page">
+                        <a class="icon-box__link br-box-page__link br-page-link-onbg015 br-page-linkhover-onbg015--hover" href="{{ path('podcast_other_podcasts', {'keys': genre.getUrlKey(), 'intent': 'podcast'}) }}">
+                            <i class="icon-box__icon gelicon gelicon--podcast"></i>
+                            <div class="icon-box__hgroup">
+                                <h3 class="icon-box__title gamma">{{ tr('podcasts_suggestions') }}</h3>
+                            </div>
+                            <p class="icon-box__note micro"> {{ tr('see_all_podcasts') }}</p>
+                            {{ gelicon('basics', 'podcast', ' icon-box__icon gelicon gelicon--podcast') }}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
