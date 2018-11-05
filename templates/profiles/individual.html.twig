@@ -56,7 +56,7 @@
                     {{ ds_shared('image', profile.getPortraitImage(), 336, '', {'ratio': null}) }}
                 </div>
                 {% if profile.getOnwardJourneyBlock() %}
-                    <div>{{ profile.getOnwardJourneyBlock().getType() }}</div>
+                    {{ ds2013('contentBlock', profile.getOnwardJourneyBlock()) }}
                 {% endif %}
             </div>
         </div>
