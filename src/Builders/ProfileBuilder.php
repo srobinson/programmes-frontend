@@ -27,6 +27,7 @@ class ProfileBuilder extends AbstractBuilder
             'image' => $faker->regexify('[0-9b-df-hj-np-tv-z]{8,15}'),
             'portraitImage' => '',
             'onwardJourneyBlock' => null,
+            'tagline' => "This brand new sofa is only £399! (Other sofas are available)",
             'parents' => [],
         ];
     }

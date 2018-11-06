@@ -25,6 +25,7 @@ class ProfileMapper extends Mapper
         $parentPid = $this->getString($formMetaData->parent_pid);
         $brandingId = $this->getString($formMetaData->branding_id);
         $imagePortrait = $this->getString($form->profile->image_portrait);
+        $tagline = $this->getString($formMetaData->tagline);
 
         $keyFacts = [];
         if (!empty($form->key_facts)) {
@@ -72,6 +73,6 @@ class ProfileMapper extends Mapper
         }
         // @codingStandardsIgnoreEnd
 
-        return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $parents);
+        return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $tagline, $parents);
     }
 }

@@ -51,6 +51,9 @@ class Profile
     private $onwardJourneyBlock;
 
     /** @var string */
+    private $tagline;
+
+    /** @var string */
     private $image;
 
     /** @var string|null */
@@ -71,6 +74,7 @@ class Profile
         string $image,
         ?string $portraitImage,
         ?AbstractContentBlock $onwardJourneyBlock,
+        ?string $tagline,
         array $parents
     ) {
         $this->title = $title;
@@ -88,6 +92,7 @@ class Profile
         $this->contentBlocks = $contentBlocks;
         $this->keyFacts = $keyFacts;
         $this->onwardJourneyBlock = $onwardJourneyBlock;
+        $this->tagline = $tagline;
         $this->image = $image;
         $this->portraitImage = $portraitImage;
         $this->parents = $parents;
@@ -184,6 +189,11 @@ class Profile
                 '-'
             )
         );
+    }
+
+    public function getTagline(): ?string
+    {
+        return $this->tagline;
     }
 
     public function getTitle(): string
