@@ -143,7 +143,7 @@ class TlecController extends BaseController
 
         $priorityPromotion = null;
         if ($programme->getOption('brand_layout') === 'promo' && !empty($promotions) && $programme->isTlec() && !$showMiniMap) {
-            $priorityPromotion = $this->extractPriorityPromotionAndUpdateList($promotions);
+            $priorityPromotion = array_shift($promotions);
         }
 
 
@@ -372,21 +372,5 @@ class TlecController extends BaseController
     private function isSamePublication(Episode $onDemandEpisode, CollapsedBroadcast $upcomingBroadcast)
     {
         return (string) $onDemandEpisode->getPid() == (string) $upcomingBroadcast->getProgrammeItem()->getPid();
-    }
-
-    /**
-     * @param Promotion[] $promotions
-     * @return Promotion|null
-     */
-    private function extractPriorityPromotionAndUpdateList(array &$promotions) :?Promotion
-    {
-        foreach ($promotions as $index => $promotion) {
-            if (!$promotion->isSuperPromotion()) {
-                unset($promotions[$index]);
-                return $promotion;
-            }
-        }
-
-        return null;
     }
 }

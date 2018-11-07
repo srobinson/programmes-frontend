@@ -136,11 +136,18 @@ podcast_download_low:
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     schemes: [https]
 
+
+podcast_other_podcasts:
+    path: /radio/categories/redirect
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
+    schemes: [https]
+
 podcast_download_rss:
     path: /{pid}.rss
     host: 'podcasts.files.bbci.co.uk'
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
     schemes: [https]
 
 food_recipes:

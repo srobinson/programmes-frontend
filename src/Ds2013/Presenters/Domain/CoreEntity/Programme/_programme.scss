@@ -85,6 +85,15 @@ $programme-icon-bpw-box-size: gel-typography('bpw', 'delta', 'line-height') + 18
     overflow: hidden;
 }
 
+.programme__overlay-tagline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #ffffff;
+    width: 100%;
+    overflow: hidden;
+}
+
 .programme__time-remaining {
     font-weight: normal;
     margin: 4px 8px 0;
