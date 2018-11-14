@@ -71,6 +71,7 @@
     overflow-x: scroll;
     overflow-y: hidden;
     touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
 }
 
 .stream__button[disabled]:hover,
