@@ -1,0 +1,29 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Broadcast Objects{% endblock %}
+
+{% block content %}
+
+<div class="programmes-page">
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <h2>A Gallery</h2>
+            <p>A link to a gallery</p>
+        </div>
+        <div class="grid 1/2@bpw 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('group', gallery,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma'
+                        }
+                    })}}
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

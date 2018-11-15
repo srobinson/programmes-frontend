@@ -1,0 +1,23 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Credits Object{% endblock %}
+
+{% block content %}
+
+    <div class="grid-wrapper programmes-page prog-layout__primary">
+        <div class="grid 1 1/4@bpw">
+            <h2>Credits</h2>
+            <p>Credits for Characters</p>
+        </div>
+        <div class="grid 1 3/4@bpw">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ds2013('credits', contributions)}}
+                </li>
+            </ol>
+        </div>
+
+    </div>
+
+{% endblock %}
+

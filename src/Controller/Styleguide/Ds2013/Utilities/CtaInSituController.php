@@ -3,14 +3,9 @@ declare(strict_types = 1);
 
 namespace App\Controller\Styleguide\Ds2013\Utilities;
 
-use App\Builders\ClipBuilder;
 use App\Builders\CollapsedBroadcastBuilder;
-use App\Builders\CollectionBuilder;
-use App\Builders\EpisodeBuilder;
-use App\Builders\GalleryBuilder;
 use App\Builders\ServiceBuilder;
 use App\Controller\BaseController;
-use BBC\ProgrammesPagesService\Domain\Enumeration\MediaTypeEnum;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Sid;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;

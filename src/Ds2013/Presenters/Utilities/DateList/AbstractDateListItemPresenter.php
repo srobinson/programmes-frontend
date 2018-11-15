@@ -30,12 +30,12 @@ abstract class AbstractDateListItemPresenter extends Presenter
     public function __construct(UrlGeneratorInterface $router, ChronosInterface $datetime, Service $service, int $offset, Chronos $unavailableAfterDate, array $options = [])
     {
         parent::__construct($options);
-
+//        dump($options);exit();
         $this->datetime = $datetime;
         $this->service = $service;
         $this->offset = $offset;
         $this->router = $router;
-        $this->isLink = $this->buildIsLink($unavailableAfterDate);
+        $this->isLink = $this->buildIsLink($unavailableAfterDate, $options);
     }
 
     public function isLink(): bool
@@ -62,8 +62,12 @@ abstract class AbstractDateListItemPresenter extends Presenter
 
     abstract protected function getBroadcastPeriod(string $medium): BroadcastPeriod;
 
-    private function buildIsLink(Chronos $unavailableAfterDate) : bool
+    private function buildIsLink(Chronos $unavailableAfterDate, $options) : bool
     {
+//        dump($options); exit();
+//        if($options['isLink']){
+//            return true;
+//    }
         // if the date is more than $unavailableAfterDate from now, then don't allow a link (page will still exist)
         if ($this->offset === 0 || $this->datetime->gte($unavailableAfterDate)) {
             return false;

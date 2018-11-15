@@ -1,0 +1,34 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %} More Less{% endblock %}
+
+{% block content %}
+    <p> The more/less object is a set of classes for creating show/hide functionality. Used for</p>
+    <ul>
+        <li>
+            FAQs
+        </li>
+        <li>
+            Truncating long prose (synopsis)
+        </li>
+        <li>
+            Truncating long lists
+        </li>
+    </ul>
+    <p>It works without JavaScript (yay), which does mean some server side logic is required to define which items will
+        be shown, and which will be hidden by default. This is ok, as our view partials are processed server-side anyway
+        (including translation).</p>
+
+    <p>Browsers that don't support these CSS selectors (IE8-) will be fully open by default</p>
+
+    <h2> Faqs </h2>
+    <p>FAQs are always hidden by default (at all sizes)</p>
+    {{ ds2013('contentBlock', faq) }}
+
+    <h2>Prose</h2>
+    <p>Large blocks of text can be truncated on the server by adding classes/spans in the right place</p>
+    {{ ds_shared('synopsis', synopses, 50) }}
+
+
+{% endblock %}
+

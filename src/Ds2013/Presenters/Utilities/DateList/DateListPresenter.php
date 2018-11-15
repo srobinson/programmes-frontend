@@ -17,6 +17,7 @@ class DateListPresenter extends Presenter
         'css_classes' => '',
         'user_timezone' => 'GMT',
         'format' => 'day',
+        'isLink' => false,
     ];
 
     /** @var ChronosInterface */

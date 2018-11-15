@@ -1,0 +1,131 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Columns{% endblock %}
+
+{% block content %}
+<div class="programmes-page">
+    <p>These are some utility classes for providing columns, and having them adjust their number at different breakpoint
+    sizes</p>
+
+    <p>Is uses CSS multi-columns so will only work in browsers where it is supported. The fallback is to return to a
+        single column, so only use this utility where that fallback is acceptable. The spacing is determined by the
+        standard GEL grid spacings</p>
+
+
+    <h2>Classes</h2>
+    <pre>.columns</pre>
+    <p>Needed for each use</p>
+
+    <pre>.columns--1 .columns--2 .columns--3 .columns--4</pre>
+    <p>How many columns to split the container into (supports up to 4)</p>
+
+    <pre>.columns--2@bpb .columns--3@bpw</pre>
+    <p>Set a different number of columns per breakpoint</p>
+</div>
+    <h2>Standard 3 columns</h2>
+
+    <pre>class="columns columns--3"</pre>
+    <div class="columns columns--3" style="text-align:justify">
+        <p>I am the Doctor, and you are the Daleks! You've swallowed a planet! The way I see it, every life is a pile of
+        good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the bad
+        things don't necessarily spoil the good things and make them unimportant. The way I see it, every life is a pile
+        of good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the bad
+            things don't necessarily spoil the good things and make them unimportant.</p>
+
+        <p>*Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes do! I'm the Doctor.
+        Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know why. Did I mention
+            we have comfy chairs?</p>
+
+        <p>I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know
+        why. I'm nobody's taxi service; I'm not gonna be there to catch you every time you feel like jumping out of a
+        spaceship. I am the Doctor, and you are the Daleks! Saving the world with meals on wheels. I am the last of my
+            species, and I know how that weighs on the heart so don't lie to me!</p>
+
+        <p>I am the Doctor, and you are the Daleks! I'm the Doctor, I'm worse than everyone's aunt. *catches himself* And
+        that is not how I'm introducing myself. Annihilate? No. No violence. I won't stand for it. Not now, not ever,
+        do you understand me?! I'm the Doctor, the Oncoming Storm - and you basically meant beat them in a football
+        match, didn't you? I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I
+            still don't know why. You hit me with a cricket bat.</p>
+
+        <p>No… It's a thing; it's like a plan, but with more greatness. I hate yogurt. It's just stuff with bits in. You
+        know when grown-ups tell you 'everything's going to be fine' and you think they're probably lying to make you
+            feel better? *Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes do!</p>
+
+        <p>Heh-haa! Super squeaky bum time! You know when grown-ups tell you 'everything's going to be fine' and you think
+        they're probably lying to make you feel better? Father Christmas. Santa Claus. Or as I've always known him:
+            Jeff.</p>
+    </div>
+
+<div class="programmes-page">
+    <h2>Adjusting at breakpoints (1 → 2 → 3 → 4)</h2>
+    <pre>class="columns columns--2@bpb2 columns--3@bpw columns--4@bpe"</pre>
+    <div class="columns columns--2@bpb2 columns--3@bpw columns--4@bpe">
+        <p>I am the Doctor, and you are the Daleks! You've swallowed a planet! The way I see it, every life is a pile of
+        good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the bad
+        things don't necessarily spoil the good things and make them unimportant. The way I see it, every life is a
+        pile of good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the
+            bad things don't necessarily spoil the good things and make them unimportant.</p>
+
+        <p>*Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes do! I'm the
+        Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know why. Did
+            I mention we have comfy chairs?</p>
+
+        <p>I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know
+        why. I'm nobody's taxi service; I'm not gonna be there to catch you every time you feel like jumping out of a
+        spaceship. I am the Doctor, and you are the Daleks! Saving the world with meals on wheels. I am the last of my
+            species, and I know how that weighs on the heart so don't lie to me!</p>
+
+        <p>I am the Doctor, and you are the Daleks! I'm the Doctor, I'm worse than everyone's aunt. *catches himself* And
+        that is not how I'm introducing myself. Annihilate? No. No violence. I won't stand for it. Not now, not ever,
+        do you understand me?! I'm the Doctor, the Oncoming Storm - and you basically meant beat them in a football
+        match, didn't you? I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too.
+            I still don't know why. You hit me with a cricket bat.</p>
+
+        <p>No… It's a thing; it's like a plan, but with more greatness. I hate yogurt. It's just stuff with bits in. You
+        know when grown-ups tell you 'everything's going to be fine' and you think they're probably lying to make you
+        feel better? *Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes
+            do!</p>
+
+        <p>Heh-haa! Super squeaky bum time! You know when grown-ups tell you 'everything's going to be fine' and you think
+        they're probably lying to make you feel better? Father Christmas. Santa Claus. Or as I've always known him:
+            Jeff.</p>
+    </div>
+</div>
+
+<div class="programmes-page">
+    <h2>Bordered Adjusting at breakpoints (1 → 2 → 3 → 4). Use .br-keyline to set the colour of the border</h2>
+    <pre>class="columns columns--bordered br-keyline bpb2-columns--2 bpw-columns--3 bpe-columns--4"</pre>
+    <div class="columns columns--bordered br-keyline columns--2@bpb2 columns--3@bpw columns--4@bpe">
+        <p>I am the Doctor, and you are the Daleks! You've swallowed a planet! The way I see it, every life is a pile of
+            good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the bad
+            things don't necessarily spoil the good things and make them unimportant. The way I see it, every life is a
+            pile of good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the
+            bad things don't necessarily spoil the good things and make them unimportant.</p>
+
+        <p>*Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes do! I'm the
+            Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know why. Did
+            I mention we have comfy chairs?</p>
+
+        <p>I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too. I still don't know
+            why. I'm nobody's taxi service; I'm not gonna be there to catch you every time you feel like jumping out of a
+            spaceship. I am the Doctor, and you are the Daleks! Saving the world with meals on wheels. I am the last of my
+            species, and I know how that weighs on the heart so don't lie to me!</p>
+
+        <p>I am the Doctor, and you are the Daleks! I'm the Doctor, I'm worse than everyone's aunt. *catches himself* And
+            that is not how I'm introducing myself. Annihilate? No. No violence. I won't stand for it. Not now, not ever,
+            do you understand me?! I'm the Doctor, the Oncoming Storm - and you basically meant beat them in a football
+            match, didn't you? I'm the Doctor. Well, they call me the Doctor. I don't know why. I call me the Doctor too.
+            I still don't know why. You hit me with a cricket bat.</p>
+
+        <p>No… It's a thing; it's like a plan, but with more greatness. I hate yogurt. It's just stuff with bits in. You
+            know when grown-ups tell you 'everything's going to be fine' and you think they're probably lying to make you
+            feel better? *Insistently* Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes
+            do!</p>
+
+        <p>Heh-haa! Super squeaky bum time! You know when grown-ups tell you 'everything's going to be fine' and you think
+            they're probably lying to make you feel better? Father Christmas. Santa Claus. Or as I've always known him:
+            Jeff.</p>
+    </div>
+</div>
+
+{% endblock %}

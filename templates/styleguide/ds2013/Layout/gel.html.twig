@@ -1,0 +1,139 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}GEL Standards{% endblock %}
+
+{% block content %}
+
+
+    <p>Grids and typography are based on the latest BBC GEL standards, with some additions where necessary.</p>
+
+
+    <h3> Grid</h3>
+
+
+            <div class="component">
+                <ul>
+                    <li><strong>bpb1</strong>: <em>(min-width: 320px) and (max-width: 599px)</em> GEL Smartphone group</li>
+                    <li><strong>bpb2</strong>: <em>(min-width: 480px) and (max-width: 599px)</em> Landscape Smartphones</li>
+                    <li><strong>bpw</strong>: <em>(min-width: 600px)</em> All wide displays</li>
+                    <li><strong>bpw1</strong>: <em>(min-width: 600px) and (max-width: 1007px)</em> Synonym for bp3 for tablets</li>
+                    <li><strong>bpw2</strong>: <em>(min-width: 770px) and (max-width: 1007px)</em> Landscape 10" tablets</li>
+                    <li><strong>bpe</strong>: <em>(min-width: 1008px)</em> Synonym for bp4 for desktop devices</li>
+                </ul>
+                <p> The following example demonstrates the classes used for grid widths and jumping between basic and wide layouts but makes no promises about precise math. You must ensure that you use these classes within containers where the results divide cleanly into integers to avoid pixel jumping due to rounding issues. </p>
+                <div class="grid-wrapper demo-grid" style="text-align: center;">
+                    <div class="grid 1 1/2@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1 1/2@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/2 1/4@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-highlight islet">1/2 1/4@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/2 1/4@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-highlight islet">1/2 1/4@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1</div>
+                        </div>
+                    </div>
+                    <div class="grid 1">
+                        <div class="grid__inner">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="grid 1 1/2@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1 1/2@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/2 1/4@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/2 1/4@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/2 1/4@bpw">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/2 1/4@bpw</div>
+                        </div>
+                    </div>
+                    <div class="grid 1">
+                        <div class="grid__inner">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="grid 3/4">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">3/4</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/4">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/4</div>
+                        </div>
+                    </div>
+                    <div class="grid 2/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">2/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">.1/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/6">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/6</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/12">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/12</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/12">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/12</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/3</div>
+                        </div>
+                    </div>
+                    <div class="grid 1/3">
+                        <div class="grid__inner">
+                            <div class="br-box-subtle islet">1/3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+{% endblock %}

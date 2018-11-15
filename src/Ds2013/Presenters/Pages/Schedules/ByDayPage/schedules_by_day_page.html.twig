@@ -58,7 +58,7 @@
                 {% set showBackToTop = schedules_by_day_page.hasJumpLinks() %}
                 <h2 class="delta text--shout island--horizontal component">{{ tr('schedules_period_' ~ period_name) }}</h2>
                 <ol class="highlight-box-wrapper">
-                    {# list of broadcasts in day period #}
+                     list of broadcasts in day period
                     {% for broadcast in broadcast_in_period %}
                         {% set onairattributes = '' %}
                         {% set collapsed_broadcast = null %}

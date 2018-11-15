@@ -1,4 +1,4 @@
-{% set outer_html_attributes = build_html_attributes(programme.getOption("outer_html_attributes")) %}
+    {% set outer_html_attributes = build_html_attributes(programme.getOption("outer_html_attributes")) %}
 <div class="{{ build_css_classes(programme.getOuterDivClasses()) }}" {{ outer_html_attributes | raw}}>
     {# Render programme image and overlay #}
     {{ ds2013_presenter(programme.getProgrammeOverlayPresenter()) }}

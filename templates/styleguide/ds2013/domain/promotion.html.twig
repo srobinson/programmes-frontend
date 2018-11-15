@@ -1,0 +1,46 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Promotion Object{% endblock %}
+
+{% block content %}
+
+    <p>A single promotion object block is used to render a link to an arbitary piece of content. To be rendered responsively across the whole of /programmes.</p>
+
+    <div class="grid-wrapper">
+        <div class="grid 1 1/4@bpw">
+            <h2>An Image Promotion</h2>
+            <p>A link to an arbitary promotion</p>
+        </div>
+        <div class="grid 1 3/4@bpw">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ds2013('promotion', promotion, {
+                        'highlight_box_classes': 'highlight-box--list',
+                        'container_classes' : 'programme--grid ',
+
+                    })}}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1 1/4@bpw">
+            <h2>An inset Promotion</h2>
+            <p>A promo that cuts out the image</p>
+        </div>
+        <div class="grid 1 3/4@bpw">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ds2013('promotion', promotion,{
+                        'highlight_box_classes': 'highlight-box--list promotion--inset@bpw',
+                        'container_classes' : 'programme--grid ',
+
+                    }
+                    )}}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+{% endblock %}

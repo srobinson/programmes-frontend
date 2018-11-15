@@ -1,0 +1,167 @@
+a{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Layout{% endblock %}
+
+{% block content %}
+
+<div>
+    <h2>Multi column layout for components</h2>
+    <p> This page shall demonstrate how we shall handle laying out items across multiple columns. For this page only
+        the page background has been made blue so the boxes of content are more visible. There are a few potential
+        ways of laying out content:
+    </p>
+    <h2>A single, full width column</h2>
+    <p> At small sizes this box shall sit flush to the edge of the page so that you can't see any background image
+        and the text shall be inline with the BBC Blocks. </p>
+    <p> At large sizes (&gt;=600px) this box sit inline with the BBC blocks, and the text shall appear indented.
+        This is so that the background image inline with the blocks but the text does not sit flush against the
+        background color. </p>
+    <p> A <code>.prog-layout__primary</code> wrapped within a <code>.prog-layout</code> is used to display text in
+        a single column. </p>
+</div>
+
+
+<hr>
+
+        <div class="grid-wrapper">
+            <div class="grid 1/2@bpw">
+                <div class="grid__inner">
+                    <div class="component component--box component--box--primary">
+                        <div class="component__body br-box-page">
+                            <h2>Primary of two columns</h2>
+                            <p> At small sizes this box shall sit flush to the edge of the page so that you can't see any background image and the text shall be inline with the BBC Blocks. </p>
+                            <p> At large sizes (&gt;=600px) this box shall sit inline with the BBC blocks, and the text shall appear indented. The background image shall bleed around the edge of the box. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid 1/2@bpw">
+                <div class="grid__inner">
+                    <div class="component component--box component--box--secondary">
+                        <div class="component__body br-box-subtle">
+                            <h2>Secondary of two columns</h2>
+                            <p> At small sizes this box shall sit inline with the BBC blocks and the text shall be indented. The background image shall bleed around the edge of the box. </p>
+                            <p> At large sizes (&gt;=600px) this box shall sit inline with the BBC blocks, and the text shall appear indented. The background image shall bleed around the edge of the box. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw">
+            <div class="grid__inner">
+                <div class="br-box-page">
+                    <div class="component component--box component--box--primary">
+                        <div class="component__body">
+                            <h2>Component-based Primary</h2>
+                            <p> In the primary column the branding box should wrap around all components within the column, so that the spacing between the components is the branding color: </p>
+                        </div>
+                    </div>
+                    <div class="component component--box component--box--primary">
+                        <div class="component__header br-box-page">
+                            <h2>Primary Component</h2>
+                        </div>
+                        <div class="component__body br-box-page">
+                            <ul class="list-unstyled">
+                                <li class="">I am the component body (primary, so not striped by default) </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="component component--box component--box--primary">
+                        <div class="component__body br-box-page">
+                            <ul class="list-unstyled">
+                                <li class="">I am the component body, without a title (primary, so not striped by default) </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="component component--box component--box--striped component--box--primary">
+                        <div class="component__header br-box-highlight">
+                            <h2>Primary Striped</h2>
+                        </div>
+                        <div class="component__body br-box-page">
+                            <ul class="list-unstyled">
+                                <li class="">Components with a striped heading are also possible </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="component component--box component--box--striped component--box-flushbody component--box--primary">
+                        <div class="component__header br-box-highlight">
+                            <h2>Flush Striped Primary Component</h2>
+                        </div>
+                        <div class="component__body br-box-subtle">
+                            <ul class="list-unstyled">
+                                <li class="">
+                                    <p>Components may decide to sit flush, this is for cases such as carousels where the next/previous arrows should be inline with the edge of the box. This should never be used for normal text.</p>
+                                    <p>
+                                        At small sizes, this box goes to the very edge of the screen. At large sizes (&gt;=600px) this box fills the width of the the column.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw">
+            <div class="grid__inner">
+                <div class="component component--box component--box--secondary">
+                    <div class="component__body br-box-subtle">
+                        <h2>Component-based Secondary</h2>
+                        <p> In the secondary column the branding box is attached to the components within the column, so that the spacing between the components is the page background image / color: </p>
+                    </div>
+                </div>
+                <div class="component component--box component--box--secondary">
+                    <div class="component__header br-box-subtle">
+                        <h2>Secondary Component</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <ul class="list-unstyled">
+                            <li class="">I am the component body </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="component component--box component--box--secondary">
+                    <div class="component__body br-box-subtle">
+                        <ul class="list-unstyled">
+                            <li class="">I am the component body, without a title </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="component component--box component--box--striped component--box--secondary">
+                    <div class="component__header br-box-highlight">
+                        <h2>Striped Secondary Component</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <ul class="list-unstyled">
+                            <li class="">
+                                <p>At small sizes striped components shall sit flush to the edge of the page so that you can't see any background image and the text shall be inline with the BBC Blocks.</p>
+                                <p>
+                                    At large sizes (&gt;=600px) this box fills the width of the the column, with the text indented by 16px
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="component component--box component--box--striped component--box-flushbody component--box--secondary">
+                    <div class="component__header br-box-highlight">
+                        <h2>Flush Striped Secondary Component</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <ul class="list-unstyled">
+                            <li class="">
+                                <p>Components may decide to sit flush, this is for cases such as carousels where the next/previous arrows should be inline with the edge of the box. This should never be used for normal text.</p>
+                                <p>
+                                    At small sizes, this box goes to the very edge of the screen. At large sizes (&gt;=600px) this box fills the width of the the column.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
