@@ -121,10 +121,10 @@ programme_podcasts:
     defaults: { route: programme_podcast_episodes_download, permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
-# Gallery
-programme_gallery:
+# Galleries
+programme_galleries:
     path: /programmes/{pid}/galleries
-    controller: App\Controller\Gallery\GalleryController
+    controller: App\Controller\Gallery\GalleriesController
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # SMP Playlist page

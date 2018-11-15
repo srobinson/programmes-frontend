@@ -89,12 +89,6 @@ article_with_contact_form:
     requirements: { key: '[a-zA-Z0-9-]{1,40}' }
     schemes: [https]
 
-programme_galleries:
-    path: /programmes/{pid}/galleries
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
-    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
-    schemes: [https]
-
 programme_topics:
     path: /programmes/{pid}/topics
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
