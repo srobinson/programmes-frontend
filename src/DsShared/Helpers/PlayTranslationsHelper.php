@@ -132,7 +132,7 @@ class PlayTranslationsHelper
 
         if ($timeInterval->h > 0 || $timeInterval->i > 0) {
             // Hours and/or minutes remaining
-            $minutesRemaining = $timeInterval->i;
+            $minutesRemaining = (int) round((($timeInterval->i * 60) + $timeInterval->s) / 60, 0);
             $hoursRemaining = $timeInterval->h;
 
             $strings = [];
