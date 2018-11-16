@@ -1,3 +1,4 @@
+{% import _self as self %}
 {% extends 'base_ds2013.html.twig' %}
 
 {% block title %}{{ meta_context.titlePrefix() }} - {{ tr('profiles') }}{% endblock %}
@@ -11,31 +12,49 @@
         <div class="programmes-page programmes-page--stripe br-box-subtle">
             <div class="prog-layout">
                 <div class="prog-layout__primary">
-                    {% for parent in profile.getParents() %}
-                        <div class="component component--box">
-                            <div class="component__header">
-                                <h2>
-                                    <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}">{{ parent.getTitle() }}</a>
-                                </h2>
+                    {% for parent in profile.getParents()|slice(0,1)  %}
+                        {% if parent.getGroupSize() is not same as(0) %}
+                            <div class="component component--box">
+                                <div class="component__header">
+                                    <h2>
+                                        <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}">{{ parent.getTitle() }}</a>
+                                    </h2>
+                                </div>
+                                <div class="component__body">
+                                    {% if parent.getChildren()  %}
+                                        {%  if (parent.getGroupSize() is same as(null)) %}
+                                            {{ self.showChildren(parent.getChildren()) }}
+                                        {% elseif parent.getGroupSize()>0 %}
+                                            {{ self.showChildren(parent.getChildren()|slice(0,parent.getGroupSize())) }}
+                                            {{ self.generatelink(parent) }}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="component__body">
-                                {% if parent.getChildren() %}
-                                    <ul class="grid-wrapper highlight-box-wrapper highlight-box-wrapper--grid">
-                                        {%- for child in parent.getChildren() -%}
-                                            <li class="grid 1/2@bpb1 1/3@bpb2 1/3@bpw 1/4@bpw2 1/5@bpe">
-                                                {{ ds2013('profile', child, {'show_synopsis': false, 'heading_level': 'h3'}) }}
-                                            </li>
-                                        {%- endfor -%}
-                                    </ul>
-                                {% endif %}
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div>
     {% endif %}
 {% endblock %}
+
+{% macro showChildren(children) %}
+    <ul class="grid-wrapper highlight-box-wrapper highlight-box-wrapper--grid">
+        {%- for child in children -%}
+            <li class="grid 1/2@bpb1 1/3@bpb2 1/3@bpw 1/4@bpw2 1/5@bpe">
+                {{ ds2013('profile', child, {'show_synopsis': false, 'heading_level': 'h3'}) }}
+            </li>
+        {%- endfor -%}
+    </ul>
+{% endmacro %}
+
+{% macro generateLink(parent) %}
+    {% set key = parent.getKey()  %}
+    {% set title = parent.getTitle() %}
+    {% set length = parent.getChildren()|length  %}
+    <a href="{{ path('programme_profile', {'key':  key, 'slug':title } ) }}" >See all from {{title}} ({{length}})</a>
+{% endmacro %}
 
 {% block javascripts %}
     {{ parent() }}

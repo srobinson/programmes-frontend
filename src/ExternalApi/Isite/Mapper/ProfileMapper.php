@@ -26,6 +26,11 @@ class ProfileMapper extends Mapper
         $brandingId = $this->getString($formMetaData->branding_id);
         $imagePortrait = $this->getString($form->profile->image_portrait);
         $tagline = $this->getString($formMetaData->tagline);
+        $groupSize = null;
+
+        if(!empty($this->getString($formMetaData->group_size)) || $this->getString($formMetaData->group_size) === '0'){
+            $groupSize = (int) $this->getString($formMetaData->group_size);
+        }
 
         $keyFacts = [];
         if (!empty($form->key_facts)) {
@@ -73,6 +78,6 @@ class ProfileMapper extends Mapper
         }
         // @codingStandardsIgnoreEnd
 
-        return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $tagline, $parents);
+        return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $tagline, $parents, $groupSize);
     }
 }
