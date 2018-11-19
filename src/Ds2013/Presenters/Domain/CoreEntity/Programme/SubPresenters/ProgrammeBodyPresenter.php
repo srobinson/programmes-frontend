@@ -26,7 +26,7 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
         'wordy_duration' => true,
         'body_suffix' => null,
         'show_child_availability' => false,
-        'show_release_date' => true,
+        'show_release_date' => false,
     ];
 
     /** @var PlayTranslationsHelper */
