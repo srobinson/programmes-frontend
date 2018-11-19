@@ -7,6 +7,7 @@ use App\DsShared\Helpers\HelperFactory;
 use App\Translate\TranslateProvider;
 use App\Twig\TranslateAndTimeExtension;
 use BBC\ProgrammesPagesService\Domain\ApplicationTime;
+use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
@@ -126,5 +127,41 @@ class TranslateAndTimeExtensionTest extends TestCase
             '<span class="timezone--note">GMT-09:30</span>',
             $this->translateAndTimeExtension->timeZoneNote(ApplicationTime::getTime())
         );
+    }
+
+    /**
+     * @dataProvider localPartialDateDataProvider
+     */
+    public function testLocalPartialDate($partialDate, $formats, $expected)
+    {
+        $this->mockTranslate->expects($this->atLeastOnce())
+            ->method('getLocale')
+            ->willReturn('en-GB');
+
+        $this->assertEquals(
+            $expected,
+            $this->translateAndTimeExtension->localPartialDate($partialDate, ...$formats)
+        );
+    }
+
+    public function localPartialDateDataProvider()
+    {
+        return [
+            'year' => [
+                new PartialDate(2018),
+                ['dd MMMM Y', 'MMMM Y', 'Y'],
+                '<time datetime="2018">2018</time>',
+            ],
+            'year_and_month' => [
+                new PartialDate(2018, 11),
+                ['dd MMMM Y', 'MMMM Y', 'Y'],
+                '<time datetime="2018-11">November 2018</time>',
+            ],
+            'full_date' => [
+                new PartialDate(2018, 11, 16),
+                ['dd MMMM Y', 'MMMM Y', 'Y'],
+                '<time datetime="2018-11-16">16 November 2018</time>',
+            ],
+        ];
     }
 }

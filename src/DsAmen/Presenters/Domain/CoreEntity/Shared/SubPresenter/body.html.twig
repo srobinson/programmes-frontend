@@ -7,7 +7,7 @@
             <div class="list-lined list-lined--spaced">
                 <div class="list-lined__item br-keyline">
                     <h5 class="invisible">{{ tr('release_date', {'%1':''}) }}</h5>
-                    <time datetime="{{ body.getReleaseDate()|local_date('Y-m-d') }}">{{ body.getReleaseDate()|local_date_intl('dd MMM Y') }}</time>
+                    {{ body.getReleaseDate()|local_partial_date('dd MMM Y', 'MMM Y', 'Y')|raw }}
                 </div>
             </div>
         {% endif %}

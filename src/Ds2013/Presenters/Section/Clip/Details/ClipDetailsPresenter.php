@@ -7,7 +7,7 @@ use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
 use BBC\ProgrammesPagesService\Domain\Entity\Podcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Version;
-use DateTime;
+use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 
 class ClipDetailsPresenter extends Presenter
 {
@@ -65,13 +65,9 @@ class ClipDetailsPresenter extends Presenter
         return $this->contributions;
     }
 
-    public function getReleaseDate(): ?DateTime
+    public function getReleaseDate(): ?PartialDate
     {
-        if ($this->clip->getReleaseDate()) {
-            return $this->clip->getReleaseDate()->asDateTime();
-        }
-
-        return null;
+        return $this->clip->getReleaseDate();
     }
 
     public function isAvailableIndefinitely(): bool

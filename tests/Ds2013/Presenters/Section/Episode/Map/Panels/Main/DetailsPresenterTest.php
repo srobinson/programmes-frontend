@@ -11,7 +11,6 @@ use BBC\ProgrammesPagesService\Domain\Entity\Version;
 use BBC\ProgrammesPagesService\Domain\Entity\VersionType;
 use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 use Cake\Chronos\Chronos;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -36,12 +35,12 @@ class DetailsPresenterTest extends TestCase
         $this->assertNull($presenter->getReleaseDate());
     }
 
-    public function testReleaseDateIsADate()
+    public function testReleaseDateIsAPartialDate()
     {
         $releaseDate = new PartialDate(2012);
         $episode = EpisodeBuilder::any()->with(['releaseDate' => $releaseDate])->build();
         $presenter = new DetailsPresenter($this->createMock(PlayTranslationsHelper::class), $this->createMock(UrlGeneratorInterface::class), $episode, null, [], null);
-        $this->assertInstanceOf(DateTime::class, $presenter->getReleaseDate());
+        $this->assertInstanceOf(PartialDate::class, $presenter->getReleaseDate());
     }
 
     /**

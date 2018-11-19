@@ -6,14 +6,14 @@ namespace App\DsAmen\Presenters\Domain\CoreEntity\Base\SubPresenter;
 use App\DsAmen\Presenter;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
-use Cake\Chronos\Date;
+use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 
 abstract class BaseBodyPresenter extends Presenter
 {
     /** @var CoreEntity */
     protected $coreEntity;
 
-    /** @var Date|null  */
+    /** @var PartialDate|null  */
     protected $releaseDate = null;
 
     /** @var array */
@@ -30,11 +30,11 @@ abstract class BaseBodyPresenter extends Presenter
         $this->coreEntity = $coreEntity;
 
         if ($this->coreEntity instanceof ProgrammeItem && $this->coreEntity->getReleaseDate()) {
-            $this->releaseDate = new Date((string) $this->coreEntity->getReleaseDate());
+            $this->releaseDate = $this->coreEntity->getReleaseDate();
         }
     }
 
-    public function getReleaseDate(): ?Date
+    public function getReleaseDate(): ?PartialDate
     {
         return $this->releaseDate;
     }

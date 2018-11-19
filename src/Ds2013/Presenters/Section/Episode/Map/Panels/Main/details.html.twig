@@ -33,7 +33,7 @@
         {% if presenter.getEpisode().getReleaseDate() and not presenter.hasPreviousBroadcast() %}
             <div class="episode-panel__meta">
                 <span class="visually-hidden">{{ tr('release_date', {'%1': ''}) }}</span>
-                <time datetime="{{ presenter.getReleaseDate()|local_date('Y-m-d') }}">{{ presenter.getReleaseDate()|local_date_intl('dd MMMM Y') }}</time>
+                {{ presenter.getReleaseDate()|local_partial_date('dd MMMM Y', 'MMMM Y', 'Y')|raw }}
             </div>
         {% endif %}
         {% if presenter.getEpisode().hasPlayableDestination() %}
