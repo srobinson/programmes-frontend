@@ -79,3 +79,9 @@
     border-bottom-width: 8px;
     border-top: 0;
 }
+
+.programme .buttons__download {
+    position: relative;
+    z-index: 2;
+    margin-top: $basic-half-spacing;
+}

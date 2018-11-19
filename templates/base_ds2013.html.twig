@@ -132,4 +132,11 @@
         {% endif %}
         {{ orb.getBodylast()|raw }}
     </body>
+    {% if show_popup() %}
+        <script type="text/javascript">
+            require(['popup'], function(popup) {
+                new popup({containerSelector: '.popup', useParentContainerWidth: true});
+            });
+        </script>
+    {% endif %}
 </html>

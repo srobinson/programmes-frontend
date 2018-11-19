@@ -5,6 +5,7 @@ namespace Tests\App\Ds2013\Presenters\Domain\CoreEntity\Programme\BroadcastSubPr
 
 use App\Ds2013\Presenters\Domain\CoreEntity\Programme\CollapsedBroadcastSubPresenters\CollapsedBroadcastProgrammeBodyPresenter;
 use App\DsShared\Helpers\LiveBroadcastHelper;
+use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Network;
@@ -22,11 +23,14 @@ class BroadcastProgrammeBodyPresenterTest extends TestCase
 
     private $mockLiveBroadcastHelper;
 
+    private $mockLocalisedDaysAndMonthsHelper;
+
     public function setUp()
     {
         $this->mockRouter = $this->createMock(UrlGeneratorInterface::class);
         $this->mockTranslationsHelper = $this->createMock(PlayTranslationsHelper::class);
         $this->mockLiveBroadcastHelper = $this->createMock(LiveBroadcastHelper::class);
+        $this->mockLocalisedDaysAndMonthsHelper = $this->createMock(LocalisedDaysAndMonthsHelper::class);
     }
 
     /**
@@ -48,6 +52,7 @@ class BroadcastProgrammeBodyPresenterTest extends TestCase
             $this->mockRouter,
             $this->mockTranslationsHelper,
             $this->mockLiveBroadcastHelper,
+            $this->mockLocalisedDaysAndMonthsHelper,
             $broadcast,
             $programme
         );

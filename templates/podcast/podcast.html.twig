@@ -2,64 +2,69 @@
 {% extends 'base_ds2013.html.twig' %}
 
 {% block title %}{{ meta_context.titlePrefix() }} - {{ tr('downloads') }}{% endblock %}
-{% block page_classes %}text-base programmes-page--smallpush prog-layout{% endblock %}
+{% block page_classes %}text-base programmes-page programmes-page--flush{% endblock %}
 
 {%- block body -%}
     {% if entity.isPodcastable %}
-        <div class="grid-wrapper grid-wrapper--flush map map--episode map--count-2">
-            <div class="grid 2/3@bpw2 3/4@bpe map__column map__column--first">
-                <div class="map__inner  br-box-secondary">
-                    <div class="island">
-                        <h1><span class="visually-hidden">{{ entity.title }} </span><span class="deemphasize block-link">{{ tr('podcasts',1) }}</span></h1>
-                        <div class="map__intro__synopsis centi">
-                            {{ ds_shared('synopsis', entity.synopses, 300) }}
-                        </div>
-                        {% if podcast.isUkOnly %}  <p>{{ tr('uk_only') }}</p> {% endif %}
-                        <div class="grid-wrapper micro">
-                            <div class="grid 1/2">
-                                <div class=""> <strong>{{ tr('updated') }} </strong> <span class="nowrap">{{ tr('updated_'~podcast.FREQUENCY)}}</span> </div>
+        <div class="b-g-p no-margin-vertical">
+            <div class="grid-wrapper grid-wrapper--flush map map--episode map--count-2">
+                <div class="grid 2/3@bpw2 3/4@bpe map__column map__column--first">
+                    <div class="map__inner  br-box-secondary">
+                        <div class="island">
+                            {% set classes = build_css_classes({
+                               'visually-hidden' : (entity.getType != 'collection' and entity.isTleo())
+                            }) %}
+                            <h1><span class="{{ classes }}">{{ entity.title }} </span><span class="cf deemphasize block-link">{{ tr('podcasts',1) }}</span></h1>
+                            <div class="map__intro__synopsis centi">
+                                {{ ds_shared('synopsis', entity.synopses, 300) }}
                             </div>
-                            <div class="grid 1/2">
-                                <div> <strong>{{ tr('episodes_available') }} </strong><span class="nowrap">
-                                        {% if podcast.availability == -1 %} {{ tr('iplayer_time_indefinitely') }} {% endif %}
-                                        {% if podcast.availability == 7 %} {{ tr('iplayer_time_weeks', 1) }} {% endif %}
-                                        {% if podcast.availability == 14 %} {{ tr('iplayer_time_weeks', 2) }} {% endif %}
-                                        {% if podcast.availability == 30 %} {{ tr('iplayer_time_months', 1) }} {% endif %}
-                                        {% if podcast.availability == 60 %} {{ tr('iplayer_time_months', 2) }} {% endif %}
-                                    </span>
+                            {% if podcast.isUkOnly %}  <p>{{ tr('uk_only') }}</p> {% endif %}
+                            <div class="grid-wrapper micro">
+                                <div class="grid 1/2">
+                                    <div class=""> <strong>{{ tr('updated') }} </strong> <span class="nowrap">{{ tr('updated_'~podcast.FREQUENCY)}}</span> </div>
+                                </div>
+                                <div class="grid 1/2">
+                                    <div> <strong>{{ tr('episodes_available') }} </strong><span class="nowrap">
+                                            {% if podcast.availability == -1 %} {{ tr('iplayer_time_indefinitely') }} {% endif %}
+                                            {% if podcast.availability == 7 %} {{ tr('iplayer_time_weeks', 1) }} {% endif %}
+                                            {% if podcast.availability == 14 %} {{ tr('iplayer_time_weeks', 2) }} {% endif %}
+                                            {% if podcast.availability == 30 %} {{ tr('iplayer_time_months', 1) }} {% endif %}
+                                            {% if podcast.availability == 60 %} {{ tr('iplayer_time_months', 2) }} {% endif %}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="grid 1/3@bpw2 1/4@bpe map__column map__column--2 map__column--last">
-                <div class=" map__inner  br-box-secondary">
-                    <div class="island">
-                        <div class="popup">
-                            <input class="popup__status" type="checkbox" id="popup-2" checked>
-                            <h2 class="gamma popup__button popup__button--subscribe br-pseudolink br-linkinvert">
-                                <label for="popup-2">
-                                    {{ gelicon('basics', 'podcast', 'gelicon--gamma') }}
-                                    {{ tr('subscribe') }}
-                                </label>
-                            </h2>
-                            <div class="popup__holder" id="popup-2-holder">
-                                <div class="popup__content popup__content--subscribe br-box-secondary br-secondary-link-onbg br-secondary-link-onborder br-secondary-link-onborder--beforeafter">
-                                    <h3 class="popup__header br-secondary-link-onborder--beforeafter br-secondary-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
-                                        <label class="popup__close island--squashed br-secondary-bg-onborder br-linkinvert" for="popup-2">
-                                            <span class="pull--right-spaced">
-                                            {{ gelicon('basics', 'no', 'gelicon--gamma') }}
-                                            </span>
-                                            {{ tr('subscribe_to_podcast')}}
-                                        </label>
-                                    </h3>
-                                    <ul class="list-unstyled popup__list">
-                                        {{ self.subscribeLink( 'pcast', entity, 'itunes', 'iTunes / iOS', 'progs-icons', 'apple')  }}
-                                        {{ self.subscribeLink('https', entity, 'android', 'Android / Google Play', 'progs-icons', 'android')  }}
-                                        {{ self.subscribeLink('pcast', entity, 'windows', 'Windows / Phone', 'progs-icons', 'windows') }}
-                                        {{ self.subscribeLink('https', entity, 'rss', 'RSS', 'basics', 'rss')  }}
-                                    </ul>
+                <div class="grid 1/3@bpw2 1/4@bpe map__column map__column--2 map__column--last">
+                    <div class=" map__inner  br-box-secondary">
+                        <div class="island">
+                            <div class="popup">
+                                <input class="popup__status" type="checkbox" id="popup-2" checked>
+                                <h2 class="gamma popup__button popup__button--subscribe br-pseudolink br-linkinvert">
+                                    <label for="popup-2">
+                                        {{ gelicon('basics', 'podcast', 'gelicon--gamma') }}
+                                        {{ tr('subscribe') }}
+                                    </label>
+                                </h2>
+                                <div class="popup__holder" id="popup-2-holder">
+                                    <div class="popup__content popup__content--subscribe br-box-secondary br-secondary-link-onbg br-secondary-link-onborder br-secondary-link-onborder--beforeafter">
+                                        <h3 class="popup__header br-secondary-link-onborder--beforeafter br-secondary-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                                            <label class="popup__close island--squashed br-secondary-bg-onborder br-linkinvert" for="popup-2">
+                                                <span class="pull--right-spaced">
+                                                {{ gelicon('basics', 'no', 'gelicon--gamma') }}
+                                                </span>
+                                                {{ tr('subscribe_to_podcast')}}
+                                            </label>
+                                        </h3>
+                                        <ul class="list-unstyled popup__list">
+                                            {{ self.subscribeLink( 'pcast', entity, 'itunes', 'iTunes / iOS', 'progs-icons', 'apple')  }}
+                                            {{ self.subscribeLink('https', entity, 'android', 'Android / Google Play', 'progs-icons', 'android')  }}
+                                            {{ self.subscribeLink('pcast', entity, 'windows', 'Windows / Phone', 'progs-icons', 'windows') }}
+                                            {{ self.subscribeLink('https', entity, 'rss', 'RSS', 'basics', 'rss')  }}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +73,7 @@
             </div>
         </div>
     {% endif %}
-    <div class="programmes-page">
+    <div class="prog-layout programmes-page">
         <div class="grid-wrapper grid-wrapper--center">
             <div class="grid 2/3@bpw2 2/3@bpe">
                 <div class="br-box-page prog-box">
@@ -76,7 +81,37 @@
                         <div class="component__header br-box-page">
                             <h2>{{ tr('podcasts_desc') }}</h2>
                         </div>
+                        {% for downloadableVersion in downloadableVersions %}
+                            {% if loop.first %}
+                                {% set imageClasses ='programme__img--nomax 1/4@bpb1 1/4@bpb2 1/2@bpw' %}
 
+                            {% else %}
+                                {% set imageClasses='1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw' %}
+                            {% endif %}
+                                {{ ds2013('programme', downloadableVersion.programmeItem,{
+
+                                        'highlight_box_classes': 'highlight-box--list',
+                                        'context_programme': programme,
+                                        'body_options': {
+                                            'show_release_date': true,
+                                            'body_suffix': ds2013('download', downloadableVersion.programmeItem, downloadableVersion, podcast, {
+                                                'classes': 'block-link__link programme__favourites centi'
+                                            }),
+                                        },
+                                        title_options: {
+                                            'title_tag': 'h4',
+                                            'title_format':'item::ancestry'
+                                        },
+                                        image_options: {
+                                                'classes': imageClasses,
+                                            },
+
+                                    }) }}
+
+                        {% endfor %}
+                        {%- if paginatorPresenter -%}
+                            {{ ds2013_presenter(paginatorPresenter) }}
+                        {%- endif -%}
                     </div>
                 </div>
             </div>
@@ -124,13 +159,10 @@
             </div>
         </div>
     </div>
+{%- endblock -%}
 
-    <script type="text/javascript">
-        require(['popup'], function(popup) {
-            new popup({containerSelector: '.popup', useParentContainerWidth: true});
-        });
-    </script>
-
+{%- block javascripts -%}
+    {{ add_popup() }}
 {%- endblock -%}
 
 {% macro subscribeLink(protocol, coreEntity, type, name, iconset, icon) %}

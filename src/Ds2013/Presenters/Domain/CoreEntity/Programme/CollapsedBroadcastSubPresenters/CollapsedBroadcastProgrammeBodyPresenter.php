@@ -4,6 +4,7 @@ namespace App\Ds2013\Presenters\Domain\CoreEntity\Programme\CollapsedBroadcastSu
 
 use App\Ds2013\Presenters\Domain\CoreEntity\Programme\SubPresenters\ProgrammeBodyPresenter;
 use App\DsShared\Helpers\LiveBroadcastHelper;
+use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
@@ -21,11 +22,12 @@ class CollapsedBroadcastProgrammeBodyPresenter extends ProgrammeBodyPresenter
         UrlGeneratorInterface $router,
         PlayTranslationsHelper $playTranslationsHelper,
         LiveBroadcastHelper $liveBroadcastHelper,
+        LocalisedDaysAndMonthsHelper $localisedDaysAndMonthsHelper,
         CollapsedBroadcast $broadcast,
         Programme $programme,
         array $options = []
     ) {
-        parent::__construct($router, $playTranslationsHelper, $programme, $options);
+        parent::__construct($router, $playTranslationsHelper, $localisedDaysAndMonthsHelper, $programme, $options);
         $this->collapsedBroadcast = $broadcast;
         $this->liveBroadcastHelper = $liveBroadcastHelper;
     }

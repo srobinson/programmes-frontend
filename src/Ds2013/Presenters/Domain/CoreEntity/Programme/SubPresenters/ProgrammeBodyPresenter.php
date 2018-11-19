@@ -4,11 +4,13 @@ declare(strict_types = 1);
 namespace App\Ds2013\Presenters\Domain\CoreEntity\Programme\SubPresenters;
 
 use App\Ds2013\Presenters\Domain\CoreEntity\Programme\ProgrammePresenterBase;
+use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
+use Cake\Chronos\Chronos;
 use InvalidArgumentException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -24,13 +26,20 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
         'wordy_duration' => true,
         'body_suffix' => null,
         'show_child_availability' => false,
+        'show_release_date' => true,
     ];
 
     /** @var PlayTranslationsHelper */
     protected $playTranslationsHelper;
+
+    /** @var LocalisedDaysAndMonthsHelper  */
+    protected $localisedDaysAndMonthsHelper;
+
+
     public function __construct(
         UrlGeneratorInterface $router,
         PlayTranslationsHelper $playTranslationsHelper,
+        LocalisedDaysAndMonthsHelper $localisedDaysAndMonthsHelper,
         Programme $programme,
         array $options = []
     ) {
@@ -38,9 +47,9 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
         if ($programme instanceof Clip) {
             $this->options['show_duration'] = true;
         }
-
         parent::__construct($router, $programme, $options);
         $this->playTranslationsHelper = $playTranslationsHelper;
+        $this->localisedDaysAndMonthsHelper = $localisedDaysAndMonthsHelper;
     }
 
     public function getDurationInWords(): string
@@ -95,5 +104,21 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
             return $this->programme->getAvailableEpisodesCount() > 0;
         }
         return false;
+    }
+
+    public function getReleaseDate(): string
+    {
+        // @TODO handle partial release dates correctly. See PROGRAMMES-6733
+        if (!$this->hasReleaseDate()) {
+            return '';
+        }
+        $releaseDate = new Chronos($this->programme->getReleaseDate());
+        return $this->localisedDaysAndMonthsHelper->getFormatedDay($releaseDate);
+    }
+
+
+    public function hasReleaseDate(): bool
+    {
+        return ($this->getOption('show_release_date') && ($this->programme instanceof ProgrammeItem) && $this->programme->getReleaseDate());
     }
 }

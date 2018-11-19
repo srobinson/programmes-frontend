@@ -5,6 +5,7 @@ namespace App\Controller\Podcast;
 
 use App\Controller\BaseController;
 use App\Ds2013\PresenterFactory;
+use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
 use BBC\ProgrammesPagesService\Domain\Entity\Collection;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
@@ -12,6 +13,7 @@ use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Service\PodcastsService;
 use BBC\ProgrammesPagesService\Service\ProgrammesAggregationService;
 use BBC\ProgrammesPagesService\Service\PromotionsService;
+use BBC\ProgrammesPagesService\Service\VersionsService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
@@ -26,7 +28,8 @@ class PodcastController extends BaseController
         CoreEntity $coreEntity,
         PodcastsService $podcastsService,
         ProgrammesAggregationService $programmesAggregationService,
-        PromotionsService $promotionsService
+        PromotionsService $promotionsService,
+        VersionsService $versionsService
     ) {
         if (!$coreEntity instanceof CoreEntity && !$coreEntity instanceof Collection) {
             throw new NotFoundHttpException(sprintf('Core Entity with PID "%s" is not a programme or collection', $coreEntity->getPid()));
@@ -41,17 +44,27 @@ class PodcastController extends BaseController
         $this->overridenDescription = 'Podcast downloads for ' . $coreEntity->getTitle();
         $podcast = $podcastsService->findByCoreEntity($coreEntity);
 
+        $page = $this->getPage();
+        $limit = 30;
+
         $programme = null;
         if ($coreEntity instanceof Collection) {
             $programme = $coreEntity->getParent();
+            $downloadableVersions = $versionsService->findDownloadableForGroupsDescendantEpisodes($coreEntity, $limit, $page);
+            $downloadableEpisodesCount = $versionsService->countDownloadableForProgrammesDescendantEpisodes($coreEntity);
         } else {
             $programme = $coreEntity;
+            $downloadableVersions = $versionsService->findDownloadableForProgrammesDescendantEpisodes($coreEntity, $limit, $page);
+            $downloadableEpisodesCount = $versionsService->countDownloadableForProgrammesDescendantEpisodes($coreEntity);
         }
 
-        $programmeItems = $programmesAggregationService->findStreamableOnDemandEpisodes($coreEntity);
+        $paginator = null;
+
+        if ($downloadableEpisodesCount > $limit) {
+            $paginator = new PaginatorPresenter($page, $limit, $downloadableEpisodesCount);
+        }
 
         $promotions = $promotionsService->findActivePromotionsByEntityGroupedByType($coreEntity);
-
         $genres = $programme->getGenres();
         $genre = reset($genres);
         if ($genre) {
@@ -63,7 +76,8 @@ class PodcastController extends BaseController
             'programme' => $programme,
             'entity' => $coreEntity,
             'podcast' => $podcast,
-            'programmeItems' => $programmeItems,
+            'downloadableVersions' => $downloadableVersions,
+            'paginatorPresenter' => $paginator,
             'promotions' => $promotions,
             'genre' => $genre,
         ]);
