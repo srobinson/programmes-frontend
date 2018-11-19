@@ -127,6 +127,12 @@ programme_galleries:
     controller: App\Controller\Gallery\GalleriesController
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+# Gallery
+programme_gallery:
+    path: /programmes/{pid}/{imagePid}
+    controller: App\Controller\FindByPid\GalleryController
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}', imagePid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # SMP Playlist page
 programme_smp_playlist:
     path: /programmes/{pid}/playlist.json
