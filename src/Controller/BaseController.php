@@ -7,6 +7,7 @@ use App\Branding\BrandingPlaceholderResolver;
 use App\Cosmos\Dials;
 use App\Translate\TranslateProvider;
 use App\ValueObject\AnalyticsCounterName;
+use App\ValueObject\AtiAnalyticsLabels;
 use App\ValueObject\ComscoreAnalyticsLabels;
 use App\ValueObject\CosmosInfo;
 use App\ValueObject\IstatsAnalyticsLabels;
@@ -215,17 +216,34 @@ abstract class BaseController extends AbstractController
         $this->preRender();
 
         $cosmosInfo = $this->container->get(CosmosInfo::class);
-        $istatsAnalyticsLabels = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
-        $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
+        $analyticsCounterName = null;
+        $istatsAnalyticsLabels = null;
+        $atiAnalyticsLabels = null;
+        $istatsAnalyticsLabelsValues = null;
+
+        if ($this->container->get(Dials::class)->get('ati-stats') === 'true') {
+            $atiAnalyticsLabels = new AtiAnalyticsLabels($this->context, $this->istatsProgsPageType);
+            $atiAnalyticsLabels = $atiAnalyticsLabels->orbLabels();
+        } else {
+            $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
+            $istatsAnalyticsLabels = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
+            $istatsAnalyticsLabelsValues = $istatsAnalyticsLabels->orbLabels();
+            // Why rename it? Are you mad? That looks awful!
+            // I mean, I'm not denying the madness, but sadly it must be done this way
+            // See line 253, where it creates an instance of ComscoreAnalyticsLabels. This needs an
+            // instance of IstatsAnalyticsLabels not the array of orb labels.
+            // if anyone can think of a cleaner way to handle this, let me know.
+        }
 
         $orb = $this->container->get(OrbitClient::class)->getContent([
             'variant' => $this->branding->getOrbitVariant(),
             'language' => $this->branding->getLanguage(),
         ], [
+            'page' => $atiAnalyticsLabels,
             'searchScope' => $this->orbitSearchScope,
             'skipLinkTarget' => 'programmes-content',
             'analyticsCounterName' => $analyticsCounterName,
-            'analyticsLabels' => $istatsAnalyticsLabels->orbLabels(),
+            'analyticsLabels' => $istatsAnalyticsLabelsValues,
         ]);
 
         $queryString = $this->request()->getQueryString();

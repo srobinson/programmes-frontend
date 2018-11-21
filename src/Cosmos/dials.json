@@ -1,0 +1,17 @@
+[
+    {
+        "name": "ati-stats",
+        "default-value": "false",
+        "values": [
+            {
+                "value": "true",
+                "description": "Use ATI stats rather than iStats"
+            },
+            {
+                "value": "false",
+                "description": "Use iStats rather than ATI stats"
+            }
+        ],
+        "description": "Choose whether to use ATI/Vulkan Stats over DAx/iStats stats"
+    }
+]
