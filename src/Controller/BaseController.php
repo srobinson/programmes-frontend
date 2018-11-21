@@ -249,12 +249,19 @@ abstract class BaseController extends AbstractController
         $queryString = $this->request()->getQueryString();
         $urlQueryString =  is_null($queryString) ? '' : '?' . $queryString;
 
+        $comscore = null;
+        $istatsLabels = null;
+        if ($this->container->get(Dials::class)->get('ati-stats') === 'false') {
+            $comscore = (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabels, $this->getCanonicalUrl() . $urlQueryString))->getComscore();
+            $istatsLabels = $istatsAnalyticsLabels->getLabels();
+        }
+
         $parameters = array_merge([
             'orb' => $orb,
             'meta_context' => new MetaContext($this->context, $this->getCanonicalUrl(), $this->getMetaNoIndex(), $this->overridenDescription),
-            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabels, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
+            'comscore' => $comscore,
             'analytics_counter_name' => $analyticsCounterName,
-            'istats_analytics_labels' => $istatsAnalyticsLabels->getLabels(),
+            'istats_analytics_labels' => $istatsLabels,
             'branding' => $this->branding,
             'with_chrome' => true,
             'is_international' => $this->isInternational,
