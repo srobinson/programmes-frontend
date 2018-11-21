@@ -1,13 +1,36 @@
 {% extends 'base_ds2013.html.twig' %}
 
 {% block title %}{{ meta_context.titlePrefix() }}{% endblock %}
-{% block page_classes %}text-base programmes-page--smallpush prog-layout{% endblock %}
 
 {%- block body -%}
 
-<div class="programmes-page prog-layout__primary br-box-page">
-    <h1><span class="context">{{ ds_shared('entityContext', gallery,{
-                'include_self': false,
-            }) }} </span>{{ gallery.getTitle() }}</h1>
-</div>
+    <div class="programmes-page prog-layout__primary br-box-page">
+        <h1><span class="context">{{ ds_shared('entityContext', gallery,{
+                    'include_self': false,
+                }) }} </span>{{ gallery.getTitle() }}</h1>
+        <p class="delta">{{ gallery.getShortSynopsis() }}</p>
+
+
+        <div id="gallery" class="gallery gallery--imgview gallery--initialised" data-page-url="/programmes/p03ts7dk">
+            <div class="gallery-slideshow gallery-slideshow--initialised">
+            {{ ds_shared('imageEntity', image,640, {1: 1/1, 1008: 1008} ,{'is_lazy_loaded': true} ) }}
+            </div>
+        </div>
+
+
+            <ul class="gallery__thumblist grid-wrapper bpw-grid-wrapper--half">
+
+                {% for eachImage in images %}
+                <li class="grid 1 1/2@bpb1 1/3@bpb2 1/4@bpw 1/6@bpe">
+                    <div>
+                        <a class="gallery__thumbnail {{ (eachImage.getPid() == image.getPid()) ? 'gallery__thumbnail--active' : '' }}
+                         " href="{{ path('programme_gallery', {'pid':  gallery.getPid(), 'imagePid': eachImage.getPid() } ) }}">
+                        {{ ds_shared('imageEntity', eachImage,640, {1: 1/1, 1008: 1008} ,{'is_lazy_loaded': false} )}}
+                         </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {%- endblock -%}
