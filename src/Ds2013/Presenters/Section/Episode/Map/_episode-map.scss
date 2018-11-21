@@ -35,8 +35,8 @@
 @include mq-range('bpw2') {
     .map--episode .map__column .map__inner,
     .map__fauxcolumn {
-        margin-bottom: -50em;
-        padding-bottom: 50em;
+        margin-bottom: -100em;
+        padding-bottom: 100em;
     }
 
     .map__column--last > .map__inner > .map__column:empty {
