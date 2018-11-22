@@ -1,10 +1,4 @@
 .cta {
-    &.cta__overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-
     a {
         display: block;
 
@@ -78,8 +72,24 @@
     }
 }
 
+@include mq-range('bpb1') {
+    .cta {
+        &.cta__overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+}
+
 @include mq-range('bpw') {
     .cta {
+        &.cta__overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
         .cta__icon {
             height: $programme-icon-bpw-box-size;
             width: $programme-icon-bpw-box-size;

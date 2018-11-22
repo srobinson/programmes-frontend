@@ -133,6 +133,12 @@ programme_gallery:
     controller: App\Controller\FindByPid\GalleryController
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}', imagePid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+#Clips
+programme_clips:
+    path: /programmes/{pid}/clips
+    defaults: { _controller: App\Controller\Clips\ListController }
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # SMP Playlist page
 programme_smp_playlist:
     path: /programmes/{pid}/playlist.json
