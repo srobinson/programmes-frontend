@@ -5,11 +5,11 @@
         "values": [
             {
                 "value": "true",
-                "description": "Use ATI stats rather than iStats"
+                "description": "Programmes-frontend will provide data for use in ATI Stats"
             },
             {
                 "value": "false",
-                "description": "Use iStats rather than ATI stats"
+                "description": "Programmes-frontend will NOT provide data for use in ATI Stats and will fall back to orbit default"
             }
         ],
         "description": "Choose whether to use ATI/Vulkan Stats over DAx/iStats stats"
