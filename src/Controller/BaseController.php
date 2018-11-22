@@ -216,30 +216,20 @@ abstract class BaseController extends AbstractController
         $this->preRender();
 
         $cosmosInfo = $this->container->get(CosmosInfo::class);
-        $analyticsCounterName = null;
-        $istatsAnalyticsLabels = null;
-        $atiAnalyticsLabels = null;
-        $istatsAnalyticsLabelsValues = null;
-
+        $atiAnalyticsLabelsValues = null;
         if ($this->container->get(Dials::class)->get('ati-stats') === 'true') {
-            $atiAnalyticsLabels = new AtiAnalyticsLabels($this->context, $this->istatsProgsPageType);
-            $atiAnalyticsLabels = $atiAnalyticsLabels->orbLabels();
-        } else {
-            $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
-            $istatsAnalyticsLabels = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
-            $istatsAnalyticsLabelsValues = $istatsAnalyticsLabels->orbLabels();
-            // Why rename it? Are you mad? That looks awful!
-            // I mean, I'm not denying the madness, but sadly it must be done this way
-            // See line 253, where it creates an instance of ComscoreAnalyticsLabels. This needs an
-            // instance of IstatsAnalyticsLabels not the array of orb labels.
-            // if anyone can think of a cleaner way to handle this, let me know.
+            $atiAnalyticsLabelsValues = new AtiAnalyticsLabels($this->context, $this->istatsProgsPageType);
+            $atiAnalyticsLabelsValues = $atiAnalyticsLabelsValues->orbLabels();
         }
+        $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
+        $istatsAnalyticsLabelsInstance = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
+        $istatsAnalyticsLabelsValues = $istatsAnalyticsLabelsInstance->orbLabels();
 
         $orb = $this->container->get(OrbitClient::class)->getContent([
             'variant' => $this->branding->getOrbitVariant(),
             'language' => $this->branding->getLanguage(),
         ], [
-            'page' => $atiAnalyticsLabels,
+            'page' => $atiAnalyticsLabelsValues,
             'searchScope' => $this->orbitSearchScope,
             'skipLinkTarget' => 'programmes-content',
             'analyticsCounterName' => $analyticsCounterName,
@@ -249,19 +239,12 @@ abstract class BaseController extends AbstractController
         $queryString = $this->request()->getQueryString();
         $urlQueryString =  is_null($queryString) ? '' : '?' . $queryString;
 
-        $comscore = null;
-        $istatsLabels = null;
-        if ($this->container->get(Dials::class)->get('ati-stats') === 'false') {
-            $comscore = (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabels, $this->getCanonicalUrl() . $urlQueryString))->getComscore();
-            $istatsLabels = $istatsAnalyticsLabels->getLabels();
-        }
-
         $parameters = array_merge([
             'orb' => $orb,
             'meta_context' => new MetaContext($this->context, $this->getCanonicalUrl(), $this->getMetaNoIndex(), $this->overridenDescription),
-            'comscore' => $comscore,
+            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabelsInstance, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
             'analytics_counter_name' => $analyticsCounterName,
-            'istats_analytics_labels' => $istatsLabels,
+            'istats_analytics_labels' => $istatsAnalyticsLabelsInstance->getLabels(),
             'branding' => $this->branding,
             'with_chrome' => true,
             'is_international' => $this->isInternational,
