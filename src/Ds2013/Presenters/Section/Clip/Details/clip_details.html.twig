@@ -14,7 +14,7 @@
                 {%- if clip_details.getReleaseDate() -%}
                     <div class="episode-panel__meta">
                         <h2 class="visually-hidden">{{ tr('release_date', {'%1': ''}) }}</h2>
-                        {{ clip_details.getReleaseDate()|local_partial_date('dd MMMM Y', 'MMMM Y', 'Y')|raw }}
+                        {{ clip_details.getReleaseDate()|local_partial_date('dd MMMM y', 'MMMM y', 'y')|raw }}
                     </div>
                 {%- elseif clip_details.getClip().getStreamableFrom() -%}
                     <div class="episode-panel__meta">
