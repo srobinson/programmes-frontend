@@ -14,7 +14,8 @@
             "php71u-pecl-apcu",
             "php71u-pecl-redis",
             "php71u-pdo",
-            "awslogs"
+            "awslogs",
+            "dial-agent"
         ],
         "conf": {
             "comment": "We're targeting c5.large instances",
