@@ -12,6 +12,6 @@
                 "description": "Programmes-frontend will NOT provide data for use in ATI Stats and will fall back to orbit default"
             }
         ],
-        "description": "Choose whether to use ATI/Vulkan Stats over DAx/iStats stats"
+        "description": "Choose whether to use ATI/Vulkan Stats"
     }
 ]
