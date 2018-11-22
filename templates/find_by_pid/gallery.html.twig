@@ -1,13 +1,46 @@
 {% extends 'base_ds2013.html.twig' %}
 
 {% block title %}{{ meta_context.titlePrefix() }}{% endblock %}
-{% block page_classes %}text-base programmes-page--smallpush prog-layout{% endblock %}
 
 {%- block body -%}
 
-<div class="programmes-page prog-layout__primary br-box-page">
-    <h1><span class="context">{{ ds_shared('entityContext', gallery,{
-                'include_self': false,
-            }) }} </span>{{ gallery.getTitle() }}</h1>
-</div>
+    <div class="grid-wrapper grid-wrapper--center">
+        <div class="grid 13/24@bpw2 13/24@bpe">
+
+        </div>
+        <div class="grid 11/24@bpw2 11/24@bpe" >
+            <div class="component component--box component--box--striped component--box--secondary galleries-link-box" >
+                {% if galleries %}
+                    <div class="component__header br-box-highlight">
+                        <h2>Galleries</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <ul class="grid-wrapper">
+                            {% for siblingGallery in galleries %}
+                                <li class="grid 1/2@bpb1 1/2@bpw">
+                                    {{ ds2013('group', siblingGallery, {
+                                        'highlight_box_classes':'highlight-box--list highlight-box--grid@bpb1 programme--grid@bpb1 highlight-box--grid@bpw programme--grid@bpw',
+                                        'img_classes': '1/1@bpb1 1/1@bpw',
+                                        'show_synopsis': false,
+                                    }) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% if brand.getAggregatedGalleriesCount() > 4 %}
+                        <div class="component__footer br-box-subtle">
+                            <a href = "{{ path('programme_galleries', {'pid':  brand.getPid() } ) }}">
+                                <span>
+                                    {{ tr('see_all_galleries_from', { '%1' : brand.getTitle()}) ~ " (" ~ brand.getAggregatedGalleriesCount() ~ ')' }}
+                                </span>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
 {%- endblock -%}
+
+
