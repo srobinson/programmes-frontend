@@ -1,0 +1,703 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Programme Objects{% endblock %}
+
+{% block content %}
+
+
+    <p>A single programme object block is used to render a brand/series/episode/clip. To be rendered responsively across the whole of /programmes. There are several variations depending on what data is and isn't available</p>
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode</h2>
+                <p>A normal video episode (with availability) including versions</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma'
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+                <h2>An episode (as grid)</h2>
+                <p>An episode displayed as part of a grid (fills width of container)</p>
+        </div>
+        <div class="grid 1/1@bpw 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        'container_classes' : 'programme--grid ',
+                        image_options: {
+                            'classes': '1'
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma'
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode (bottom up)</h2>
+                <p>Rendering the object where episode title is most important</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                            'title_format':'item::ancestry'
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>Long Availability</h2>
+                <p>A video episode with a long availability message</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episodeAvailableLong,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>Indefinite Availability</h2>
+                    <p>A video episode with a indefinite availability message</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episodeAvailableIndefinitely,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                            'wordy_duration': false,
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with no image</h2>
+                    <p>A video episode with no image (available)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episodeWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with no image</h2>
+                <p>A video episode with no image set (unavailable)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', unavailableEpisodeWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with images disabled</h2>
+                <p>A video episode with images disabled (available)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                            'show_standalone_cta': true,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with images disabled</h2>
+                <p>A video episode with images disabled (unavailable)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', episode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio episode</h2>
+                <p>A normal radio episode (with availability)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An unavailable radio episode</h2>
+                <p>A normal radio episode (without availability)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_overlay' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>Long Availability (Radio)</h2>
+                <p>A radio episode with a long availability message</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisodeAvailablityLong,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with no image</h2>
+                <p>A radio episode with no image (available)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisodeWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with no image</h2>
+                <p>A radio episode with no image set (unavailable)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisodeWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options: {
+                            'show_image': false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with images disabled</h2>
+                <p>A radio episode with images disabled (available)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                            'show_standalone_cta': true,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An episode with images disabled</h2>
+                <p>A radio episode with images disabled (unavailable)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioEpisode,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A video clip</h2>
+                <p>A normal video clip (with availability)</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', videoClip,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A video clip</h2>
+                <p>An unavailable video clip</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', videoClip,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_overlay' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio clip</h2>
+                <p>An available radio clip</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioClip,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio clip</h2>
+                <p>An unavailable radio clip</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioClip,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_overlay' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A brand</h2>
+                <p>A normal Brand</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', brand,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>An available brand</h2>
+                <p>An available brand</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', brand,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options:{
+                            'show_child_availability': true,
+                            'body_suffix': tvService,
+                        },
+
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A brand with no image</h2>
+                <p>A normal brand, but with no image</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', brandWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~tvService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio brand </h2>
+                <p>A normal radio brand</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioBrand,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },
+                        body_options: {
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio brand</h2>
+                <p>An available radio brand</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioBrand,{
+                        'highlight_box_classes': 'highlight-box--list',
+
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },body_options:{
+                            'show_child_availability': true,
+                            'body_suffix': '<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        },
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid 1/2@bpw2 1/4@bpe">
+            <div class="grid__inner">
+                <h2>A radio brand with no image</h2>
+                <p>A normal radio brand, but with no image</p>
+            </div>
+        </div>
+        <div class="grid 1/2@bpw2 3/4@bpe">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('programme', radioBrandWithNoImage,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        image_options:{
+                            'show_image' : false,
+                        },
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma',
+                        },body_options: {
+                            'body_suffix':'<p class="programme__service micro text--subtle">'~radioService~'</p>',
+                        }
+                    }) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+{% endblock %}

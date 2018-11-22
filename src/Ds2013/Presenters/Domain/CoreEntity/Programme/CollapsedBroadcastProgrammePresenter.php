@@ -89,6 +89,7 @@ class CollapsedBroadcastProgrammePresenter extends ProgrammePresenter
             $this->router,
             $this->helperFactory->getPlayTranslationsHelper(),
             $this->helperFactory->getLiveBroadcastHelper(),
+            $this->helperFactory->getLocalisedDaysAndMonthsHelper(),
             $this->collapsedBroadcast,
             $this->programme,
             $this->subPresenterOptions('body_options')

@@ -1,12 +1,17 @@
-[{
-    "name": "sounds-nav",
-    "default-value": "true",
-    "values": [{
-        "value": "true",
-        "description": "Show the Sounds Nav on Schedule Pages"
-    }, {
-        "value": "false",
-        "description": "Hide the Sounds Nav on Schedule Pages"
-    }],
-    "description": "Show/Hide the Sounds Nav on Schedule Pages (and change the Orb to white)"
-}]
+[
+    {
+        "name": "ati-stats",
+        "default-value": "false",
+        "values": [
+            {
+                "value": "true",
+                "description": "Programmes-frontend will provide data for use in ATI Stats"
+            },
+            {
+                "value": "false",
+                "description": "Programmes-frontend will NOT provide data for use in ATI Stats and will fall back to orbit default"
+            }
+        ],
+        "description": "Choose whether to use ATI/Vulkan Stats"
+    }
+]

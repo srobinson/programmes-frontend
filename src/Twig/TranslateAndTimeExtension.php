@@ -6,6 +6,7 @@ use App\DsShared\Helpers\HelperFactory;
 use App\Translate\TranslatableTrait;
 use App\Translate\TranslateProvider;
 use BBC\ProgrammesPagesService\Domain\ApplicationTime;
+use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -41,6 +42,7 @@ class TranslateAndTimeExtension extends Twig_Extension
             new Twig_SimpleFilter('time_zone_note', [$this, 'timeZoneNote'], [
                 'is_safe' => ['html'],
             ]),
+            new Twig_SimpleFilter('local_partial_date', [$this, 'localPartialDate']),
         ];
     }
 
@@ -104,6 +106,32 @@ class TranslateAndTimeExtension extends Twig_Extension
     public function localisedDaysAndMonths()
     {
         return $this->helperFactory->getLocalisedDaysAndMonthsHelper()->localisedDaysAndMonths();
+    }
+
+    public function localPartialDate(
+        PartialDate $partialDate,
+        string $fullFormat,
+        string $yearMonthFormat,
+        string $yearFormat
+    ): string {
+        $dateTime = $partialDate->asDateTime();
+
+        $hasMonth = $partialDate->hasMonth();
+        if ($partialDate->hasDay() && $hasMonth) {
+            $attribute = $this->localDate($dateTime, 'Y-m-d');
+            $text = $this->localDateIntlWrapper($dateTime, $fullFormat);
+        } else if ($hasMonth) {
+            $attribute = $this->localDate($dateTime, 'Y-m');
+            $text = $this->localDateIntlWrapper($dateTime, $yearMonthFormat);
+        } else {
+            $attribute = $this->localDate($dateTime, 'Y');
+            $text = $this->localDateIntlWrapper($dateTime, $yearFormat);
+        }
+
+        $attribute = htmlspecialchars($attribute);
+        $text = htmlspecialchars($text);
+
+        return '<time datetime="' . $attribute . '">' . $text . '</time>';
     }
 
     private function toTimeZone(DateTimeInterface $dateTime, DateTimeZone $timeZone): DateTimeInterface

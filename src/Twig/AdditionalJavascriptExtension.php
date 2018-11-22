@@ -6,9 +6,10 @@ namespace App\Twig;
 use Twig_Extension;
 use Twig_Function;
 
-class FavouriteButtonExtension extends Twig_Extension
+class AdditionalJavascriptExtension extends Twig_Extension
 {
     private $buttons = [];
+    private $showPopup = false;
 
     /**
      * {@inheritdoc}
@@ -18,6 +19,8 @@ class FavouriteButtonExtension extends Twig_Extension
         return [
             new Twig_Function('add_button', [$this, 'addButton']),
             new Twig_Function('get_buttons', [$this, 'getButtons']),
+            new Twig_Function('add_popup', [$this, 'addPopup']),
+            new Twig_Function('show_popup', [$this, 'showPopup']),
         ];
     }
 
@@ -39,5 +42,15 @@ class FavouriteButtonExtension extends Twig_Extension
     public function getButtons(): ?array
     {
         return $this->buttons;
+    }
+
+    public function addPopup()
+    {
+        $this->showPopup = true;
+    }
+
+    public function showPopup()
+    {
+        return $this->showPopup;
     }
 }

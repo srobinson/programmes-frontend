@@ -8,6 +8,7 @@ use App\Ds2013\Presenters\Domain\CoreEntity\Programme\CollapsedBroadcastSubPrese
 use App\Ds2013\Presenters\Domain\CoreEntity\Programme\CollapsedBroadcastSubPresenters\CollapsedBroadcastProgrammeOverlayPresenter;
 use App\DsShared\Helpers\HelperFactory;
 use App\DsShared\Helpers\LiveBroadcastHelper;
+use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use App\DsShared\Helpers\TitleLogicHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\Brand;
@@ -26,6 +27,8 @@ class BroadcastProgrammePresenterTest extends TestCase
     /** @var HelperFactory|PHPUnit_Framework_MockObject_MockObject */
     private $mockHelperFactory;
 
+    private $mockLocalisedDaysAndMonthsHelper;
+
     public function setUp()
     {
         $this->mockRouter = $this->createMock(UrlGeneratorInterface::class);
@@ -36,6 +39,7 @@ class BroadcastProgrammePresenterTest extends TestCase
         $this->mockHelperFactory->method('getTitleLogicHelper')->willReturn($titleLogicHelper);
         $liveBroadcastHelper = $this->createMock(LiveBroadcastHelper::class);
         $this->mockHelperFactory->method('getLiveBroadcastHelper')->willReturn($liveBroadcastHelper);
+        $this->mockLocalisedDaysAndMonthsHelper = $this->createMock(LocalisedDaysAndMonthsHelper::class);
     }
 
     public function testGetBroadcastProgrammeOverlayPresenterAndOptions()

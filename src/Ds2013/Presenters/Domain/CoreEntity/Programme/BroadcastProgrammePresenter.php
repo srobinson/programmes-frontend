@@ -62,6 +62,7 @@ class BroadcastProgrammePresenter extends ProgrammePresenter
         return new BroadcastProgrammeBodyPresenter(
             $this->router,
             $this->helperFactory->getPlayTranslationsHelper(),
+            $this->helperFactory->getLocalisedDaysAndMonthsHelper(),
             $this->broadcast,
             $this->programme,
             $this->subPresenterOptions('body_options')

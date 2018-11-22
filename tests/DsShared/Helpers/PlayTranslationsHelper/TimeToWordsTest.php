@@ -59,6 +59,29 @@ class TimeToWordsTest extends TestCase
     }
 
     /**
+     * @dataProvider roundSecondsToMinutesDataProvider
+     */
+    public function testRoundSecondsToMinutesRemainingToWords($minutes, $seconds, $expectedMinutes, $prefix)
+    {
+        $timeRemaining = DateTimeImmutable::createFromFormat('U', '0')
+            ->diff(DateTimeImmutable::createFromFormat('U', (string) (($minutes * 60) + $seconds)));
+
+        $this->setMockTranslate($prefix . '_minutes', $expectedMinutes);
+
+        $translation = $this->helper->timeIntervalToWords($timeRemaining, false, $prefix);
+        $this->assertEquals('A Translation', $translation);
+    }
+
+    public function roundSecondsToMinutesDataProvider()
+    {
+        return [
+            [1, 0, 1, 'iplayer_listen_remaining'],
+            [29, 29, 29, 'iplayer_listen_remaining'],
+            [49, 59, 50, 'iplayer_play_remaining'],
+        ];
+    }
+
+    /**
      * @dataProvider minutesDataProvider
      */
     public function testMinutesRemainingToWords($minutes, $prefix)

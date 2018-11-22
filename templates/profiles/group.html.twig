@@ -6,7 +6,13 @@
             <div class="grid">
                 <div class="br-box-page">
                     <div class="prog-layout__primary island--vertical">
-                        <h1>{{ profile.getTitle() }}</h1>
+                            <h1>
+                            {% if programme %}
+                                <span class="context">
+                                    {{ ds_shared('entityContext', programme) }}
+                                </span>
+                             {% endif %}
+                            {{ profile.getTitle() }}</h1>
                         <div class="text--prose component">
                             <p>{{ profile.getLongSynopsis() }}</p>
                         </div>

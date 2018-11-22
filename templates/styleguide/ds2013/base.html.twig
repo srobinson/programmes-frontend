@@ -3,10 +3,102 @@
 {% block title %}BBC - Programmes Styleguide{{ block('section_name') is defined ? ' - ' ~ block('section_name') }}{% endblock %}
 
 {% block body %}
-    <div class="b-g-p br-box-page island--vertical">
-        <h1>Styleguide/2013</h1>
-        <h2>{% block section_name %}{% endblock %}</h2>
 
-        {% block content %}{% endblock %}
+
+    <div class="b-g-p br-box-page island--vertical">
+
+        <a href="{{ path('ds2013_styleguide_intro')}}"><h1>Styleguide/2013</h1></a>
+        <div class="grid-wrapper">
+            <div class="grid 1/4@bpw">
+                <h3>Layout</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_layout/GEL') }}">GEL standards</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_layout/columns') }}">Columns</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_layout/prose') }}">Prose</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_layout/layout') }}">Layout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="grid 1/4@bpw">
+                <h3>Domain</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_domain/broadcast_object') }}">Broadcast objects</a>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_domain/broadcast_event') }}">Broadcast events</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_domain/programme_object') }}">Programme objects</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_domain/promotion') }}">Promotions</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="grid 1/4@bpw">
+                <h3> Segments</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_segments/music') }}">Music</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_segments/gallery') }}">Gallery</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="grid 1/4@bpw">
+                <h3>Utilities</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_utilities/cta') }}">CTAs</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_utilities/credits') }}">Credits</a>
+                    <li>
+                        <a href="{{ path('ds2013_styleguide_utilities/folding_list') }}">Date list</a>
+                    </li>
+                    <li>
+                        <a href="">Paginator</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="no-margin"> See this page with different branding:</p>
+            <ul class="list-unstyled">
+                <li style="display: inline-block;">
+                    <a href="">Base Branding</a> |
+                </li>
+                <li style="display: inline-block;">
+                    <a href="?branding_context=b006q2x0">Doctor Who</a> |
+                </li>
+                <li style="display: inline-block;">
+                    <a href="?branding_context=b006qpgr">The Archers</a> |
+                </li>
+                <li style="display: inline-block;">
+                    <a href="?service=p00fzl86">Radio 1</a> |
+                </li>
+                <li style="display: inline-block;">
+                    <a href="?service=p00fzl6n">BBC 1 HD</a> |
+                </li>
+                <li style="display: inline-block;">
+                    <a href="?service=p00fzl67">BBC ALBA</a>
+                </li>
+            </ul>
+
+        <br>
+        <h1>{% block section_name %}{% endblock %}</h1>
+
+        {% block content %}
+
+
+        {% endblock %}
+
     </div>
 {% endblock %}

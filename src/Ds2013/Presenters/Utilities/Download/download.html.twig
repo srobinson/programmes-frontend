@@ -5,7 +5,7 @@
                data-clicktrack="podcast_download"
                href="{{ download.getPodcastUrls()|first }}" download="{{ download.getPodcastFileName() }}"
             >
-                {{ gelicon('basics', 'download', 'gelicon--centi') }}
+                {{ gelicon('basics', 'download', 'gelicon--centi gelicon--leading') }}
                 {{ tr('downloads', 1) }} {% if download.isUkOnlyPodcast() %}({{ tr('uk_only') }}){% endif %}
             </a>
         </div>
@@ -16,7 +16,7 @@
             <div class="buttons__download">
                 <h2 class="popup__button text-base br-linkinvert buttons__download__link" data-clicktrack="podcast_download">
                     <label for="download-popup">
-                        {{ gelicon('basics', 'download', 'gelicon--centi') }}
+                        {{ gelicon('basics', 'download', 'gelicon--centi gelicon--leading') }}
                         {{ tr('downloads',1) }}{% if download.isUkOnlyPodcast() %} ({{ tr('uk_only') }}){% endif %}
                     </label>
                 </h2>
@@ -43,10 +43,7 @@
             </div>
         </div>
     {% endif %}
+    {{ add_popup() }}
 
-    <script type="text/javascript">
-        require(['popup'], function(popup) {
-            new popup({containerSelector: '.popup', useParentContainerWidth: true});
-        });
-    </script>
+
 {% endif %}

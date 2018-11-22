@@ -1,0 +1,180 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Broadcast Objects{% endblock %}
+
+{% block content %}
+
+<p>A single broadcast object block is used to render a brand/series/episode/clip. To be rendered responsively across the whole of /programmes. It contains a programme object along with additional broadcast information</p>
+
+<div class="grid-wrapper programmes-page">
+    <div class="grid 1 1/4@bpw">
+            <h2>A broadcast</h2>
+            <p>The default state is common to TV and radio broadcasts</p>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', broadcast, null,{
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>A broadcast showing date</h2>
+            <p>The default state (with a date)</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', broadcast, null, {
+                    'show_date' : true,
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>A broadcast with availability</h2>
+            <p>The default state with availability</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('Broadcast', pastBroadcast, null,{
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpe">
+        <div class="grid__inner">
+            <h2>An airing TV broadcast</h2>
+            <p>A currently airing TV Broadcast</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpe">
+        <ol class="highlight-box-wrapper">
+            <li>
+            {{ ds2013('broadcast', liveBroadcast, null,{
+                'show_overlay' : true,
+                'highlight_box_classes' : 'highlight-box--list'
+            }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>A stacked TV / Radio broadcast with availability</h2>
+            <p>The default state with availability</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', broadcast, null,{
+                    'is_stacked' : true,
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+            <li>
+                {{ ds2013('broadcast', radioBroadcast, null,{
+                    'is_stacked' : true,
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>A currently airing stacked TV broadcast</h2>
+            <p>A currently airing TV Broadcast</p>
+        </div>
+    </div>
+        <div class="grid 1 3/4@bpw">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('broadcast', broadcast, null,{
+                        'is_stacked' : true,
+                        'highlight_box_classes' : 'highlight-box--list'
+                    }) }}
+                </li>
+            </ol>
+        </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>A radio broadcast</h2>
+            <p>The default state for radio</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', radioBroadcast, null,{
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>An available radio broadcast</h2>
+            <p>The default state for radio</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', pastRadioBroadcast, null, {
+                    'highlight_box_classes' : 'highlight-box--list'
+                })}}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid 1 1/4@bpw">
+        <div class="grid__inner">
+            <h2>An airing radio broadcast</h2>
+            <p>A currently airing radio Broadcast</p>
+        </div>
+    </div>
+    <div class="grid 1 3/4@bpw">
+        <ol class="highlight-box-wrapper">
+            <li>
+                {{ ds2013('broadcast', liveRadioBroadcast, null,{
+                    'highlight_box_classes' : 'highlight-box--list'
+                }) }}
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+{% endblock %}

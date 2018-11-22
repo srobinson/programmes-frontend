@@ -77,22 +77,10 @@ categories_show:
     requirements: { categoryType: 'formats|genres', urlKeyHierarchy: '.+' }
     schemes: [https]
 
-programme_clips:
-    path: /programmes/{pid}/clips
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
-    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
-    schemes: [https]
-
 article_with_contact_form:
     path: /programmes/articles/{key}/{slug}/contact
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     requirements: { key: '[a-zA-Z0-9-]{1,40}' }
-    schemes: [https]
-
-programme_galleries:
-    path: /programmes/{pid}/galleries
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
-    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
     schemes: [https]
 
 programme_topics:

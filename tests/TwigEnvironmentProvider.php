@@ -8,7 +8,7 @@ use App\DsShared\Helpers\HelperFactory;
 use App\DsShared\PresenterFactory as DsSharedPresenterFactory;
 use App\Translate\TranslateProvider;
 use App\Twig\DesignSystemPresenterExtension;
-use App\Twig\FavouriteButtonExtension;
+use App\Twig\AdditionalJavascriptExtension;
 use App\Twig\GelIconExtension;
 use App\Twig\HtmlUtilitiesExtension;
 use App\Twig\TranslateAndTimeExtension;
@@ -141,7 +141,7 @@ class TwigEnvironmentProvider
 
         $twig->addExtension(new HtmlUtilitiesExtension($assetPackages, $twig));
 
-        $twig->addExtension(new FavouriteButtonExtension());
+        $twig->addExtension(new AdditionalJavascriptExtension());
 
         // Set twig for template tests to use
         self::$twig = $twig;

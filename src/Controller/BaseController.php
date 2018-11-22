@@ -7,6 +7,7 @@ use App\Branding\BrandingPlaceholderResolver;
 use App\Cosmos\Dials;
 use App\Translate\TranslateProvider;
 use App\ValueObject\AnalyticsCounterName;
+use App\ValueObject\AtiAnalyticsLabels;
 use App\ValueObject\ComscoreAnalyticsLabels;
 use App\ValueObject\CosmosInfo;
 use App\ValueObject\IstatsAnalyticsLabels;
@@ -215,17 +216,24 @@ abstract class BaseController extends AbstractController
         $this->preRender();
 
         $cosmosInfo = $this->container->get(CosmosInfo::class);
-        $istatsAnalyticsLabels = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
+        $atiAnalyticsLabelsValues = null;
+        if ($this->container->get(Dials::class)->get('ati-stats') === 'true') {
+            $atiAnalyticsLabelsValues = new AtiAnalyticsLabels($this->context, $this->istatsProgsPageType);
+            $atiAnalyticsLabelsValues = $atiAnalyticsLabelsValues->orbLabels();
+        }
         $analyticsCounterName = (string) new AnalyticsCounterName($this->context, $this->request()->getPathInfo());
+        $istatsAnalyticsLabelsInstance = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
+        $istatsAnalyticsLabelsValues = $istatsAnalyticsLabelsInstance->orbLabels();
 
         $orb = $this->container->get(OrbitClient::class)->getContent([
             'variant' => $this->branding->getOrbitVariant(),
             'language' => $this->branding->getLanguage(),
         ], [
+            'page' => $atiAnalyticsLabelsValues,
             'searchScope' => $this->orbitSearchScope,
             'skipLinkTarget' => 'programmes-content',
             'analyticsCounterName' => $analyticsCounterName,
-            'analyticsLabels' => $istatsAnalyticsLabels->orbLabels(),
+            'analyticsLabels' => $istatsAnalyticsLabelsValues,
         ]);
 
         $queryString = $this->request()->getQueryString();
@@ -234,9 +242,9 @@ abstract class BaseController extends AbstractController
         $parameters = array_merge([
             'orb' => $orb,
             'meta_context' => new MetaContext($this->context, $this->getCanonicalUrl(), $this->getMetaNoIndex(), $this->overridenDescription),
-            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabels, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
+            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabelsInstance, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
             'analytics_counter_name' => $analyticsCounterName,
-            'istats_analytics_labels' => $istatsAnalyticsLabels->getLabels(),
+            'istats_analytics_labels' => $istatsAnalyticsLabelsInstance->getLabels(),
             'branding' => $this->branding,
             'with_chrome' => true,
             'is_international' => $this->isInternational,

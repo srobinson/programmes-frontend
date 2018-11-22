@@ -11,6 +11,12 @@
         {% endif %}
     </div>
 {% endif %}
+{% if programme_body.hasReleaseDate() %}
+    <div class="programme__service micro ">
+        <time >{{ programme_body.getReleaseDate() }}</time>
+    </div>
+{% endif %}
+
 {% if programme_body.getOption('show_synopsis') %}
     <p class="programme__synopsis text--subtle centi">
         {% if programme_body.hasDefinedPositionUnderParentProgramme() %}

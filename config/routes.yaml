@@ -121,10 +121,22 @@ programme_podcasts:
     defaults: { route: programme_podcast_episodes_download, permanent: true }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
+# Galleries
+programme_galleries:
+    path: /programmes/{pid}/galleries
+    controller: App\Controller\Gallery\GalleriesController
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
 # Gallery
 programme_gallery:
-    path: /programmes/{pid}/galleries
-    controller: App\Controller\Gallery\GalleryController
+    path: /programmes/{pid}/{imagePid}
+    controller: App\Controller\FindByPid\GalleryController
+    requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}', imagePid: '[0-9b-df-hj-np-tv-z]{8,15}' }
+
+#Clips
+programme_clips:
+    path: /programmes/{pid}/clips
+    defaults: { _controller: App\Controller\Clips\ListController }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
 # SMP Playlist page

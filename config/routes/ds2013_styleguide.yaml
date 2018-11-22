@@ -2,10 +2,6 @@ ds2013_styleguide_intro:
     path: /programmes/styleguide/ds2013
     defaults: { _controller: App\Controller\Styleguide\Ds2013\IntroController }
 
-ds2013_styleguide_segments:
-    path: /programmes/styleguide/ds2013/segments
-    defaults: { _controller: App\Controller\Styleguide\Ds2013\Domain\SegmentsController }
-
 ds2013_styleguide_segments/music:
     path: /programmes/styleguide/ds2013/segments/music
     defaults: { _controller: App\Controller\Styleguide\Ds2013\Domain\MusicSegmentsController }
@@ -17,3 +13,53 @@ ds2013_styleguide_utilities/cta:
 ds2013_styleguide_utilities/cta_insitu:
     path: /programmes/styleguide/ds2013/utilities/cta/insitu
     defaults: { _controller: App\Controller\Styleguide\Ds2013\Utilities\CtaInSituController }
+
+ds2013_styleguide_utilities/credits:
+    path: /programmes/styleguide/ds2013/utilities/credits
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Utilities\CreditsController }
+
+ds2013_styleguide_utilities/folding_list:
+    path: /programmes/styleguide/ds2013/utilities/foldinglist
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Utilities\FoldingListController }
+
+ds2013_styleguide_utilities/moreless:
+    path: /programmes/styleguide/ds2013/utilities/moreless
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Utilities\MoreLessController }
+
+ds2013_styleguide_domain/broadcast_event:
+    path: /programmes/styleguide/ds2013/domain/broadcastevent
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Domain\BroadcastEventsController }
+
+ds2013_styleguide_domain/broadcast_object:
+    path: /programmes/styleguide/ds2013/domain/broadcastobject
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Domain\BroadcastObjectController }
+
+ds2013_styleguide_domain/programme_object:
+    path: /programmes/styleguide/ds2013/domain/programmeobject
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Domain\ProgrammeObjectController }
+
+ds2013_styleguide_segments/gallery:
+    path: /programmes/styleguide/ds2013/domain/gallery
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Domain\GalleryController }
+
+ds2013_styleguide_layout/GEL:
+    path: /programmes/styleguide/ds2013/layout/gel
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\GELController }
+
+
+ds2013_styleguide_layout/layout:
+    path: /programmes/styleguide/ds2013/layout/layout
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\LayoutController }
+
+ds2013_styleguide_domain/promotion:
+    path: /programmes/styleguide/ds2013/domain/promotion
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Domain\PromotionController }
+
+ds2013_styleguide_layout/columns:
+    path: /programmes/styleguide/ds2013/layout/columns
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\ColumnsController }
+
+ds2013_styleguide_layout/prose:
+    path: /programmes/styleguide/ds2013/layout/prose
+    defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\ProseController }
+

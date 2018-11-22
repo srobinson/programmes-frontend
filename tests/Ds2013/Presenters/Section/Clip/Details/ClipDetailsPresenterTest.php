@@ -11,7 +11,6 @@ use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Synopses;
 use Cake\Chronos\Chronos;
-use DateTime;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\App\BaseTemplateTestCase;
 
@@ -33,7 +32,7 @@ class ClipDetailsPresenterTest extends BaseTemplateTestCase
 
         $clipDetailsPresenter = $this->presenter($clip);
 
-        $this->assertInstanceOf(DateTime::class, $clipDetailsPresenter->getReleaseDate());
+        $this->assertInstanceOf(PartialDate::class, $clipDetailsPresenter->getReleaseDate());
         $this->assertTrue($clipDetailsPresenter->isAvailableIndefinitely(), 'When is streamable for more than 1 year is considered inifinite');
     }
 

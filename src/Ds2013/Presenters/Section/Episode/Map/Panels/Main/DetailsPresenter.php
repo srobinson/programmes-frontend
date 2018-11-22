@@ -7,8 +7,8 @@ use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\Podcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Version;
+use BBC\ProgrammesPagesService\Domain\ValueObject\PartialDate;
 use Cake\Chronos\Chronos;
-use DateTime;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DetailsPresenter extends Presenter
@@ -74,13 +74,9 @@ class DetailsPresenter extends Presenter
         return $this->episode->getFirstBroadcastDate() && $this->episode->getFirstBroadcastDate()->isPast();
     }
 
-    public function getReleaseDate(): ?DateTime
+    public function getReleaseDate(): ?PartialDate
     {
-        if ($this->episode->getReleaseDate()) {
-            return $this->episode->getReleaseDate()->asDateTime();
-        }
-
-        return null;
+        return $this->episode->getReleaseDate();
     }
 
     /**

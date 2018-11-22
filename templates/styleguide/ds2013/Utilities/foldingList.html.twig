@@ -1,0 +1,22 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Folding List{% endblock %}
+
+{% block content %}
+    <p>A list of inline links that show/hide items from a central offset dependent upon screen size. Similar to the
+    pagination object but more suited to top navigation for continuous lists (e.g. dates). The current item is always
+    centered, with items either side always displayed, even if they are greyed out.</p>
+    <p>Because the block expects a known number of items and has no concept of the size of it's container, additional
+        css class hints must be added to it to ensure that items show / hide when there is sufficient space.</p>
+
+            <h2>Full width</h2>
+            <p>Default layout, no additional CSS classes passed.</p>
+
+
+    <nav class="schedule-nav-wrapper">
+        {{ ds2013('dateList', date, service) }}
+    </nav>
+
+
+{% endblock %}
+

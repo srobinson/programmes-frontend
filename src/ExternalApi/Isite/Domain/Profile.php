@@ -59,6 +59,9 @@ class Profile
     /** @var string|null */
     private $portraitImage;
 
+    /** @var int  */
+    private $groupSize;
+
     public function __construct(
         string $title,
         string $key,
@@ -75,7 +78,8 @@ class Profile
         ?string $portraitImage,
         ?AbstractContentBlock $onwardJourneyBlock,
         ?string $tagline,
-        array $parents
+        array $parents,
+        ?int $groupSize = null
     ) {
         $this->title = $title;
         $this->key = $key;
@@ -96,6 +100,7 @@ class Profile
         $this->image = $image;
         $this->portraitImage = $portraitImage;
         $this->parents = $parents;
+        $this->groupSize = $groupSize;
     }
 
     /**
@@ -214,6 +219,11 @@ class Profile
     public function getBrandingId()
     {
         return $this->brandingId;
+    }
+
+    public function getGroupSize()
+    {
+        return $this->groupSize;
     }
 
     /**

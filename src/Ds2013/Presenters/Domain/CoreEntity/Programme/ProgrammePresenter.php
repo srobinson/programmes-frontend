@@ -106,6 +106,7 @@ class ProgrammePresenter extends ProgrammePresenterBase
         return new ProgrammeBodyPresenter(
             $this->router,
             $this->helperFactory->getPlayTranslationsHelper(),
+            $this->helperFactory->getLocalisedDaysAndMonthsHelper(),
             $this->programme,
             $this->subPresenterOptions('body_options')
         );

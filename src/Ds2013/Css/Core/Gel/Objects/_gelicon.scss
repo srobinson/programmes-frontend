@@ -2,6 +2,10 @@ svg.gelicon {
     display: inline-block;
     fill: currentColor;
     vertical-align: baseline;
+
+    &[focusable='false']:focus {
+        outline: none;
+    }
 }
 
 .gelicons-source {
@@ -21,16 +25,6 @@ svg.gelicon {
 .gelicon--fill-container {
     width: 100%;
     height: 100%;
-}
-
-svg.gelicon--alpha,
-svg.gelicon--beta,
-svg.gelicon--gamma,
-svg.gelicon--delta,
-svg.gelicon--centi,
-svg.gelicon--milli,
-svg.gelicon--micro {
-    vertical-align: text-top;
 }
 
 .gelicon--leading {

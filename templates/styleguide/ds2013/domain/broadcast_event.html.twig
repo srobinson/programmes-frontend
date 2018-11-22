@@ -1,0 +1,37 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+
+{% block section_name %}Broadcast Events{% endblock %}
+
+{% block content %}
+
+    <p>A single broadcast object without the context of a programme. To be rendered responsively across the whole of /programmes.</p>
+    <div class="grid-wrapper">
+        <div class="grid 1 1/4@bpw">
+            <h2>A broadcast event</h2>
+            <p>The default state is common to TV and radio broadcasts</p>
+        </div>
+        <div class="grid 1 3/4@bpw">
+            <ol class="highlight-box-wrapper">
+                <li>
+                    {{ ds2013('broadcastEvent',collapsedBroadcastOfEastenders, {'show_on_air_message': true}) }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid 1 1/4@bpw">
+            <h2>An international broadcast event</h2>
+            <p>Defaults to GMT time, with JavaScript updating to show local time in the browser</p>
+        </div>
+            <div class="grid 1 3/4@bpw">
+                <ol class="highlight-box-wrapper">
+                    <li>
+                        {{ ds2013('broadcastEvent',collapsedBroadcastOfWorldServiceNews ) }}
+                    </li>
+                </ol>
+            </div>
+    </div>
+
+
+{% endblock %}
+
