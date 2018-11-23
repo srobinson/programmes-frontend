@@ -3,7 +3,7 @@ declare(strict_types = 1);
 namespace App\Controller\FindByPid;
 
 use App\Controller\BaseController;
-use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
+use App\Controller\Gallery\GalleryView;
 use BBC\ProgrammesPagesService\Domain\Entity\Gallery;
 use BBC\ProgrammesPagesService\Domain\Entity\Image;
 use BBC\ProgrammesPagesService\Service\ImagesService;
@@ -21,16 +21,12 @@ class GalleryController extends BaseController
         $this->setIstatsProgsPageType('galleries_show');
         $this->setContextAndPreloadBranding($gallery);
         $siblingLimit = 4;
-
         $images = $imagesService->findByGroup($gallery);
         $image = $this->getFirstImage($imagePid, $images);
         $programme = $gallery->getParent();
         $brand = $programme->getTleo();
         $network = $programme->getMasterBrand()->getNetwork()->getName();
-
         $galleries = $programmesAggregationService->findDescendantGalleries($brand, $siblingLimit);
-
-
 
         return $this->renderWithChrome('find_by_pid/gallery.html.twig', [
             'gallery' => $gallery,
