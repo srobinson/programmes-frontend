@@ -1,7 +1,7 @@
 {%  import _self as self %}
 
 {% if not gallery_display.isFullImagePageView() %}
-<div id="gallery" class="gallery gallery--listview" data-page-url="{{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }}">
+<div id="gallery" class="gallery gallery--listview" data-page-url="{{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid() } ) }}">
     <div class="cf component" >
         <div class="pull--right-spaced">
             <span class="gallery__positiontext gamma no-margin"></span>
