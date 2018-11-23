@@ -77,7 +77,7 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
                 return;
             }
             this.galleryWindow = this.elementsByClass(this.classes.galleryWindow);
-            this.bootstrapImages = new Bootstrap.Images({ context: this.container, appear: { onscroll: false } });
+            this.bootstrapImages = new Bootstrap.images({ context: this.container, appear: { onscroll: false } });
             // Get data from our markup
             this.getGalleryData();
 
