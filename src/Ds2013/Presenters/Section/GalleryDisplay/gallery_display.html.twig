@@ -14,11 +14,11 @@
 </div>
 {% else %}
 
-<div id="gallery" class="gallery gallery--imgview" data-page-url="  ">
+<div id="gallery" class="gallery gallery--imgview" data-page-url=" {{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }} ">
     <div class="cf component">
         <div class="gallery__listlink pull--left js-hideme">
-            <a class="link-complex" href=" ">
-                <span class="gallery__listlink__icon br-box-highlight"><i class="gelicon gelicon--grid"></i></span>
+            <a class="link-complex" href=" {{ path('programme_galleries', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid()  } ) }} ">
+                <span class="gallery__listlink__icon br-box-highlight"><i class="gelicon gelicon--grid"> </i></span>
                 <span class="link-complex__target gallery__listlink__text"><{{ tr('galleries', 1)}}</span>
             </a>
         </div>
@@ -34,11 +34,11 @@
                 <div class="gallery-slideshow__slide gallery-slideshow__slide--current">
                     <div class="gallery-slideshow__imgholder">
                         <a href="{{ gallery_display.getPreviousUrl()}}" class="gallery__previousnext gallery__previousnext--prev">
-                            <i class="gelicon gelicon--previous"></i>
+                            <i class="gelicon gelicon--previous">{{ gelicon('basics', 'previous', 'gelicon--centi gelicon--trailing') }}</i>
                             <span class="visually-hidden">{{ tr('previous') }}</span>
                         </a>
                         <a href="{{ gallery_display.getNextUrl()}}" class="gallery__previousnext gallery__previousnext--next">
-                            <i class="gelicon gelicon--next"></i>
+                            <i class="gelicon gelicon--next">{{ gelicon('basics', 'next', 'gelicon--centi gelicon--trailing') }}</i>
                             <span class="visually-hidden">{{ tr('next') }}</span>
                         </a>
                         <img class="rsp-img"
@@ -48,7 +48,6 @@
                             <h2>{{ gallery_display.getPrimaryImage().getTitle()}}</h2>
                             <p>{{ gallery_display.getPrimaryImage().getShortSynopsis()}}</p>
                         </div>
-                        {{ self.thumbnails(gallery_display) }}
                     </div>
                 </div>
             </div>
@@ -82,6 +81,5 @@
         {% endfor %}
     </ul>
 {% endmacro %}
-
 
 
