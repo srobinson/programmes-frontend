@@ -21,11 +21,11 @@ class AtiAnalyticsLabels
     {
         // TODO: This destination logic is incorrect and needs to cover BBC_Language_English (PROGRAMMES-6747)
         // This also needs to be moved into something environment based as we shouldn't be using test on live
-        $destination = 'PS Programmes Test';
+        $destination = 'PS Programmes - Test';
         if (method_exists($this->context, 'getNetwork') && $this->context->getNetwork()
             && ((string) $this->context->getNetwork()->getNid() === 'bbc_world_service' || $this->context->getNetwork()->isWorldServiceInternational())
         ) {
-            $destination = 'WS Programmes Test';
+            $destination = 'WS Programmes - Test';
         }
 
         // TODO: This needs to be set based on the masterbrand - seperate ticket incoming
