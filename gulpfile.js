@@ -35,6 +35,7 @@ gulp.task('js', ['js:clean'], function () {
         staticPathSrc + '/js/**/timezone-notification.js',
         staticPathSrc + '/js/**/episode-guide.js',
         staticPathSrc + '/js/**/popup.js',
+        staticPathSrc + '/js/**/gallery.js',
         staticPathSrc + '/js/**/smp/*',
         staticPathSrc + '/js/snippet-player/**/snippets.js',
         staticPathSrc + '/js/third-party.js',
