@@ -32,14 +32,12 @@ class ArticleMapper extends Mapper
             }
         }
 
-        $rows = [];
+        $rowGroups = [];
         if (!empty($form->rows->{'rows-iteration'}->primary[0]->{'primary-blocks'}->result) || !empty($form->rows->{'rows-iteration'}->secondary[0]->{'secondary-blocks'}->result)) {
-            foreach($form->rows->{'rows-iteration'} as $row) {
-                $rows[] = $this->mapperFactory->createRowMapper()->getDomainModel($row);
-            }
+            $rowGroups = $this->mapperFactory->createRowGroupMapper()->getDomainModels($form->rows->{'rows-iteration'});
         }
         // @codingStandardsIgnoreEnd
 
-        return new Article($title, $key, $fileId, $projectSpace, $parentPid, $shortSynopsis, $brandingId, $image, $parents, $rows);
+        return new Article($title, $key, $fileId, $projectSpace, $parentPid, $shortSynopsis, $brandingId, $image, $parents, $rowGroups);
     }
 }

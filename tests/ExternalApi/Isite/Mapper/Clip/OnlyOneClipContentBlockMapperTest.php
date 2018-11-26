@@ -37,8 +37,10 @@ class OnlyOneClipContentBlockMapperTest extends TestCase
         ];
 
         $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/one_clip.xml'));
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
         /** @var ClipStandAlone $block */
-        $block = $this->mapper()->getDomainModels([$isiteResponse])[0];
+        $block = $mapper->getDomainModel($isiteResponse->result);
 
         $this->assertInstanceOf(ClipStandAlone::class, $block);
         $this->assertInstanceOf(Clip::class, $block->getClip());

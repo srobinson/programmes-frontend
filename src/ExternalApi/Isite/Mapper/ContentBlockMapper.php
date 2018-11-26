@@ -55,6 +55,13 @@ class ContentBlockMapper extends Mapper
      */
     private $clips = [];
 
+    /**
+     * All available galleries will be set here at once so we don't need to query the DB or Redis multiple times
+     *
+     * var Gallery[]
+     */
+    private $galleries = [];
+
     /** @var Version[] */
     private $streamableVersions = [];
 
@@ -76,13 +83,15 @@ class ContentBlockMapper extends Mapper
     }
 
     /**
+     * Call this function with a list of all blocks in order to preload clips and galleries, this is required
+     * to avoid doing one DB query for each content block with clips or galleries
+     *
      * @param array $contentBlocksList
-     * @return AbstractContentBlock[]
      */
-    public function getDomainModels(array $contentBlocksList): array
+    public function preloadData(array $contentBlocksList): void
     {
-        $clipsPid = [];
-        // get clips queries
+        $clipPids = [];
+        $galleryPids = [];
         foreach ($contentBlocksList as $block) {
             $type = $this->getType($block->result);
             $form = $this->getForm($block->result);
@@ -90,7 +99,7 @@ class ContentBlockMapper extends Mapper
                 $clipPidString = $this->getString($form->content->clip);
                 if (!empty($clipPidString)) {
                     try {
-                        $clipsPid[] = new Pid($clipPidString);
+                        $clipPids[] = new Pid($clipPidString);
                     } catch (InvalidArgumentException $e) {
                         $this->logger->error('Invalid clip PID: "' . $clipPidString . '" from iSite prose');
                     }
@@ -101,25 +110,38 @@ class ContentBlockMapper extends Mapper
                     $clipPidString = $this->getString($isiteClip->pid);
                     if (!empty($clipPidString)) {
                         try {
-                            $clipsPid[] = new Pid($clipPidString);
+                            $clipPids[] = new Pid($clipPidString);
                         } catch (InvalidArgumentException $e) {
                             $this->logger->error('Invalid clip PID: "' . $clipPidString . '" from iSite clips');
                         }
                     }
                 }
             }
+            if ('galleries' === $type) {
+                foreach ($form->content->galleries as $gallery) {
+                    $galleryPidString = $this->getString($gallery->pid);
+                    if (!empty($galleryPidString)) {
+                        try {
+                            $galleryPids[] = new Pid($galleryPidString);
+                        } catch (InvalidArgumentException $e) {
+                            $this->logger->error('Invalid gallery PID: "' . $galleryPidString . '" from iSite clips');
+                        }
+                    }
+                }
+            }
         }
-        $this->clips = $this->coreEntitiesService->findByPids($clipsPid, 'Clip');
-        $this->streamableVersions = $this->versionsService->findStreamableVersionForProgrammeItems($this->clips);
-
-        $contentBlock = [];
-        foreach ($contentBlocksList as $block) {
-            $contentBlock[] = $this->getDomainModel($block->result);
+        if (!empty($clipPids)) {
+            $this->clips = $this->coreEntitiesService->findByPids($clipPids, 'Clip');
+            $this->streamableVersions = $this->versionsService->findStreamableVersionForProgrammeItems($this->clips);
         }
-        return $contentBlock;
+        if (!empty($galleryPids)) {
+            $this->galleries = $this->coreEntitiesService->findByPids($galleryPids, 'Gallery');
+        }
     }
 
     /**
+     * If a block contains galleries or clips then preloadData() have to be call before this function
+     *
      * public function getDomainModel(SimpleXMLElement $isiteObject): AbstractContentBlock
      */
     public function getDomainModel(SimpleXMLElement $isiteObject)
@@ -153,11 +175,13 @@ class ContentBlockMapper extends Mapper
                 break;
             case 'galleries':
                 $contentBlockData = $form->content;
-                $galleryPids = [];
+                $galleries = [];
                 foreach ($contentBlockData->galleries as $gallery) {
-                    $galleryPids[] = new Pid($this->getString($gallery->pid));
+                    $galleryPid = $this->getString($gallery->pid);
+                    if (isset($this->galleries[$galleryPid])) {
+                        $galleries[] = $this->galleries[$galleryPid];
+                    }
                 }
-                $galleries = $this->coreEntitiesService->findByPids($galleryPids, 'Gallery');
                 $contentBlock = new Galleries(
                     $this->getString($contentBlockData->title),
                     $galleries
@@ -376,7 +400,7 @@ class ContentBlockMapper extends Mapper
             case 'contactform':
                 throw new HasContactFormException('Contact form found');
             default:
-//                throw new Exception('Invalid content block type. Found ' . $type);
+                $this->logger->error('Invalid content block type. Found ' . $type);
                 break;
         }
 
