@@ -45,6 +45,9 @@
 {% endif %}
 {# This exists solely to be extended. @TODO revisit once this is more fleshed out #}
 {% block body_extra %}{% endblock %}
+{% if programme_body.getDisplayMasterbrand() %}
+    <p class="programme__service micro text--subtle">{{ programme_body.getDisplayMasterbrand().getName() }}</p>
+{% endif %}
 
 {% if programme_body.getOption('body_suffix') %}
     {{ programme_body.getOption('body_suffix')|raw }}

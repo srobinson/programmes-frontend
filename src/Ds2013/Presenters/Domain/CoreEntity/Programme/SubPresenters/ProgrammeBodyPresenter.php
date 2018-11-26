@@ -7,6 +7,7 @@ use App\Ds2013\Presenters\Domain\CoreEntity\Programme\ProgrammePresenterBase;
 use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
+use BBC\ProgrammesPagesService\Domain\Entity\MasterBrand;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
@@ -27,6 +28,7 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
         'body_suffix' => null,
         'show_child_availability' => false,
         'show_release_date' => false,
+        'show_masterbrand' => false,
     ];
 
     /** @var PlayTranslationsHelper */
@@ -120,5 +122,18 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
     public function hasReleaseDate(): bool
     {
         return ($this->getOption('show_release_date') && ($this->programme instanceof ProgrammeItem) && $this->programme->getReleaseDate());
+    }
+
+    public function getDisplayMasterbrand(): ?MasterBrand
+    {
+        if (!$this->getOption('show_masterbrand')) {
+            return null;
+        }
+        $programmeMasterbrand = $this->programme->getMasterBrand();
+        $contextMasterbrand = $this->getOption('context_programme') ? $this->getOption('context_programme')->getMasterbrand : null;
+        if ($programmeMasterbrand != $contextMasterbrand) {
+            return $programmeMasterbrand;
+        }
+        return null;
     }
 }

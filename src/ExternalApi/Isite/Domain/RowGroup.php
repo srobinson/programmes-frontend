@@ -5,7 +5,7 @@ namespace App\ExternalApi\Isite\Domain;
 
 use App\ExternalApi\Isite\Domain\ContentBlock\AbstractContentBlock;
 
-class Row
+class RowGroup
 {
     /** @var AbstractContentBlock[] */
     private $primary;

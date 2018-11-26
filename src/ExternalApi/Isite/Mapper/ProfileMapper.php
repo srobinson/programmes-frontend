@@ -62,7 +62,7 @@ class ProfileMapper extends Mapper
                         $contentBlocksList[] = $block->content_block;
                     }
                 }
-                $contentBlocks = $this->mapperFactory->createContentBlockMapper()->getDomainModels(
+                $contentBlocks = $this->getDomainModels(
                     $contentBlocksList
                 );
             }
@@ -79,5 +79,16 @@ class ProfileMapper extends Mapper
         // @codingStandardsIgnoreEnd
 
         return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $tagline, $parents, $groupSize);
+    }
+
+    public function getDomainModels($contentBlocksList): array
+    {
+        $contentBlocksMapper = $this->mapperFactory->createContentBlockMapper();
+        $contentBlocksMapper->preloadData($contentBlocksList);
+        $blocks = [];
+        foreach ($contentBlocksList as $block) {
+            $blocks[] = $contentBlocksMapper->getDomainModel($block->result);
+        }
+        return $blocks;
     }
 }

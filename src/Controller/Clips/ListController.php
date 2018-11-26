@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
 use BBC\ProgrammesPagesService\Domain\Entity\Brand;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
+use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
 use BBC\ProgrammesPagesService\Service\ProgrammesAggregationService;
 use BBC\ProgrammesPagesService\Service\ProgrammesService;
 use BBC\ProgrammesPagesService\Service\AbstractService;
@@ -40,13 +41,16 @@ class ListController extends BaseController
 
         $clipsCount = $aggregationService->countStreamableDescendantClips($programme);
 
-        $series = $programmesService->findChildrenSeriesByParent(
-            $programme->getTleo(),
-            AbstractService::DEFAULT_LIMIT,
-            AbstractService::DEFAULT_PAGE,
-            CacheInterface::NORMAL,
-            true
-        );
+        $series = [];
+        if ($programme->getTleo() instanceof ProgrammeContainer) {
+            $series = $programmesService->findChildrenSeriesByParent(
+                $programme->getTleo(),
+                AbstractService::DEFAULT_LIMIT,
+                AbstractService::DEFAULT_PAGE,
+                CacheInterface::NORMAL,
+                true
+            );
+        }
 
         $parameters = [
             self::PARAMS_PROGRAMME_KEY => $programme,
