@@ -25,7 +25,7 @@
                 </h3>
 
                 <div class="ml__hidden" id="ml-1-answer">
-                    <ul class="grid columns--2@bpb2 columns--3@bpw columns--4@bpe list-unstyled gamma">
+                    <ul class="grid columns--2@bpb2 columns--3@bpw columns--4@bpe list-unstyled gamma clips-series">
                         <li>
                             {% if showAllPid is defined %}
                                 <a class="box-link" href="{{ path('programme_clips', {pid: showAllPid}) }}">
@@ -76,7 +76,7 @@
                 {% endfor %}
             </ol>
         {% else %}
-            <p>
+            <p class="no_clips_page">
                 {{ tr('clips_count', {'%1': 0}) }}.
                 {% if programme is defined and programme.isTleo() == false %}
                     <a
