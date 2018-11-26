@@ -20,10 +20,16 @@ class GalleryController extends BaseController
 
         $images = $imagesService->findByGroup($gallery);
         $image = $this->getFirstImage($imagePid, $images);
+        $showFirstImage = false;
+        if($imagePid){
+            $showFirstImage = true;
+        }
         return $this->renderWithChrome('find_by_pid/gallery.html.twig', [
             'gallery' => $gallery,
             'image' => $image,
             'images' => $images,
+            'showFirstImage' => $showFirstImage,
+
         ]);
     }
 

@@ -1,7 +1,7 @@
 {%  import _self as self %}
 
 {% if not gallery_display.isFullImagePageView() %}
-<div id="gallery" class="gallery gallery--listview" data-page-url="{{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid() } ) }}">
+<div id="gallery" class="gallery gallery--listview" data-page-url="{{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }}">
     <div class="cf component" >
         <div class="pull--right-spaced">
             <span class="gallery__positiontext gamma no-margin"></span>
@@ -42,7 +42,7 @@
                             <span class="visually-hidden">{{ tr('next') }}</span>
                         </a>
                         <img class="rsp-img"
-                            {{ ds_shared_presenter(gallery_display.getRenderedimage(gallery_display.getActiveImagePosition())) }}>
+                            {{ ds_shared_presenter(gallery_display.getRenderedimage(gallery_display.getActiveImagePosition())) }}
                     </div>
                     <div class="gallery__caption"><div class="island">
                             <h2>{{ gallery_display.getPrimaryImage().getTitle()}}</h2>
@@ -64,7 +64,7 @@
             <li class="grid 1 1/2@bpb1 1/3@bpb2 1/4@bpw 1/6@bpe">
                 <div>
                     {% set url =path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': eachImage.getPid() } ) %}
-                    <a class="gallery__thumbnail {{ (eachImage.getPid() == gallery_display.getPrimaryImage().getPid()) ? 'gallery__thumbnail--active' : '' }}"
+                    <a class="gallery__thumbnail {{ (eachImage.getPid() == gallery_display.getPrimaryImage().getPid() and gallery_display.isFullImagePageView()) ? 'gallery__thumbnail--active' : '' }}"
                        href="{{ url }}"
                        data-img-blank="{{ asset('images/blank.png') }}"
                        data-gallery-title="{{ eachImage.getTitle() }}"
