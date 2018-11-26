@@ -69,7 +69,15 @@ class ShowController extends BaseController
         $response = $this->resolvePromises(['children' => $childPromise, 'siblings' => $siblingPromise]);
 
         $paginator = $this->getPaginator(reset($response['children']));
-        return $this->renderWithChrome('articles/show.html.twig', ['article' => $article, 'paginatorPresenter' => $paginator]);
+
+        return $this->renderWithChrome(
+            'articles/show.html.twig',
+            [
+                'article' => $article,
+                'paginatorPresenter' => $paginator,
+                'programme' => $context,
+            ]
+        );
     }
 
     private function redirectWith(string $key, string $slug, bool $preview)
