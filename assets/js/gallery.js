@@ -41,9 +41,9 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
         },
         attributes: {
             data_img_blank: 'data-img-blank',
-            data_img_src: 'data-img-src',
-            data_img_srcsets:'data-img-srcsets',
-            data_img_sizes: 'data-img-sizes',
+            data_img_src: 'data-image-src',
+            data_img_srcsets:'data-image-src-sets',
+            data_img_sizes: 'data-image-sizes',
             data_img_title: 'data-gallery-title',
             data_img_synopsis: 'data-gallery-synopsis',
             data_img_position: 'data-gallery-position',
@@ -77,7 +77,7 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
                 return;
             }
             this.galleryWindow = this.elementsByClass(this.classes.galleryWindow);
-            this.bootstrapImages = new Bootstrap.images({ context: this.container, appear: { onscroll: false } });
+            //this.bootstrapImages = new Bootstrap.images({ context: this.container, appear: { onscroll: false } });
             // Get data from our markup
             this.getGalleryData();
 
@@ -123,12 +123,21 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
          */
         getImgSrcAttributes: function(element) {
             var attributes = element.attributes;
-            var srcAttributes = {
-                'src': attributes[this.attributes.data_img_src].value,
-                'srcset': attributes[this.attributes.data_img_srcsets].value,
-                'sizes': attributes[this.attributes.data_img_sizes].value
-            };
-            return srcAttributes;
+            var srcAttributes = {};
+            for (var i = 0; i < attributes.length; i++) {
+                var key = attributes[i].name;
+                if (key == this.attributes.data_img_src
+                    || key == this.attributes.data_img_srcsets
+                    || key ==this.attributes.data_img_sizes
+                ) {
+                    srcAttributes[key] = attributes[i].value;
+                }
+            }
+            return {
+                'src': srcAttributes[this.attributes.data_img_src],
+                'sizes': srcAttributes[this.attributes.data_img_sizes],
+                'srcset': srcAttributes[this.attributes.data_img_srcsets],
+            }
         },
         /**
          * Initialise the gallery
@@ -179,8 +188,10 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
 
             // Add previous/next arrows
             var previous = $('<a />', {'class': this.classes.previousNextBtn + ' ' + this.classes.previousBtn})
+            // @TODO This is broken in V3. Fix it to use SVG
             previous.append('<i class="gelicon gelicon--previous"></i>');
             var next = $('<a />', {'class': this.classes.previousNextBtn + ' ' + this.classes.nextBtn});
+            // @TODO This is broken in V3. Fix it to use SVG
             next.append('<i class="gelicon gelicon--next"></i></a>');
             this.elementsByClass(this.classes.slideShowContainer).prepend(next).prepend(previous);
             // Change container class
@@ -624,7 +635,7 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
          * Fire standard responsive image loading on the gallery container. Don't reinvent the wheel...
          */
         loadImages: function() {
-            this.bootstrapImages.switchImagesSrc();
+            //this.bootstrapImages.switchImagesSrc();
         },
         /**
          * Check whether browser supports pushState/replaceState
