@@ -63,7 +63,8 @@ class GalleryDisplayPresenter extends Presenter
                 $this->options['image_sizes'],
                 ['srcsets'=> $this->options[
                     'image_srcsets'],
-                    'is_bounded'=> true]
+                    'is_bounded'=> true,
+                    'is_lazy_loaded' => false]
             );
             if($image->getPid() == $primaryImage->getPid()){
                 $this->activeImagePosition = $position;
