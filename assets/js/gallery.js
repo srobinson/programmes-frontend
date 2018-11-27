@@ -55,7 +55,7 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
         initialised: false,
         previousSvg: 'null',
         nextSvg: 'null',
-        bootstrapImages: null,
+        pictureFill: null,
         position: 0,
         locked: false,
         scrollBarHeight: null,
@@ -81,7 +81,7 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
                 return;
             }
             this.galleryWindow = this.elementsByClass(this.classes.galleryWindow);
-            //this.bootstrapImages = new Bootstrap.images({ context: this.container, appear: { onscroll: false } });
+            this.pictureFill = Bootstrap.Picturefill;
             // Get data from our markup
             this.getGalleryData();
 
@@ -635,7 +635,9 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
          * Fire standard responsive image loading on the gallery container. Don't reinvent the wheel...
          */
         loadImages: function() {
-            //this.bootstrapImages.switchImagesSrc();
+            if (this.pictureFill) {
+                this.pictureFill(this.galleryWindow.get(0));
+            }
         },
         /**
          * Check whether browser supports pushState/replaceState
