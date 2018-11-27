@@ -1,6 +1,15 @@
 .stream {
     position: relative;
     overflow: hidden;
+
+    .highlight-box--grid,
+    .highlight-box-wrapper,
+    .highlight-box--grid:hover,
+    .highlight-box--grid:active,
+    .highlight-box--grid:focus,
+    .highlight-box--grid.highlight-box--active {
+        margin-bottom: 0;
+    }
 }
 
 .stream__button--edges:hover,
@@ -12,15 +21,11 @@
 .stream__button--edges.stream__button--prev {
     left: 0;
     border-right: solid 1px #ffffff;
-    width: 9.5%;
-    height: 109px;
 }
 
 .stream__button--edges.stream__button--next {
     right: 0;
     border-left: solid 1px #ffffff;
-    width: 9.5%;
-    height: 109px;
 }
 
 .stream__button[disabled]:focus {
@@ -51,6 +56,8 @@
     padding: 0;
     bottom: 0;
     top: 0;
+    width: 10%;
+    height: 100%;
 }
 
 .stream__window .stream__item {

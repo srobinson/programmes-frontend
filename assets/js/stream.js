@@ -39,7 +39,7 @@ define(['jquery-1.9','rv-bootstrap', 'istats-1'], function ($, bootstrap, istats
             items_in_window : [
                 { threshold : 0, number : 1 }
             ], /* how many items to fit in the window */
-            button_width: '9.8%',
+            button_width: '10%',
             next_button_text : '&gt;',
             previous_button_text : '&lt;',
             button_classes : 'stream__button--edges',
