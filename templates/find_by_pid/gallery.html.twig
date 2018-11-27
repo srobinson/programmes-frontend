@@ -21,7 +21,9 @@
     <script>
         require(['gallery'], function (gallery) {
             new gallery({
-                containerSelector: '#gallery'
+                containerSelector: '#gallery',
+                previousSvg: {{ gelicon('basics', 'previous', 'gelicon--beta gelicon--center')|json_encode| raw }},
+                nextSvg: {{ gelicon('basics', 'next', 'gelicon--beta gelicon--center')|json_encode()|raw }},
             });
         });
     </script>

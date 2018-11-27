@@ -53,6 +53,8 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
         container: null, // Outer Gallery/Thumb container. Passed in in constructor.
         galleryWindow: null,
         initialised: false,
+        previousSvg: 'null',
+        nextSvg: 'null',
         bootstrapImages: null,
         position: 0,
         locked: false,
@@ -73,6 +75,8 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
         init : function () {
             // Get our container. Only do anything if it exists
             this.container = $(this.options.containerSelector);
+            this.previousSvg = $(this.options.previousSvg);
+            this.nextSvg = $(this.options.nextSvg);
             if (this.container.length < 1) {
                 return;
             }
@@ -185,14 +189,10 @@ define(['jquery-1.9', 'rv-bootstrap'], function ($, Bootstrap) {
             var slide = this.createSlideDOM(this.getCurrentSlideData());
             slide.addClass(this.classes.currentSlide);
             tableau.append(slide);
-
-            // Add previous/next arrows
             var previous = $('<a />', {'class': this.classes.previousNextBtn + ' ' + this.classes.previousBtn})
-            // @TODO This is broken in V3. Fix it to use SVG
-            previous.append('<i class="gelicon gelicon--previous"></i>');
+            previous.append(this.previousSvg[0]);
             var next = $('<a />', {'class': this.classes.previousNextBtn + ' ' + this.classes.nextBtn});
-            // @TODO This is broken in V3. Fix it to use SVG
-            next.append('<i class="gelicon gelicon--next"></i></a>');
+            next.append(this.nextSvg[0]);
             this.elementsByClass(this.classes.slideShowContainer).prepend(next).prepend(previous);
             // Change container class
             this.container.removeClass(this.classes.listingPage).addClass(this.classes.imagePage);

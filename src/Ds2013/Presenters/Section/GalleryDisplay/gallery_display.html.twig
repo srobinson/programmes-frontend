@@ -16,15 +16,15 @@
     <div id="gallery" class="gallery gallery--imgview" data-page-url=" {{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }} ">
         <div class="cf component">
             <div class="gallery__listlink pull--left js-hideme">
-                <a class="link-complex" href=" {{ path('programme_galleries', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid()  } ) }} ">
-                    <span class="gallery__listlink__icon br-box-highlight"><i class="gelicon gelicon--grid"> </i></span>
-                    <span class="link-complex__target gallery__listlink__text"><{{ tr('galleries', 1)}}</span>
+                <a class="link-complex" href=" {{ path('find_by_pid', {'pid':  gallery_display.getGallery().getPid()}) }} ">
+                    <span class="gallery__listlink__icon br-box-highlight">{{ gelicon('basics', 'grid', 'gelicon--centi ') }}</span>
+                    <span class="link-complex__target gallery__listlink__text">{{ tr('galleries', 1)}}</span>
                 </a>
             </div>
             <div class="pull--right-spaced">
-                    <span class="gallery__positiontext gamma no-margin">
-                        {{ (gallery_display.getActiveImagePosition()+1) ~ '/' ~ (gallery_display.getImages()|length)}}
-                    </span>
+                <span class="gallery__positiontext gamma no-margin">
+                    {{ (gallery_display.getActiveImagePosition()+1) ~ '/' ~ (gallery_display.getImages()|length)}}
+                </span>
             </div>
         </div>
         {% spaceless %}
@@ -34,11 +34,11 @@
                         <div class="gallery-slideshow__slide gallery-slideshow__slide--current">
                             <div class="gallery-slideshow__imgholder">
                                 <a href="{{ gallery_display.getPreviousUrl()}}" class="gallery__previousnext gallery__previousnext--prev">
-                                    <i class="gelicon gelicon--previous">{{ gelicon('basics', 'previous', 'gelicon--centi gelicon--trailing') }}</i>
+                                    {{ gelicon('basics', 'previous', 'gelicon--beta gelicon--center') }}
                                     <span class="visually-hidden">{{ tr('previous') }}</span>
                                 </a>
                                 <a href="{{ gallery_display.getNextUrl()}}" class="gallery__previousnext gallery__previousnext--next">
-                                    <i class="gelicon gelicon--next">{{ gelicon('basics', 'next', 'gelicon--centi gelicon--trailing') }}</i>
+                                   {{ gelicon('basics', 'next', 'gelicon--beta gelicon--trailing gelicon--center') }}
                                     <span class="visually-hidden">{{ tr('next') }}</span>
                                 </a>
                                 {{ ds_shared_presenter(gallery_display.getRenderedimage(gallery_display.getActiveImagePosition())) }}
