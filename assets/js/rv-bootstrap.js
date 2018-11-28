@@ -1,11 +1,14 @@
 define(['jquery', 'lazyload', 'istats-tracking', 'lazysizes'],function($, Lazyload, IstatsTracking, lazysizes){
+    var picturefill = null;
     $(function() {
         // Lazy sizes (as of v4.0.2) breaks in IE11 without this hack
         window.lazySizes = lazysizes;
         // Load responsive image polyfill if needed
         var image = document.createElement( "img" );
         if (!("srcset" in image) || !("sizes" in image) || !(window.HTMLPictureElement)) {
-            require(['picturefill'], function (picturefill) {})
+            require(['picturefill'], function (picturefilllib) {
+                picturefill = picturefilllib;
+            })
         }
 
         var responsiveLazyload = new Lazyload();
@@ -32,6 +35,7 @@ define(['jquery', 'lazyload', 'istats-tracking', 'lazysizes'],function($, Lazylo
 
     return {
         $: $,
-        Lazyload: Lazyload
+        Lazyload: Lazyload,
+        Picturefill: picturefill
     }
 });
