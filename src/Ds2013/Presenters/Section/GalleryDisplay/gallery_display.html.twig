@@ -41,7 +41,7 @@
                                    {{ gelicon('basics', 'next', 'gelicon--beta gelicon--trailing gelicon--center') }}
                                     <span class="visually-hidden">{{ tr('next') }}</span>
                                 </a>
-                                {{ ds_shared_presenter(gallery_display.getRenderedimage(gallery_display.getActiveImagePosition())) }}
+                                {{ ds_shared_presenter(gallery_display.getImagePresenter(gallery_display.getActiveImagePosition())) }}
                             </div>
                             <div class="gallery__caption"><div class="island">
                                     <h2>{{ gallery_display.getPrimaryImage().getTitle()}}</h2>
@@ -73,7 +73,11 @@
                        data-image-src="{{ gallery_display.renderSrc(position) }}"
                        data-image-src-sets=" {{ gallery_display.renderSrcSets(position) }}"
                        data-image-sizes=" {{ gallery_display.renderSizes(position) }}">
-                        {{ ds_shared('imageEntity', eachImage,224, {1: "224px"} ,{'is_lazy_loaded': false, 'alt': eachImage.getTitle()} )}}
+                        {{ ds_shared('imageEntity', eachImage,224, {1: "224px"} ,{
+                            'is_lazy_loaded': false,
+                            'alt': eachImage.getTitle()},
+                            'srcsets': [80,160,224],
+                        )}}
                     </a>
                 </div>
             </li>

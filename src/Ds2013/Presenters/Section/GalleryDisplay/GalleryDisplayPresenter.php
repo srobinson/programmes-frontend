@@ -8,24 +8,47 @@ use App\DsShared\PresenterFactory;
 use BBC\ProgrammesPagesService\Domain\Entity\Gallery;
 use BBC\ProgrammesPagesService\Domain\Entity\Image;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\DsShared\Utilities\ImageEntity\ImageEntityPresenter;
 
 class GalleryDisplayPresenter extends Presenter
 {
 
+    /** @var Gallery  */
     private $gallery;
 
+    /**
+     * @var array
+     */
     private $images;
 
+    /**
+     * @var Image|null
+     */
     private $primaryImage;
 
+    /**
+     * @var bool
+     */
     private $fullImagePageView;
 
+    /**
+     * @var array
+     */
     private $imagePresenters =[];
 
+    /**
+     * @var int|string
+     */
     private $activeImagePosition;
 
+    /**
+     * @var UrlGeneratorInterface
+     */
     private $router;
 
+    /**
+     * @var array
+     */
     protected $options = [
         'image_sizes' => [1 => 1/1, 1008 => '976px'],
         'image_srcsets' => [320, 560, 976],
@@ -74,41 +97,49 @@ class GalleryDisplayPresenter extends Presenter
 
     }
 
-    function isFullImagePageView(): bool{
+    function isFullImagePageView(): bool
+    {
         return $this->fullImagePageView;
     }
 
-    function renderSrc(int $position ){
+    function renderSrc(int $position ):string
+    {
         return $this->imagePresenters[$position]->getSrc();
     }
 
-    function renderSrcSets(int $position ){
+    function renderSrcSets(int $position ): string
+    {
+
         return $this->imagePresenters[$position]->getSrcSets();
     }
 
-    function renderSizes(int $position ){
+    function renderSizes(int $position ): string
+    {
         return $this->imagePresenters[$position]->getSizes();
     }
 
-    function getPrimaryImage(){
+    function getPrimaryImage(): Image
+    {
         return $this->primaryImage;
     }
 
-    function getImages(){
+    function getImages(): array
+    {
         return $this->images;
     }
 
-    function getGallery(){
+    function getGallery(): gallery
+    {
         return $this->gallery;
     }
 
-    public function getActiveImagePosition()
+    public function getActiveImagePosition():int
     {
         return $this->activeImagePosition;
     }
 
 
-    public function getPreviousUrl()
+    public function getPreviousUrl(): string
     {
         $images_count = count($this->images);
         $previous_image_pos = $this->getActiveImagePosition() > 0 ? ($this->getActiveImagePosition() - 1) : $images_count - 1;
@@ -118,7 +149,7 @@ class GalleryDisplayPresenter extends Presenter
         return $this->pageUrl($this->images[$previous_image_pos]);
     }
 
-    public function getNextUrl()
+    public function getNextUrl() : string
     {
         $images_count = count($this->images);
         $next_image_pos = $this->getActiveImagePosition() < ($images_count - 1) ? ($this->getActiveImagePosition() + 1) : 0;
@@ -134,7 +165,8 @@ class GalleryDisplayPresenter extends Presenter
         return $this->router->generate( 'programme_gallery', ['pid' =>  $this->getGallery()->getPid(), 'imagePid'=> $image->getPid() ] );
     }
 
-    public function getRenderedimage(int $position){
+    public function getImagePresenter(int $position):ImageEntityPresenter
+    {
         return $this->imagePresenters[$position];
     }
 }
