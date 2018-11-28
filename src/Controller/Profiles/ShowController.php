@@ -68,8 +68,14 @@ class ShowController extends BaseController
          * @var IsiteResult[] $response
          */
         $response = $isiteService->setChildrenOn([$profile], $profile->getProjectSpace(), $this->getPage())->wait(true);
-        $extraProfiles = array_merge($profile->getChildren(), $profile->getParents()); // We want to fetch the children of the main profiles children and parents.
-        $grandChildPromise = $isiteService->setChildrenOn($extraProfiles, $profile->getProjectSpace());
+        $profilesToFindChildrenFor = [];
+        foreach ($profile->getChildren() as $childProfile) {
+            if ($childProfile->isGroup()) {
+                $profilesToFindChildrenFor[] = $childProfile;
+            }
+        }
+        $profilesToFindChildrenFor = array_merge($profilesToFindChildrenFor, $profile->getParents());
+        $grandChildPromise = $isiteService->setChildrenOn($profilesToFindChildrenFor, $profile->getProjectSpace());
         $this->resolvePromises([$grandChildPromise]);
         $paginator = $this->getPaginator(reset($response));
         return $this->renderWithChrome('profiles/group.html.twig', ['profile' => $profile, 'paginatorPresenter' => $paginator, 'programme' => $context]);
