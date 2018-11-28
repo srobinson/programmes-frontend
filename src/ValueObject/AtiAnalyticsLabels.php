@@ -29,12 +29,15 @@ class AtiAnalyticsLabels
         // TODO: This contentID needs to not be based on pips if it's an article or profile - that should be iSite and use GUID
         // If it's on pips, it should have the pips authority and the pid as the identifier
         // Seperate ticket incoming for that.
-        $contentId = 'urn:bbc:<authority>:<identifier>';
+        $authority = 'pips';
+        $identifier = (string) $this->context->getPid();
+
+        // dump($this->context); exit;
 
         $labels = [
             'destination' => $this->getDestination(),
             'producer' => $producer,
-            'contentId' => $contentId,
+            'contentId' => 'urn:bbc:' . $authority . ':' . $identifier,
             'contentType' => $this->pageType,
         ];
 
