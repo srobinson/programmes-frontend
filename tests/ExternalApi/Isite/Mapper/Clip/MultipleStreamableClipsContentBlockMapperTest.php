@@ -42,8 +42,10 @@ class MultipleStreamableClipsContentBlockMapperTest extends TestCase
         ];
 
         $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/three_clips.xml'));
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
         /** @var ClipStream $block */
-        $block = $this->mapper()->getDomainModels([$isiteResponse])[0];
+        $block = $mapper->getDomainModel($isiteResponse->result);
 
         $this->assertInstanceOf(ClipStream::class, $block);
         $this->assertCount(3, $block->getStreamItems());
@@ -61,7 +63,9 @@ class MultipleStreamableClipsContentBlockMapperTest extends TestCase
 
 
         $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/three_clips.xml'));
-        $block = $this->mapper()->getDomainModels([$isiteResponse])[0];
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
+        $block = $mapper->getDomainModel($isiteResponse->result);
 
         $this->assertNull($block);
     }
@@ -86,8 +90,10 @@ class MultipleStreamableClipsContentBlockMapperTest extends TestCase
         ];
 
         $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/three_clips.xml'));
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
         /** @var ClipStream $block */
-        $block = $this->mapper()->getDomainModels([$isiteResponse])[0];
+        $block = $mapper->getDomainModel($isiteResponse->result);
 
         $this->assertInstanceOf(ClipStream::class, $block);
         $this->assertCount(2, $block->getStreamItems());
@@ -114,8 +120,10 @@ class MultipleStreamableClipsContentBlockMapperTest extends TestCase
         ];
 
         $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/three_clips.xml'));
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
         /** @var ClipStandAlone $block */
-        $block = $this->mapper()->getDomainModels([$isiteResponse])[0];
+        $block = $mapper->getDomainModel($isiteResponse->result);
 
         $this->assertInstanceOf(ClipStandAlone::class, $block);
         $this->assertEquals('p02f20w2', (string) $block->getClip()->getPid());

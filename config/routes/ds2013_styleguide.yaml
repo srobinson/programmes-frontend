@@ -14,6 +14,10 @@ ds2013_styleguide_utilities/cta_insitu:
     path: /programmes/styleguide/ds2013/utilities/cta/insitu
     defaults: { _controller: App\Controller\Styleguide\Ds2013\Utilities\CtaInSituController }
 
+ds2013_styleguide_utilities/pagination:
+    path: /programmes/styleguide/ds2013/utilities/pagination
+    defaults: { _controller: App\Controller\Styleguide\Ds2013\Utilities\PaginationController }
+    
 ds2013_styleguide_utilities/credits:
     path: /programmes/styleguide/ds2013/utilities/credits
     defaults: {_controller: App\Controller\Styleguide\Ds2013\Utilities\CreditsController }
@@ -46,7 +50,6 @@ ds2013_styleguide_layout/GEL:
     path: /programmes/styleguide/ds2013/layout/gel
     defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\GELController }
 
-
 ds2013_styleguide_layout/layout:
     path: /programmes/styleguide/ds2013/layout/layout
     defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\LayoutController }
@@ -62,4 +65,3 @@ ds2013_styleguide_layout/columns:
 ds2013_styleguide_layout/prose:
     path: /programmes/styleguide/ds2013/layout/prose
     defaults: {_controller: App\Controller\Styleguide\Ds2013\Layout\ProseController }
-

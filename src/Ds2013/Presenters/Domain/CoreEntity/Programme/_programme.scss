@@ -64,9 +64,6 @@ $programme-icon-bpw-box-size: gel-typography('bpw', 'delta', 'line-height') + 18
 }
 
 .programme__img-box {
-    background: #cccccc;
-    background: rgba(204, 204, 204, 0.5);
-
     // Hidden by default
     display: none;
     visibility: hidden;

@@ -6,11 +6,13 @@
 
 <div
     class="component component--box {{ container_classes }} {% block extraClasses %}{% endblock %}">
-    {% if content_block.getBlock().getTitle() %}
-        <div class="component__header {{ content_block.isInPrimaryColumn() ? 'br-box-page' : 'br-box-highlight'}}">
-            <h2>{% block title %}{{ content_block.getBlock().getTitle() }}{% endblock %}</h2>
-        </div>
-    {% endif %}
+    {% block title %}
+        {% if content_block.getBlock().getTitle() %}
+            <div class="component__header {{ content_block.isInPrimaryColumn() ? 'br-box-page' : 'br-box-highlight'}}">
+                <h2>{{ content_block.getBlock().getTitle() }}</h2>
+            </div>
+        {% endif %}
+    {% endblock %}
     <div class="component__body {{ content_block.isInPrimaryColumn() ? ' br-box-page' : ' br-box-subtle'}}">
         {% block blockContent %}{% endblock %}
     </div>

@@ -28,10 +28,7 @@ class BrandFixtures extends AbstractFixture implements DependentFixtureInterface
 
         $brand = $this->buildBrand('b006q2x0', 'B1', 2);
 
-        $this->addReference(
-            'b006q2x0',
-            $brand
-        );
+        $this->addReference('b006q2x0', $brand);
 
         $this->buildPodcast($brand);
 

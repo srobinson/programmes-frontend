@@ -1,0 +1,17 @@
+[
+    {
+        "name": "ati-stats",
+        "default-value": "false",
+        "values": [
+            {
+                "value": "true",
+                "description": "Programmes-frontend will provide data for use in ATI Stats"
+            },
+            {
+                "value": "false",
+                "description": "Programmes-frontend will NOT provide data for use in ATI Stats and will fall back to orbit default"
+            }
+        ],
+        "description": "Choose whether to use ATI/Vulkan Stats"
+    }
+]

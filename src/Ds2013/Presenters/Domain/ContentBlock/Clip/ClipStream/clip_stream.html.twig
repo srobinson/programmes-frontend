@@ -6,10 +6,10 @@
     {{ add_stream(id) }}
     {# Carousel stream #}
     <div id="clips-p{{ id }}-items">
-        <ul class="list-unstyled article-clips grid-wrapper stream__list">
+        <ul class="list-unstyled article-clips grid-wrapper grid-wrapper--flush stream__list">
 
             {%- for carouselItem in content_block.getStreamItems() -%}
-            <li class="stream__item grid 1/2">
+            <li class="stream__item grid 1/2 grid--flush">
                 <div class="stream__item-inner br-page-bg-onborder">
                     {{ ds2013('programme', carouselItem.clip(), {
                         'title_options': {

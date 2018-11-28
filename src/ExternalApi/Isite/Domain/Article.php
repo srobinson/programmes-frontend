@@ -38,8 +38,8 @@ class Article
     /** @var string */
     private $image;
 
-    /** @var Row[] */
-    private $rows;
+    /** @var RowGroup[] */
+    private $rowGroups;
 
     public function __construct(
         string $title,
@@ -51,7 +51,7 @@ class Article
         string $brandingId,
         string $image,
         array $parents,
-        array $rows
+        array $rowGroups
     ) {
         $this->title = $title;
         $this->key = $key;
@@ -62,7 +62,7 @@ class Article
         $this->brandingId = $brandingId;
         $this->image = $image;
         $this->parents = $parents;
-        $this->rows = $rows;
+        $this->rowGroups = $rowGroups;
     }
 
     /**
@@ -103,9 +103,9 @@ class Article
         return empty($this->parentPid) ? null : new Pid($this->parentPid);
     }
 
-    public function getRows(): array
+    public function getRowGroups(): array
     {
-        return $this->rows;
+        return $this->rowGroups;
     }
 
     public function getShortSynopsis(): ?string

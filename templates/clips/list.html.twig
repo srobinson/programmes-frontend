@@ -1,0 +1,97 @@
+{% extends 'base_ds2013.html.twig' %}
+
+{% block page_classes %}text-base programmes-page--smallpush prog-layout{% endblock %}
+{% block title %}{{ meta_context.titlePrefix() }} - {{ tr("Clips") }}{% endblock %}
+
+{% block body %}
+    <div class="programmes-page prog-layout__primary br-box-page">
+        <h1>
+            <span class="context">
+                {{ ds_shared('entityContext', programme, {}) }}
+            </span>
+            {{ tr('Clips') }}
+        </h1>
+
+        {% if series|length > 0 %}
+            <div class="component ml br-box-subtle island--squashed">
+                <input class="ml__status" type="checkbox" id="ml-1" checked="">
+                <h3 class="ml__button--dropdown-h no-margin">
+                    <label class="ml__button ml__button--dropdown br-pseudolink" for="ml-1">
+                        <span class="dropdown-symbol">
+                            {{ gelicon('basics', 'up', 'gelicon--delta dropdown-icon dropdown-symbol ml__button--dropdown') }}
+                        </span>
+                        Filter by
+                    </label>
+                </h3>
+
+                <div class="ml__hidden" id="ml-1-answer">
+                    <ul class="grid columns--2@bpb2 columns--3@bpw columns--4@bpe list-unstyled gamma clips-series">
+                        <li>
+                            {% if showAllPid is defined %}
+                                <a class="box-link" href="{{ path('programme_clips', {pid: showAllPid}) }}">
+                                    {{ tr('All') }}
+                                </a>
+                            {% else %}
+                                <span class="box-link">{{ tr('All') }}</span>
+                            {% endif %}
+                        </li>
+
+                        {% for seriesInstance in series %}
+                            <li>
+                                {% if seriesInstance.getAvailableClipsCount() > 0 %}
+                                    <a class="box-link" href="{{ path('programme_clips', {pid: seriesInstance.getPid()}) }}">
+                                        {{ seriesInstance.getTitle() }}
+                                    </a>
+                                {% else %}
+                                    <span class="box-link">{{ seriesInstance.getTitle() }}</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if clips|length %}
+            <ol class="highlight-box-wrapper grid-wrapper clips-grid-wrapper">
+                {% for clip in clips %}
+                    <li class="grid 1/2@bpb1 1/3@bpw 1/4@bpe">
+                        {{ ds2013('programme', clip, {
+                            'context_programme': programme,
+                            'highlight_box_classes':'highlight-box--list programme--grid@bpb1 highlight-box--grid@bpb1 programme--grid@bpw highlight-box--grid@bpw',
+                            'image_options': {
+                                'classes': '1/1@bpb1 1/1@bpw',
+                                'default_width': 240,
+                                'sizes': { 0: 1/2, 1008: '224px', 600: 1/3},
+                            },
+                            'title_options': {
+                                'title_format': 'item::ancestry'
+                            },
+                            'body_options': {
+                                'show_synopsis': false
+                            },
+                            'branding_context': 'page'
+                        }) }}
+                    </li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p class="no_clips_page">
+                {{ tr('clips_count', {'%1': 0}) }}.
+                {% if programme is defined and programme.isTleo() == false %}
+                    <a
+                        href="{{ path('programme_clips', {pid: programme.getTleo().getPid()}) }}"
+                    >
+                        {{ tr("see_all_clips_from", {'%1': programme.getTleo().getTitle()}) }}
+                    </a>
+                {% endif %}
+            </p>
+        {% endif %}
+
+        <div class="component">
+            {%- if paginatorPresenter is defined -%}
+                {{ ds2013_presenter(paginatorPresenter) }}
+            {%- endif -%}
+        </div>
+    </div>
+{% endblock %}

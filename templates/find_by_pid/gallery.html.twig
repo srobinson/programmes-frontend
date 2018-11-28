@@ -12,10 +12,60 @@
 
         {{ ds2013('galleryDisplay', gallery, image, images, showFirstImage ,[]) }}
     </div>
-
+    
+    <div class="grid-wrapper grid-wrapper--center">
+        <div class="grid 13/24@bpw2 13/24@bpe">          
+            <div class="component component--box component--box-flushbody component--box--primary">
+                <div class="component__header br-box-highlight">
+                    <h2>{{ tr('galleries_context') }}</h2>
+                </div>
+                <div class="component__body br-box-page">
+                    {{ ds2013('programme', programme,{
+                        'highlight_box_classes': 'highlight-box--list',
+                        title_options: {
+                            'title_tag': 'h2',
+                            'title_classes': 'gamma'
+                        },
+                        body_options: {
+                            'show_masterbrand': true
+                        },
+                    }) }}
+                </div>
+            </div>
+        </div>
+        <div class="grid 11/24@bpw2 11/24@bpe" >
+            <div class="component component--box component--box--striped component--box--secondary galleries-link-box" >
+                {% if galleries %}
+                    <div class="component__header br-box-highlight">
+                        <h2>Galleries</h2>
+                    </div>
+                    <div class="component__body br-box-subtle">
+                        <ul class="grid-wrapper">
+                            {% for siblingGallery in galleries %}
+                                <li class="grid 1/2@bpb1 1/2@bpw">
+                                    {{ ds2013('group', siblingGallery, {
+                                        'highlight_box_classes':'highlight-box--list highlight-box--grid@bpb1 programme--grid@bpb1 highlight-box--grid@bpw programme--grid@bpw',
+                                        'img_classes': '1/1@bpb1 1/1@bpw',
+                                        'show_synopsis': false,
+                                    }) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% if brand.getAggregatedGalleriesCount() > 4 %}
+                        <div class="component__footer br-box-subtle">
+                            <a href = "{{ path('programme_galleries', {'pid':  brand.getPid() } ) }}">
+                                <span>
+                                    {{ tr('see_all_galleries_from', { '%1' : brand.getTitle()}) ~ " (" ~ brand.getAggregatedGalleriesCount() ~ ')' }}
+                                </span>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {%- endblock -%}
-
-
 
 {% block javascripts %}
     <script>
@@ -28,3 +78,4 @@
         });
     </script>
 {% endblock %}
+

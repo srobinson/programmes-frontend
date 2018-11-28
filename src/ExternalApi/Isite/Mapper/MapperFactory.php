@@ -78,9 +78,9 @@ class MapperFactory
         return $this->findMapper(ProfileMapper::class);
     }
 
-    public function createRowMapper(): RowMapper
+    public function createRowGroupMapper(): RowGroupMapper
     {
-        return $this->findMapper(RowMapper::class);
+        return $this->findMapper(RowGroupMapper::class);
     }
 
     private function findMapper(string $mapperType)

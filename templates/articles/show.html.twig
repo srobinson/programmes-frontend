@@ -6,9 +6,9 @@
 {% block body %}
     <div class="prog-layout">
         <div class="programmes-page">
-            {% if article.getRows() %}
+            {% if article.getRowGroups() %}
                 <div class="grid-wrapper">
-                    {% for row in article.getRows() %}
+                    {% for row in article.getRowGroups() %}
                         <div class="grid{{ row.getSecondaryBlocks() ? ' 7/12@bpw2 7/12@bpe' : '' }}">
                             <div class="br-box-page prog-box">
                                 {% if row.getPrimaryBlocks() %}
