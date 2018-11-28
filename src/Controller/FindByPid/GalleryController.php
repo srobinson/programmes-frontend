@@ -24,7 +24,7 @@ class GalleryController extends BaseController
         $images = $imagesService->findByGroup($gallery);
         $image = $this->getFirstImage($imagePid, $images);
         $showFirstImage = false;
-        if($imagePid){
+        if ($imagePid) {
             $showFirstImage = true;
         }
         $programme = $gallery->getParent();

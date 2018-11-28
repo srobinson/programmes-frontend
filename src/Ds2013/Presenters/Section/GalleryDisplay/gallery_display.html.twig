@@ -75,8 +75,8 @@
                        data-image-sizes=" {{ gallery_display.renderSizes(position) }}">
                         {{ ds_shared('imageEntity', eachImage,224, {1: "224px"} ,{
                             'is_lazy_loaded': false,
-                            'alt': eachImage.getTitle()},
-                            'srcsets': [80,160,224],
+                            'alt': eachImage.getTitle(),
+                            'srcsets': [80,160,224],}
                         )}}
                     </a>
                 </div>

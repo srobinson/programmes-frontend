@@ -3,7 +3,8 @@ $gallery-previous-next-base-size: 16px;
 $gallery-previous-next-bpw-size: 24px;
 
 // @todo We do this link with an icon thing a lot. We should abstract it
-.gallery__listlink__icon, .gallery__listlink__text {
+.gallery__listlink__icon,
+.gallery__listlink__text {
     display: inline-block;
     height: 2.2em;
     line-height: 2.15em;
@@ -13,6 +14,7 @@ $gallery-previous-next-bpw-size: 24px;
 .gallery__listlink__icon {
     width: 2.2em;
     text-align: center;
+
     i {
         font-size: 1.05em;
     }
@@ -108,6 +110,7 @@ $gallery-previous-next-bpw-size: 24px;
         visibility: visible;
         z-index: 5;
     }
+
     .gallery-slideshow__slide--current {
         opacity: 1;
     }
@@ -132,7 +135,7 @@ $gallery-previous-next-bpw-size: 24px;
     @extend .loading-spinner--large;
 
     width: 100%;
-    padding: 0 0 56.25% 0; // enforces 16:9 aspect ratio when image is not present
+    padding: 0 0 56.25%; // enforces 16:9 aspect ratio when image is not present
     position: relative;
 
     img {
@@ -198,7 +201,8 @@ a.gallery__previousnext {
     .gallery__thumblist {
         display: none;
     }
-    &.gallery--initialised .gallery__thumblist {
+    &.gallery--initialised
+    .gallery__thumblist {
         display: block;
     }
 }

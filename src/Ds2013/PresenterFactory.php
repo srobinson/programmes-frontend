@@ -231,8 +231,8 @@ class PresenterFactory
         array $images,
         bool $fullImagePageView,
         ?array $options
-    ){
-        return new GalleryDisplayPresenter(new \App\DsShared\PresenterFactory(), $gallery, $primaryImage, $images, $fullImagePageView,$this->router, $options);
+    ) {
+        return new GalleryDisplayPresenter(new \App\DsShared\PresenterFactory(), $gallery, $primaryImage, $images, $fullImagePageView, $this->router, $options);
     }
 
     public function noSchedulePresenter(

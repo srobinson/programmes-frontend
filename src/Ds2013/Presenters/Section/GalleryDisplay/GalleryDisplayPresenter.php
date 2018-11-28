@@ -34,7 +34,7 @@ class GalleryDisplayPresenter extends Presenter
     /**
      * @var array
      */
-    private $imagePresenters =[];
+    private $imagePresenters = [];
 
     /**
      * @var int|string
@@ -59,8 +59,12 @@ class GalleryDisplayPresenter extends Presenter
 
     /**
      * GalleryDisplayPresenter constructor.
+     * @param PresenterFactory $presenterFactory
      * @param Gallery $gallery
+     * @param Image|null $primaryImage
      * @param array $images
+     * @param bool $fullImagePageView
+     * @param UrlGeneratorInterface $router
      * @param array $options
      */
     public function __construct(
@@ -78,57 +82,54 @@ class GalleryDisplayPresenter extends Presenter
         $this->fullImagePageView = $fullImagePageView;
         $this->router = $router;
         parent::__construct($options);
-
-        foreach( $images as $position => $image){
+        foreach ($images as $position => $image) {
             $this->imagePresenters[$position] = $presenterFactory->imageEntityPresenter(
                 $image,
                 $this->options['default_width'],
                 $this->options['image_sizes'],
-                ['srcsets'=> $this->options[
-                    'image_srcsets'],
-                    'is_bounded'=> true,
-                    'is_lazy_loaded' => false]
+                ['srcsets' => $this->options['image_srcsets'],
+                    'is_bounded' => true,
+                    'is_lazy_loaded' => false,
+                    ]
             );
-            if($image->getPid() == $primaryImage->getPid()){
+            if ($image->getPid() == $primaryImage->getPid()) {
                 $this->activeImagePosition = $position;
             }
         }
-
-
     }
 
-    function isFullImagePageView(): bool
+    public function isFullImagePageView():bool
     {
         return $this->fullImagePageView;
     }
 
-    function renderSrc(int $position ):string
+    public function renderSrc(int $position) :string
     {
         return $this->imagePresenters[$position]->getSrc();
     }
 
-    function renderSrcSets(int $position ): string
+    public function renderSrcSets(int $position) :string
     {
 
         return $this->imagePresenters[$position]->getSrcSets();
     }
 
-    function renderSizes(int $position ): string
+    public function renderSizes(int $position) :string
     {
         return $this->imagePresenters[$position]->getSizes();
     }
 
-    function getPrimaryImage(): Image
+    public function getPrimaryImage(): Image
     {
         return $this->primaryImage;
     }
 
-    function getImages(): array
+    public function getImages(): array
     {
         return $this->images;
     }
 
-    function getGallery(): gallery
+    public function getGallery(): gallery
     {
         return $this->gallery;
     }
@@ -141,28 +142,28 @@ class GalleryDisplayPresenter extends Presenter
 
     public function getPreviousUrl(): string
     {
-        $images_count = count($this->images);
-        $previous_image_pos = $this->getActiveImagePosition() > 0 ? ($this->getActiveImagePosition() - 1) : $images_count - 1;
-        if (!isset($this->images[$previous_image_pos])) {
+        $imagesCount = count($this->images);
+        $previousImagePos = $this->getActiveImagePosition() > 0 ? ($this->getActiveImagePosition() - 1) : $imagesCount - 1;
+        if (!isset($this->images[$previousImagePos])) {
             return '#';
         }
-        return $this->pageUrl($this->images[$previous_image_pos]);
+        return $this->pageUrl($this->images[$previousImagePos]);
     }
 
     public function getNextUrl() : string
     {
-        $images_count = count($this->images);
-        $next_image_pos = $this->getActiveImagePosition() < ($images_count - 1) ? ($this->getActiveImagePosition() + 1) : 0;
-        if (!isset($this->images[$next_image_pos])) {
+        $imagesCount = count($this->images);
+        $previousImagePos  = $this->getActiveImagePosition() < ($imagesCount - 1) ? ($this->getActiveImagePosition() + 1) : 0;
+        if (!isset($this->images[$previousImagePos])) {
             return '#';
         }
-        return $this->pageUrl($this->images[$next_image_pos]);
+        return $this->pageUrl($this->images[$previousImagePos]);
     }
 
 
     public function pageUrl($image)
     {
-        return $this->router->generate( 'programme_gallery', ['pid' =>  $this->getGallery()->getPid(), 'imagePid'=> $image->getPid() ] );
+        return $this->router->generate('programme_gallery', ['pid' =>  $this->getGallery()->getPid(), 'imagePid' => $image->getPid()]);
     }
 
     public function getImagePresenter(int $position):ImageEntityPresenter
