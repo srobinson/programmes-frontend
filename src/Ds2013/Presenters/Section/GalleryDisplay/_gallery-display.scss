@@ -34,7 +34,7 @@ $gallery-previous-next-bpw-size: 24px;
     clear: both;
     position: relative;
     margin-bottom: $wide-spacing;
-    // States for previous/next buttons
+
     &:hover {
         .gallery__previousnext {
             visibility: visible;
@@ -68,8 +68,8 @@ $gallery-previous-next-bpw-size: 24px;
     overflow-x: auto;
     overflow-y: hidden;
     z-index: 1;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: scrollbar;
+    overflow-scrolling: touch;
+    overflow-style: scrollbar;
     -ms-scroll-chaining: none;
 }
 
@@ -201,12 +201,11 @@ a.gallery__previousnext {
     .gallery__thumblist {
         display: none;
     }
-    &.gallery--initialised
-    .gallery__thumblist {
+    &.gallery--initialised .gallery__thumblist {
         display: block;
     }
 }
-// Thumbnails with grey/blackout on hover/.active
+
 .gallery__thumblist {
     clear: both;
     margin-bottom: $wide-spacing;
