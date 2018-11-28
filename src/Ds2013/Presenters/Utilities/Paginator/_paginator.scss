@@ -12,7 +12,8 @@
 
     // Nested in a .pagination class to trump the "nav > li" styles
     .pagination__page,
-    .pagination__spacer {
+    .pagination__spacer,
+    .pagination__spacer--hidden {
         display: none;
         margin: 0 1px;
         text-align: center;
@@ -37,9 +38,10 @@
 
 .pagination__page a,
 .pagination__page span,
-.pagination__spacer span {
+.pagination__spacer span,
+.pagination__spacer--hidden span {
     display: block;
-    width: mq-px2em(38px, 14px);
+    width: mq-px2em(35px, 14px);
     padding: mq-px2em(10px, 14px) 0;
 }
 
@@ -61,6 +63,8 @@ svg.pagination__next-previous {
         .pagination__page--first,
         .pagination__page--last,
         .pagination__page--current,
+        .pagination__page--nohide,
+        .pagination__spacer--hidden,
         .pagination__spacer {
             display: inline-block;
         }
@@ -81,13 +85,16 @@ svg.pagination__next-previous {
         .pagination__page--last,
         .pagination__page--current,
         .pagination__spacer,
+        .pagination__spacer--hidden,
+        .pagination__page--nohide,
         .pagination__page--offset1,
         .pagination__page--offset2 {
             @include gel-font-size(15px, 15px);
         }
 
         .pagination__page--offset1,
-        .pagination__page--offset2 {
+        .pagination__page--offset2,
+        .pagination__page--nohide {
             display: inline-block;
         }
     }
@@ -103,8 +110,17 @@ svg.pagination__next-previous {
         .pagination__page--last,
         .pagination__page--current,
         .pagination__spacer,
+        .pagination__page--nohide,
         .pagination__page--offset1,
         .pagination__page--offset2 {
+            display: inline-block;
+        }
+    }
+}
+
+@include mq-range('bpw1') {
+    .pagination {
+        .pagination__spacer--hidden {
             display: inline-block;
         }
     }

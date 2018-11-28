@@ -1,0 +1,63 @@
+{% extends 'styleguide/ds2013/base.html.twig' %}
+{% block section_name %}Pagination{% endblock %}
+{% block content %}
+    <p>The pagination element has some weird rules that allow it to work at both mobile (Down to 320px) and desktop sizes.
+    At mobile (320px width screen) it will never show more than five elements, including the previous and next arrows.</p>
+    <p>Careful consideration should be taken around the spacers, to ensure it never displays a spacer when there is only
+    a gap of one number.</p>
+    <p>The current page should have a different colour scheme to the other items.</p>
+    <p>At desktop, on nine pages, when on page 5, it should display ALL pages. This is because if we introduced a spacer
+    as well as keeping the two either side of current page (Like other combinations), we would end up with 1...345, which
+    we don't want, since we might as well just do the 2 instead, it doesn't save any space.</p>
+    {%- for pageCount in 2..11 -%}
+            <h2>{{ pageCount }} pages</h2>
+            <hr/>
+            <br/>
+            {%- for currentPage in 1..pageCount -%}
+                <div class="grid-wrapper">
+                    <div class="grid 1/1">
+                        {{ ds2013('paginator', currentPage, 10, pageCount * 10) }}
+                    </div>
+                </div>
+            {%- endfor -%}
+            <br/>
+        {%- endfor -%}
+        <h2>140 pages</h2>
+        <hr/>
+        <br/>
+        <div class="grid-wrapper">
+            <div class="grid 1/1">
+                {{ ds2013('paginator', 1, 10, 1400) }}
+            </div>
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid 1/1">
+                {{ ds2013('paginator', 50, 10, 1400) }}
+            </div>
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid 1/1">
+                {{ ds2013('paginator', 140, 10, 1400) }}
+            </div>
+        </div>
+        <br/>
+    <h2>1500 pages</h2>
+    <hr/>
+    <br/>
+    <div class="grid-wrapper">
+        <div class="grid 1/1">
+            {{ ds2013('paginator', 1, 10, 15000) }}
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid 1/1">
+            {{ ds2013('paginator', 150, 10, 15000) }}
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid 1/1">
+            {{ ds2013('paginator', 1500, 10, 15000) }}
+        </div>
+    </div>
+    <br/>
+{% endblock %}

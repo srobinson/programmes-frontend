@@ -11,23 +11,18 @@ class AtiAnalyticsLabels
     /** @var string */
     private $pageType;
 
-    public function __construct($context, string $progsPageType)
+    /** @var string */
+    private $appEnvironment;
+
+    public function __construct($context, string $progsPageType, string $environment)
     {
         $this->context = $context;
         $this->pageType = $progsPageType;
+        $this->appEnvironment = $environment;
     }
 
     public function orbLabels()
     {
-        // TODO: This destination logic is incorrect and needs to cover BBC_Language_English (PROGRAMMES-6747)
-        // This also needs to be moved into something environment based as we shouldn't be using test on live
-        $destination = 'PS Programmes - Test';
-        if (method_exists($this->context, 'getNetwork') && $this->context->getNetwork()
-            && ((string) $this->context->getNetwork()->getNid() === 'bbc_world_service' || $this->context->getNetwork()->isWorldServiceInternational())
-        ) {
-            $destination = 'WS Programmes - Test';
-        }
-
         // TODO: This needs to be set based on the masterbrand - seperate ticket incoming
         $producer = 'progs_v3';
 
@@ -37,12 +32,32 @@ class AtiAnalyticsLabels
         $contentId = 'urn:bbc:<authority>:<identifier>';
 
         $labels = [
-            'destination' => $destination,
+            'destination' => $this->getDestination(),
             'producer' => $producer,
             'contentId' => $contentId,
             'contentType' => $this->pageType,
         ];
 
         return $labels;
+    }
+
+    private function getDestination(): string
+    {
+        $destination =  'programmes_ps';
+
+        if (method_exists($this->context, 'getNetwork') && $this->context->getNetwork()
+            && (
+                in_array((string) $this->context->getNetwork()->getNid(), ['bbc_world_service', 'bbc_world_service_tv', 'bbc_learning_english', 'bbc_world_news'])
+                || $this->context->getNetwork()->isWorldServiceInternational()
+            )
+        ) {
+            $destination = 'ws_programmes';
+        }
+
+        if (in_array($this->appEnvironment, ['int', 'stage', 'sandbox', 'test'])) {
+            $destination .= '_test';
+        }
+
+        return $destination;
     }
 }
