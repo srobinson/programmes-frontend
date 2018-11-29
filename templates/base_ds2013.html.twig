@@ -92,7 +92,7 @@
         {% if meta_context.canonicalUrl() %}<meta property="og:url" content="{{ meta_context.canonicalUrl() }}">{% endif %}
         <meta property="og:description" content="{{ meta_context.description() }}">
         <meta property="og:image" content="{{ meta_context.image().getUrl(1200, 675) }}">
-        
+
         {#- Twitter-specific tags -#}
         {% block twitter_tags %}
             <meta name="twitter:card" content="summary_large_image">

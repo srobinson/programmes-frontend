@@ -66,7 +66,7 @@ class MetaContext
             }
         }
 
-        if (is_null($this->image)) {
+        if ($this->image === null) {
             $this->image = new Image(
                 new Pid('p01tqv8z'),
                 'bbc_640x360.png',
