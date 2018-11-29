@@ -49,6 +49,6 @@ abstract class SchedulesBaseController extends BaseController
 
     private function shouldShowSoundsNav(): bool
     {
-        return $this->context->isRadio() && $this->container->get(Dials::class)->get('sounds-nav') === 'true';
+        return $this->context->isRadio();
     }
 }
