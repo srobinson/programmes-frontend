@@ -37,7 +37,7 @@ class GalleryDisplayPresenter extends Presenter
     private $imagePresenters = [];
 
     /**
-     * @var int|string
+     * @var int
      */
     private $activeImagePosition;
 
