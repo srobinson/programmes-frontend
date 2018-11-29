@@ -13,11 +13,11 @@ class PaginatorPresenter extends Presenter
     /** @var int */
     private $pageSize;
 
-    /** @var int */
-    private $totalItems;
-
     /** @var (int|string)[] */
     private $items;
+    
+    /** @var int */
+    private $totalItems;
 
     public function __construct(int $currentPage, int $pageSize, int $totalItems, array $options = [])
     {

@@ -11,6 +11,9 @@ class Profile
     /** @var Profile[]|null */
     private $children;
 
+    /** @var int|null */
+    private $childCount;
+
     /** @var string */
     private $fileId;
 
@@ -92,6 +95,7 @@ class Profile
         $this->brandingId = $brandingId;
         if ($this->isIndividual()) {
             $this->setChildren([]);
+            $this->setChildCount(0);
         }
         $this->contentBlocks = $contentBlocks;
         $this->keyFacts = $keyFacts;
@@ -114,6 +118,14 @@ class Profile
         }
 
         return $this->children;
+    }
+
+    public function getChildCount(): int
+    {
+        if ($this->childCount === null) {
+            throw new DataNotFetchedException('Profile children have not been queried for yet.');
+        }
+        return $this->childCount;
     }
 
     public function getContentBlocks(): array
@@ -158,6 +170,12 @@ class Profile
     public function getParents(): array
     {
         return $this->parents;
+    }
+
+    public function getParent(): ?Profile
+    {
+        $parent = reset($this->parents);
+        return $parent ?: null;
     }
 
     public function getParentPid(): string
@@ -232,6 +250,11 @@ class Profile
     public function setChildren(array $children)
     {
         $this->children = $children;
+    }
+
+    public function setChildCount(int $childCount): void
+    {
+        $this->childCount = $childCount;
     }
 
     public function isIndividual(): bool

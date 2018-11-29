@@ -73,6 +73,7 @@ class ProfileFakeService extends ProfileService
         $profile->setChildren([
             ProfileBuilder::anyIndividual()->build(),
         ]);
+        $profile->setChildCount(1);
 
         return $profile;
     }

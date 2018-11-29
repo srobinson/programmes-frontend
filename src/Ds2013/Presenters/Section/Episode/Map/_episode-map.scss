@@ -33,14 +33,14 @@
 }
 
 @include mq-range('bpw2') {
+    .map__column--last > .map__inner > .map__column:empty {
+        margin-top: $basic-spacing / 4;
+    }
+
     .map--episode .map__column .map__inner,
     .map__fauxcolumn {
         margin-bottom: -100em;
         padding-bottom: 100em;
-    }
-
-    .map__column--last > .map__inner > .map__column:empty {
-        margin-top: $basic-spacing / 4;
     }
 }
 
@@ -114,13 +114,13 @@
         background: $iplayer-pink !important; // colours matter here
     }
 
-    .map--episode .map__column .map__inner,
-    .map__fauxcolumn {
-        margin-bottom: -50em;
-        padding-bottom: 50em;
-    }
-
     .map__column--last > .map__inner > .map__column:empty {
         margin-top: $basic-spacing / 4;
+    }
+
+    .map--episode .map__column .map__inner,
+    .map__fauxcolumn {
+        margin-bottom: -100em;
+        padding-bottom: 100em;
     }
 }

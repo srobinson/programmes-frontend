@@ -6,17 +6,7 @@
     {% endif %}
 {% endblock %}
 
-{% block title %}
-    <div class="component__header {{ content_block.isInPrimaryColumn() ? 'br-box-page' : 'br-box-highlight'}}">
-        <h2>
-            {% if content_block.getBlock().getTitle() %}
-                {{ content_block.getBlock().getTitle() }}
-            {% else %}
-                {{ tr('galleries', content_block.getBlock().getGalleries()|length) }}
-            {% endif %}
-        </h2>
-    </div>
-{% endblock %}
+{% block defaultTitle %}{{ tr('galleries', content_block.getBlock().getGalleries()|length) }}{% endblock %}
 
 {% block blockContent %}
     <ul class="grid-wrapper highlight-box-wrapper bpb1-highlight-box-wrapper--grid bpw-highlight-box-wrapper--grid">

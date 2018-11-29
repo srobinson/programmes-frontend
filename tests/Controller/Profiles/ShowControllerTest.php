@@ -31,7 +31,6 @@ class ShowControllerTest extends BaseWebTestCase
     {
         $crawler = $this->client->request('GET', '/programmes/profiles/' . self::PROFILE_GROUP . '/' . self::SLUG);
         $this->assertResponseStatusCode($this->client, 200);
-
         $this->assertEquals(1, $crawler->filter('.profile--group')->count());
     }
 
