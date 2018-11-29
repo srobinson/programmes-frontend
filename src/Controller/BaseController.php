@@ -172,6 +172,7 @@ abstract class BaseController extends AbstractController
      * set $this->isInternational to true so the twig template can render the required JavaScript
      *
      * @param mixed $context
+     *
      * @throws Exception
      */
     protected function setInternationalStatusAndTimezoneFromContext($context): void
@@ -208,6 +209,7 @@ abstract class BaseController extends AbstractController
             $this->branding = $unwrapped['branding'];
             unset($unwrapped['branding']);
         }
+
         return $unwrapped;
     }
 
@@ -225,30 +227,45 @@ abstract class BaseController extends AbstractController
         $istatsAnalyticsLabelsInstance = new IstatsAnalyticsLabels($this->context, $this->istatsProgsPageType, $cosmosInfo->getAppVersion(), $this->istatsExtraLabels);
         $istatsAnalyticsLabelsValues = $istatsAnalyticsLabelsInstance->orbLabels();
 
-        $orb = $this->container->get(OrbitClient::class)->getContent([
-            'variant' => $this->branding->getOrbitVariant(),
-            'language' => $this->branding->getLanguage(),
-        ], [
-            'page' => $atiAnalyticsLabelsValues,
-            'searchScope' => $this->orbitSearchScope,
-            'skipLinkTarget' => 'programmes-content',
-            'analyticsCounterName' => $analyticsCounterName,
-            'analyticsLabels' => $istatsAnalyticsLabelsValues,
-        ]);
+        $orb = $this->container->get(OrbitClient::class)->getContent(
+            [
+                'variant' => $this->branding->getOrbitVariant(),
+                'language' => $this->branding->getLanguage(),
+            ],
+            [
+                'page' => $atiAnalyticsLabelsValues,
+                'searchScope' => $this->orbitSearchScope,
+                'skipLinkTarget' => 'programmes-content',
+                'analyticsCounterName' => $analyticsCounterName,
+                'analyticsLabels' => $istatsAnalyticsLabelsValues,
+            ]
+        );
 
         $queryString = $this->request()->getQueryString();
         $urlQueryString =  is_null($queryString) ? '' : '?' . $queryString;
+        $comscoreAnalysis = new ComscoreAnalyticsLabels(
+            $this->context,
+            $cosmosInfo,
+            $istatsAnalyticsLabelsInstance,
+            $this->getCanonicalUrl() . $urlQueryString
+        );
 
         $parameters = array_merge([
             'orb' => $orb,
-            'meta_context' => new MetaContext($this->context, $this->getCanonicalUrl(), $this->getMetaNoIndex(), $this->overridenDescription),
-            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabelsInstance, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
+            'meta_context' => new MetaContext(
+                $this->context,
+                $this->getCanonicalUrl(),
+                $this->getMetaNoIndex(),
+                $this->overridenDescription
+            ),
+            'comscore' => $comscoreAnalysis->getComscore(),
             'analytics_counter_name' => $analyticsCounterName,
             'istats_analytics_labels' => $istatsAnalyticsLabelsInstance->getLabels(),
             'branding' => $this->branding,
             'with_chrome' => true,
             'is_international' => $this->isInternational,
         ], $parameters);
+
         return $this->render($view, $parameters, $this->response);
     }
 
@@ -256,6 +273,7 @@ abstract class BaseController extends AbstractController
     {
         $this->preRender();
         $parameters['with_chrome'] = false;
+
         return $this->render($view, $parameters, $this->response);
     }
 
@@ -264,18 +282,19 @@ abstract class BaseController extends AbstractController
      * This picks up the default cache configuration of $this->response that was
      * set in the constructor, unlike ->redirect()
      *
-     * @param string $url    The URL to redirect to
-     * @param int    $status The status code to use for the Response
+     * @param string $url           The URL to redirect to
+     * @param int    $status        The status code to use for the Response
      * @param int    $cacheLifetime Seconds the response should be cached for
      *
      * @return RedirectResponse
      */
     protected function cachedRedirect($url, $status = 302, int $cacheLifetime = null): RedirectResponse
     {
-        if ($cacheLifetime !== null) {
+        if (!is_null($cacheLifetime)) {
             $this->response()->setPublic()->setMaxAge($cacheLifetime);
         }
         $headers = $this->response->headers->all();
+
         return new RedirectResponse($url, $status, $headers);
     }
 
@@ -284,10 +303,10 @@ abstract class BaseController extends AbstractController
      *  * This picks up the default cache configuration of $this->response that was
      * set in the constructor, unlike ->redirect()
      *
-     * @param string $route The name of the route
-     * @param array $parameters An array of parameters
-     * @param int $status The status code to use for the Response
-     * @param int|null $lifetime The varnish cache lifetime
+     * @param string   $route      The name of the route
+     * @param array    $parameters An array of parameters
+     * @param int      $status     The status code to use for the Response
+     * @param int|null $lifetime   The varnish cache lifetime
      *
      * @return RedirectResponse
      */
@@ -349,6 +368,7 @@ abstract class BaseController extends AbstractController
                 }
             );
         }
+
         return $this->brandingPromise;
     }
 
@@ -385,11 +405,14 @@ abstract class BaseController extends AbstractController
 
             $this->setBrandingId($this->fallbackBrandingId);
             $brandingClient = $this->container->get(BrandingClient::class);
+
             return $brandingClient->getContent($this->brandingId, null);
         }
+
         if ($reason instanceof Exception) {
             throw $reason;
         }
+
         throw new RuntimeException("An unknown error occurred fetching branding");
     }
 
@@ -425,6 +448,7 @@ abstract class BaseController extends AbstractController
         if ($network->isRadio()) {
             return 'sounds';
         }
+
         return '';
     }
 }

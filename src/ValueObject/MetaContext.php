@@ -38,8 +38,12 @@ class MetaContext
     /** @var  bool */
     private $metaNoIndex;
 
-    public function __construct($context = null, string $canonicalUrl = '', bool $metaNoIndex = false, $overriddenDescription = null)
-    {
+    public function __construct(
+        $context = null,
+        string $canonicalUrl = '',
+        bool $metaNoIndex = false,
+        $overriddenDescription = null
+    ) {
         $this->canonicalUrl = $canonicalUrl;
         $this->context = $context;
         $this->metaNoIndex = $metaNoIndex;
@@ -62,7 +66,7 @@ class MetaContext
             }
         }
 
-        if ($this->image === null) {
+        if (is_null($this->image)) {
             $this->image = new Image(
                 new Pid('p01tqv8z'),
                 'bbc_640x360.png',

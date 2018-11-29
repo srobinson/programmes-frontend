@@ -61,6 +61,7 @@ class GalleryController extends BaseController
         if (!$image) {
             throw new NotFoundHttpException('Image not found.');
         }
+
         return $image;
     }
 }
