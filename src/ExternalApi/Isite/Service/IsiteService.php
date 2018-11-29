@@ -234,7 +234,9 @@ abstract class IsiteService
     {
         foreach ($objects as $key => $object) {
             $childObjects = (isset($responses[$key]) ? $responses[$key]->getDomainModels() : []);
+            $childCount = (isset($responses[$key]) ? $responses[$key]->getTotal() : 0);
             $object->setChildren($childObjects);
+            $object->setChildCount($childCount);
         }
     }
 }
