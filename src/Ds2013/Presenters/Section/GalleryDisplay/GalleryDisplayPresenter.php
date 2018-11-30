@@ -87,7 +87,8 @@ class GalleryDisplayPresenter extends Presenter
                 $image,
                 $this->options['default_width'],
                 $this->options['image_sizes'],
-                ['srcsets' => $this->options['image_srcsets'],
+                [
+                    'srcsets' => $this->options['image_srcsets'],
                     'is_bounded' => true,
                     'is_lazy_loaded' => false,
                     ]
@@ -110,7 +111,6 @@ class GalleryDisplayPresenter extends Presenter
 
     public function renderSrcSets(int $position) :string
     {
-
         return $this->imagePresenters[$position]->getSrcSets();
     }
 
@@ -163,7 +163,10 @@ class GalleryDisplayPresenter extends Presenter
 
     public function pageUrl($image)
     {
-        return $this->router->generate('programme_gallery', ['pid' =>  $this->getGallery()->getPid(), 'imagePid' => $image->getPid()]);
+        return $this->router->generate('programme_gallery', [
+            'pid' =>  $this->getGallery()->getPid(),
+            'imagePid' => $image->getPid()
+        ]);
     }
 
     public function getImagePresenter(int $position):ImageEntityPresenter
