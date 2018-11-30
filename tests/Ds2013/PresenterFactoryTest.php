@@ -35,6 +35,7 @@ use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\Service;
 use BBC\ProgrammesPagesService\Domain\Entity\Version;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
+use App\DsShared\PresenterFactory as DsSharedPresenterFactory;
 use Cake\Chronos\Chronos;
 use Cake\Chronos\Date;
 use PHPUnit\Framework\TestCase;
@@ -67,7 +68,8 @@ class PresenterFactoryTest extends TestCase
         $this->router = $this->createMock(UrlGeneratorInterface::class);
         $this->helperFactory = $this->createMock(HelperFactory::class);
         $dummyCosmosInfo = $this->createMock(CosmosInfo::class);
-        $this->factory = new PresenterFactory($translateProvider, $this->router, $this->helperFactory, $dummyCosmosInfo);
+
+        $this->factory = new PresenterFactory(new DsSharedPresenterFactory(), $translateProvider, $this->router, $this->helperFactory, $dummyCosmosInfo);
     }
 
     public function tearDown()

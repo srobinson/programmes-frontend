@@ -201,6 +201,7 @@ a.gallery__previousnext {
     .gallery__thumblist {
         display: none;
     }
+
     &.gallery--initialised .gallery__thumblist {
         display: block;
     }

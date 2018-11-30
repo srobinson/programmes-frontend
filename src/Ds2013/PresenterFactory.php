@@ -88,6 +88,7 @@ use Cake\Chronos\Date;
 use InvalidArgumentException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use BBC\ProgrammesPagesService\Domain\Entity\Image as DomainImage;
+use App\DsShared\PresenterFactory as SharedPresenterFactory;
 
 /**
  * Ds2013 Factory Class for creating presenters.
@@ -122,12 +123,16 @@ class PresenterFactory
     /** @var CosmosInfo */
     private $cosmosInfo;
 
+    private $presenterFactory;
+
     public function __construct(
+        SharedPresenterFactory $presenterFactory,
         TranslateProvider $translateProvider,
         UrlGeneratorInterface $router,
         HelperFactory $helperFactory,
         CosmosInfo $cosmosInfo
     ) {
+        $this->presenterFactory = $presenterFactory;
         $this->translateProvider = $translateProvider;
         $this->router = $router;
         $this->helperFactory = $helperFactory;
@@ -232,7 +237,7 @@ class PresenterFactory
         bool $fullImagePageView,
         ?array $options
     ) {
-        return new GalleryDisplayPresenter(new \App\DsShared\PresenterFactory(), $gallery, $primaryImage, $images, $fullImagePageView, $this->router, $options);
+        return new GalleryDisplayPresenter($this->presenterFactory, $gallery, $primaryImage, $images, $fullImagePageView, $this->router, $options);
     }
 
     public function noSchedulePresenter(
