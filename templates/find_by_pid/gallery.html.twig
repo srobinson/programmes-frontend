@@ -2,12 +2,19 @@
 
 {% block title %}{{ meta_context.titlePrefix() }}{% endblock %}
 
+{% block page_classes %}programmes-page text-base programmes-page--flush prog-layout{% endblock %}
+
 {%- block body -%}
 
+    <div class="programmes-page prog-layout__primary br-box-page">
+        <h1><span class="context">{{ ds_shared('entityContext', gallery,{
+                    'include_self': false,
+                }) }} </span>{{ gallery.getTitle() }}</h1>
+        <p class="delta">{{ gallery.getShortSynopsis() }}</p>
 
-    {# Gallery Carro#}
-
-
+        {{ ds2013('galleryDisplay', gallery, image, images, showFirstImage ,[]) }}
+    </div>
+    
     <div class="grid-wrapper grid-wrapper--center">
         <div class="grid 13/24@bpw2 13/24@bpe">          
             <div class="component component--box component--box-flushbody component--box--primary">
@@ -62,4 +69,15 @@
     </div>
 {%- endblock -%}
 
+{% block javascripts %}
+    <script>
+        require(['gallery'], function (gallery) {
+            new gallery({
+                containerSelector: '#gallery',
+                previousSvg: {{ gelicon('basics', 'previous', 'gelicon--beta gelicon--center')|json_encode()| raw }},
+                nextSvg: {{ gelicon('basics', 'next', 'gelicon--beta gelicon--center')|json_encode()|raw }},
+            });
+        });
+    </script>
+{% endblock %}
 

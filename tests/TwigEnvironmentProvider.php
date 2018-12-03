@@ -125,9 +125,9 @@ class TwigEnvironmentProvider
 
         // Set presenter factory for template tests to use.
         $dummyCosmosInfo = new CosmosInfo('12', 'asdf');
-        self::$ds2013PresenterFactory = new Ds2013PresenterFactory($translateProvider, $router, $helperFactory, $dummyCosmosInfo);
-        self::$dsAmenPresenterFactory = new DsAmenPresenterFactory($translateProvider, $router, $helperFactory);
         self::$dsSharedPresenterFactory = new DsSharedPresenterFactory();
+        self::$ds2013PresenterFactory = new Ds2013PresenterFactory(self::$dsSharedPresenterFactory, $translateProvider, $router, $helperFactory, $dummyCosmosInfo);
+        self::$dsAmenPresenterFactory = new DsAmenPresenterFactory($translateProvider, $router, $helperFactory);
 
         $twig->addExtension(new DesignSystemPresenterExtension(
             self::$ds2013PresenterFactory,
