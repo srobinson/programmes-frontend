@@ -41,6 +41,9 @@ class Article
     /** @var RowGroup[] */
     private $rowGroups;
 
+    /** @var int */
+    private $childCount;
+
     public function __construct(
         string $title,
         string $key,
@@ -63,6 +66,7 @@ class Article
         $this->image = $image;
         $this->parents = $parents;
         $this->rowGroups = $rowGroups;
+        $this->setChildCount(0);
     }
 
     /**
@@ -152,5 +156,10 @@ class Article
     public function setChildren(array $children)
     {
         $this->children = $children;
+    }
+
+    public function setChildCount(int $childCount)
+    {
+        $this->childCount = $childCount;
     }
 }
