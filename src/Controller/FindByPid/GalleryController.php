@@ -12,6 +12,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryController extends BaseController
 {
+    private const TWITTER_CARD_PHOTO_TYPE = 'photo';
+    private const TWITTER_CARD_GALLERY_TYPE = 'gallery';
+
     public function __invoke(
         Gallery $gallery,
         ImagesService $imagesService,
@@ -27,6 +30,7 @@ class GalleryController extends BaseController
         $brand = $programme->getTleo();
         $network = $programme->getMasterBrand()->getNetwork()->getName();
         $galleries = $programmesAggregationService->findDescendantGalleries($brand, $siblingLimit);
+        $isGallery = empty($imagePid);
 
         return $this->renderWithChrome('find_by_pid/gallery.html.twig', [
             'gallery' => $gallery,
@@ -36,7 +40,8 @@ class GalleryController extends BaseController
             'network' => $network,
             'galleries' => $galleries,
             'brand' => $brand,
-        ]);
+            'isGallery' => $isGallery,
+         ]);
     }
 
     public function getFirstImage(?string $imagePid, array $images): ?Image
