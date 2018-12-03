@@ -12,61 +12,35 @@ use App\DsShared\Utilities\ImageEntity\ImageEntityPresenter;
 
 class GalleryDisplayPresenter extends Presenter
 {
-
     /** @var Gallery  */
     private $gallery;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $images;
 
-    /**
-     * @var Image|null
-     */
+    /** @var Image|null */
     private $primaryImage;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $fullImagePageView;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $imagePresenters = [];
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $activeImagePosition;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
+    /** @var UrlGeneratorInterface */
     private $router;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'image_sizes' => [1 => 1/1, 1008 => '976px'],
         'image_srcsets' => [320, 560, 976],
         'thumbnail_width' => 224,
         'default_width' => 320,
-
     ];
 
-    /**
-     * GalleryDisplayPresenter constructor.
-     * @param PresenterFactory $presenterFactory
-     * @param Gallery $gallery
-     * @param Image|null $primaryImage
-     * @param array $images
-     * @param bool $fullImagePageView
-     * @param UrlGeneratorInterface $router
-     * @param array $options
-     */
     public function __construct(
         PresenterFactory $presenterFactory,
         Gallery $gallery,
@@ -91,7 +65,7 @@ class GalleryDisplayPresenter extends Presenter
                     'srcsets' => $this->options['image_srcsets'],
                     'is_bounded' => true,
                     'is_lazy_loaded' => false,
-                    ]
+                ]
             );
             if ($image->getPid() == $primaryImage->getPid()) {
                 $this->activeImagePosition = $position;
@@ -99,22 +73,22 @@ class GalleryDisplayPresenter extends Presenter
         }
     }
 
-    public function isFullImagePageView():bool
+    public function isFullImagePageView(): bool
     {
         return $this->fullImagePageView;
     }
 
-    public function renderSrc(int $position) :string
+    public function renderSrc(int $position): string
     {
         return $this->imagePresenters[$position]->getSrc();
     }
 
-    public function renderSrcSets(int $position) :string
+    public function renderSrcSets(int $position): string
     {
         return $this->imagePresenters[$position]->getSrcSets();
     }
 
-    public function renderSizes(int $position) :string
+    public function renderSizes(int $position): string
     {
         return $this->imagePresenters[$position]->getSizes();
     }
@@ -134,11 +108,10 @@ class GalleryDisplayPresenter extends Presenter
         return $this->gallery;
     }
 
-    public function getActiveImagePosition():int
+    public function getActiveImagePosition(): int
     {
         return $this->activeImagePosition;
     }
-
 
     public function getPreviousUrl(): string
     {
@@ -150,7 +123,7 @@ class GalleryDisplayPresenter extends Presenter
         return $this->pageUrl($this->images[$previousImagePos]);
     }
 
-    public function getNextUrl() : string
+    public function getNextUrl(): string
     {
         $imagesCount = count($this->images);
         $previousImagePos  = $this->getActiveImagePosition() < ($imagesCount - 1) ? ($this->getActiveImagePosition() + 1) : 0;
@@ -160,8 +133,7 @@ class GalleryDisplayPresenter extends Presenter
         return $this->pageUrl($this->images[$previousImagePos]);
     }
 
-
-    public function pageUrl($image)
+    public function pageUrl($image): string
     {
         return $this->router->generate('programme_gallery', [
             'pid' =>  $this->getGallery()->getPid(),
@@ -169,7 +141,7 @@ class GalleryDisplayPresenter extends Presenter
         ]);
     }
 
-    public function getImagePresenter(int $position):ImageEntityPresenter
+    public function getImagePresenter(int $position): ImageEntityPresenter
     {
         return $this->imagePresenters[$position];
     }

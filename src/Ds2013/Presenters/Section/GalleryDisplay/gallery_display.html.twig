@@ -60,7 +60,7 @@
 {% macro thumbnails(gallery_display) %}
     <ul class="gallery__thumblist grid-wrapper grid-wrapper--half@bpw">
         {% for position,eachImage in gallery_display.getImages() %}
-            <li class="grid 1 1/2@bpb1 1/3@bpb2 1/4@bpw 1/6@bpe">
+            <li class="grid grid--half grid--half@bpw 1 1/2@bpb1 1/3@bpb2 1/4@bpw 1/6@bpe">
                 <div>
                     {% set url =path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': eachImage.getPid() } ) %}
                     <a class="gallery__thumbnail {{ (eachImage.getPid() == gallery_display.getPrimaryImage().getPid() and gallery_display.isFullImagePageView()) ? 'gallery__thumbnail--active' : '' }}"
