@@ -3,7 +3,16 @@
 {% block title %}{{ meta_context.titlePrefix() }}{% endblock %}
 
 {% block twitter_tags %}
-    <meta name="twitter:card" content="{{ cardType }}" />
+    {% if isGallery %}
+        <meta name="twitter:card" content="gallery" />
+
+        {% for index, image in images %}
+            <meta name="twitter:image{{ index }}" content="{{ image.getUrl(560) }}" />
+        {% endfor %}
+    {% else %}
+        <meta name="twitter:card" content="photo" />
+    {% endif %}
+
     <meta name="twitter:title" content="{{ meta_context.titlePrefix() }}" />
     <meta name="twitter:image" content="{{ meta_context.image().getUrl(1200, 675) }}">
     <meta name="twitter:description" content="{{ meta_context.description() }}" />
