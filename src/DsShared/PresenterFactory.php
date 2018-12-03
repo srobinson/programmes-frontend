@@ -23,7 +23,6 @@ class PresenterFactory
         return new EntityContextPresenter($context, $options);
     }
 
-
     public function imageEntityPresenter(
         Image $image,
         int $defaultWidth,

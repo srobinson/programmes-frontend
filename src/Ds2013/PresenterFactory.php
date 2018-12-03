@@ -34,7 +34,6 @@ use App\Ds2013\Presenters\Section\Clip\Playout\ClipPlayoutPresenter;
 use App\Ds2013\Presenters\Section\Episode\Map\EpisodeMapPresenter;
 use App\Ds2013\Presenters\Section\EpisodesSubNav\EpisodesSubNavPresenter;
 use App\Ds2013\Presenters\Section\Footer\FooterPresenter;
-use App\Ds2013\Presenters\Section\GalleryDisplay\GalleryDisplayPresenter;
 use App\Ds2013\Presenters\Section\RelatedTopics\RelatedTopicsPresenter;
 use App\Ds2013\Presenters\Section\Segments\SegmentsListPresenter;
 use App\Ds2013\Presenters\Section\SupportingContent\SupportingContentPresenter;
@@ -73,7 +72,6 @@ use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
-use BBC\ProgrammesPagesService\Domain\Entity\Gallery;
 use BBC\ProgrammesPagesService\Domain\Entity\Group;
 use BBC\ProgrammesPagesService\Domain\Entity\Podcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
@@ -87,8 +85,6 @@ use Cake\Chronos\ChronosInterface;
 use Cake\Chronos\Date;
 use InvalidArgumentException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use BBC\ProgrammesPagesService\Domain\Entity\Image as DomainImage;
-use App\DsShared\PresenterFactory as SharedPresenterFactory;
 
 /**
  * Ds2013 Factory Class for creating presenters.
@@ -123,16 +119,12 @@ class PresenterFactory
     /** @var CosmosInfo */
     private $cosmosInfo;
 
-    private $presenterFactory;
-
     public function __construct(
-        SharedPresenterFactory $presenterFactory,
         TranslateProvider $translateProvider,
         UrlGeneratorInterface $router,
         HelperFactory $helperFactory,
         CosmosInfo $cosmosInfo
     ) {
-        $this->presenterFactory = $presenterFactory;
         $this->translateProvider = $translateProvider;
         $this->router = $router;
         $this->helperFactory = $helperFactory;
@@ -228,16 +220,6 @@ class PresenterFactory
             $service,
             $options
         );
-    }
-
-    public function galleryDisplayPresenter(
-        Gallery $gallery,
-        DomainImage $primaryImage,
-        array $images,
-        bool $fullImagePageView,
-        ?array $options
-    ) {
-        return new GalleryDisplayPresenter($this->presenterFactory, $gallery, $primaryImage, $images, $fullImagePageView, $this->router, $options);
     }
 
     public function noSchedulePresenter(
@@ -343,8 +325,6 @@ class PresenterFactory
             (\is_object($contentBlock) ? \get_class($contentBlock) : gettype($contentBlock))
         ));
     }
-
-
 
     /**
      * Create a group presenter class
