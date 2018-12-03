@@ -22,12 +22,14 @@
                             {% if profile.getChildren() %}
                                 {% include 'profiles/partials/profile_list.html.twig' with {
                                     'profiles': profile.getChildren(),
-                                    'programme': programme,
-                                    'paginatorPresenter': paginatorPresenter
+                                    'programme': programme
                                 } only %}
                             {% endif %}
                         </div>
                     </div>
+                    {%- if paginatorPresenter -%}
+                        {{ ds2013_presenter(paginatorPresenter) }}
+                    {%- endif -%}
                 </div>
             </div>
         </div>
