@@ -43,7 +43,7 @@ class GalleryController extends BaseController
             'galleries' => $galleries,
             'brand' => $brand,
             'isGallery' => $isGallery,
-         ]);
+        ]);
     }
 
     public function getFirstImage(?string $imagePid, array $images): ?Image
