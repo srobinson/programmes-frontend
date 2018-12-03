@@ -1,0 +1,88 @@
+{%  import _self as self %}
+
+{% if not gallery_display.isFullImagePageView() %}
+    <div id="gallery" class="gallery gallery--listview" data-page-url="{{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }}">
+        <div class="cf component" >
+            <div class="pull--right-spaced">
+                <span class="gallery__positiontext gamma no-margin"></span>
+            </div>
+        </div>
+        <div class="gallery-slideshow">
+            <div class="gallery-slideshow__window"><div class="gallery-slideshow__tableau br-box-subtle"></div></div>
+        </div>
+        {{ self.thumbnails(gallery_display) }}
+    </div>
+{% else %}
+    <div id="gallery" class="gallery gallery--imgview" data-page-url=" {{ path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': gallery_display.getPrimaryImage().getPid() } ) }} ">
+        <div class="cf component">
+            <div class="gallery__listlink pull--left js-hideme">
+                <a class="link-complex" href=" {{ path('find_by_pid', {'pid':  gallery_display.getGallery().getPid()}) }} ">
+                    <span class="gallery__listlink__icon br-box-highlight">{{ gelicon('basics', 'grid', 'gelicon--centi ') }}</span>
+                    <span class="link-complex__target gallery__listlink__text">{{ tr('galleries', 1)}}</span>
+                </a>
+            </div>
+            <div class="pull--right-spaced">
+                <span class="gallery__positiontext gamma no-margin">
+                    {{ (gallery_display.getActiveImagePosition()+1) ~ '/' ~ (gallery_display.getImages()|length)}}
+                </span>
+            </div>
+        </div>
+        {% spaceless %}
+            <div class="gallery-slideshow">
+                <div class="gallery-slideshow__window">
+                    <div class="gallery-slideshow__tableau br-box-subtle">
+                        <div class="gallery-slideshow__slide gallery-slideshow__slide--current">
+                            <div class="gallery-slideshow__imgholder">
+                                <a href="{{ gallery_display.getPreviousUrl()}}" class="gallery__previousnext gallery__previousnext--prev">
+                                    {{ gelicon('basics', 'previous', 'gelicon--beta gelicon--center') }}
+                                    <span class="visually-hidden">{{ tr('previous') }}</span>
+                                </a>
+                                <a href="{{ gallery_display.getNextUrl()}}" class="gallery__previousnext gallery__previousnext--next">
+                                   {{ gelicon('basics', 'next', 'gelicon--beta gelicon--trailing gelicon--center') }}
+                                    <span class="visually-hidden">{{ tr('next') }}</span>
+                                </a>
+                                {{ ds_shared_presenter(gallery_display.getImagePresenter(gallery_display.getActiveImagePosition())) }}
+                            </div>
+                            <div class="gallery__caption"><div class="island">
+                                    <h2>{{ gallery_display.getPrimaryImage().getTitle()}}</h2>
+                                    <p>{{ gallery_display.getPrimaryImage().getShortSynopsis()}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endspaceless %}
+        {{ self.thumbnails(gallery_display) }}
+    </div>
+{% endif %}
+
+{% macro thumbnails(gallery_display) %}
+    <ul class="gallery__thumblist grid-wrapper grid-wrapper--half@bpw">
+        {% for position,eachImage in gallery_display.getImages() %}
+            <li class="grid grid--half grid--half@bpw 1 1/2@bpb1 1/3@bpb2 1/4@bpw 1/6@bpe">
+                <div>
+                    {% set url =path('programme_gallery', {'pid':  gallery_display.getGallery().getPid(), 'imagePid': eachImage.getPid() } ) %}
+                    <a class="gallery__thumbnail {{ (eachImage.getPid() == gallery_display.getPrimaryImage().getPid() and gallery_display.isFullImagePageView()) ? 'gallery__thumbnail--active' : '' }}"
+                       href="{{ url }}"
+                       data-img-blank="{{ asset('images/blank.png') }}"
+                       data-gallery-title="{{ eachImage.getTitle() }}"
+                       data-gallery-synopsis="{{ eachImage.getShortSynopsis() }}"
+                       data-gallery-position="{{ position }}"
+                       data-gallery-url="{{ url }}"
+                       data-image-src="{{ gallery_display.renderSrc(position) }}"
+                       data-image-src-sets=" {{ gallery_display.renderSrcSets(position) }}"
+                       data-image-sizes=" {{ gallery_display.renderSizes(position) }}">
+                        {{ ds_shared('imageEntity', eachImage,224, {1: "224px"} ,{
+                            'is_lazy_loaded': false,
+                            'alt': eachImage.getTitle(),
+                            'srcsets': [80,160,224],}
+                        )}}
+                    </a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+

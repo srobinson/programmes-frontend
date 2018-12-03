@@ -1,0 +1,275 @@
+// Previous/next arrows over image
+$gallery-previous-next-base-size: 16px;
+$gallery-previous-next-bpw-size: 24px;
+
+// @todo We do this link with an icon thing a lot. We should abstract it
+.gallery__listlink__icon,
+.gallery__listlink__text {
+    display: inline-block;
+    height: 2.2em;
+    line-height: 2.15em;
+    vertical-align: middle;
+}
+
+.gallery__listlink__icon {
+    width: 2.2em;
+    text-align: center;
+
+    i {
+        font-size: 1.05em;
+    }
+}
+
+.gallery__positiontext {
+    vertical-align: middle;
+}
+
+/**
+ * View container for gallery image display, but not thumbnails.
+ * This exists to anchor the previous/next arrows and to hide the
+ * horizontal scrollbar
+ */
+.gallery-slideshow {
+    overflow: hidden;
+    clear: both;
+    position: relative;
+    margin-bottom: $wide-spacing;
+
+    &:hover {
+        .gallery__previousnext {
+            visibility: visible;
+            opacity: 0.5;
+        }
+    }
+
+    .gallery__previousnext:hover {
+        opacity: 1;
+    }
+}
+
+.gallery-slideshow--touched {
+    .gallery__previousnext {
+        display: none;
+    }
+}
+
+/**
+ * The window div is (once the scrollable class is added in Gallery.js)
+ * the window into the scrolling "tableau" element behind it
+ * which users can scroll back and forth over to move through the gallery
+ */
+.gallery-slideshow__window {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.gallery-slideshow__window--scrollable {
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 1;
+    overflow-scrolling: touch;
+    overflow-style: scrollbar;
+    -ms-scroll-chaining: none;
+}
+
+.gallery-slideshow__window--scrollable::-webkit-scrollbar,
+.gallery-slideshow__window--scrollable::-webkit-scrollbar-thumb,
+.gallery__hidescrollbars {
+    display: none;
+}
+
+/**
+ * The following classes only apply once activated by Gallery.js
+ * the image display is a pretty simple 100% width affair until these classes
+ * kick in.
+ * These allow 2 extra images to the left and right of the displayed image
+ * for scrolling, and an image behind to fade to.
+ */
+.gallery-slideshow--initialised  {
+    // "Tableau" class to hold 3 images side by side
+    .gallery-slideshow__tableau {
+        width: 300%;
+        position: relative;
+    }
+
+    .gallery-slideshow__slide {
+        width: 33.333333%;
+        display: inline-block;
+        position: relative;
+        visibility: hidden;
+        vertical-align: top;
+        z-index: 1;
+    }
+
+
+    // These 3 classes used for sliding effects
+    .gallery-slideshow__slide--current,
+    .gallery-slideshow__slide--next,
+    .gallery-slideshow__slide--previous {
+        visibility: visible;
+        z-index: 5;
+    }
+
+    .gallery-slideshow__slide--current {
+        opacity: 1;
+    }
+
+    .gallery-slideshow__slide--fadeout {
+        opacity: 0;
+    }
+
+    // This class used for fade effects
+    .gallery-slideshow__slide--behind {
+        visibility: visible;
+        left: 33.333333%;
+        position: absolute;
+        top: 0;
+        z-index: 4;
+    }
+}
+
+// This stops the slideshow background jumping when the image loads. Or doesn't.
+.gallery-slideshow__imgholder {
+    @extend .loading-spinner;
+    @extend .loading-spinner--large;
+
+    width: 100%;
+    padding: 0 0 56.25%; // enforces 16:9 aspect ratio when image is not present
+    position: relative;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        max-height: 100%;
+    }
+
+    &::before {
+        // Styling for loading spinner
+        // Note: CSS Loading spinner because Android <=4.4 fires scroll events continuously if
+        //       an animated gif is present. Cheers guys.
+        width: 24px;
+        height: 24px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        margin: -12px 0 0 -12px;
+    }
+}
+
+.gallery__previousnext {
+    @include transition(opacity 0.2s linear);
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: $gallery-previous-next-base-size * -1.5;
+    width: $gallery-previous-next-base-size * 3;
+    height: $gallery-previous-next-base-size * 3;
+    line-height: $gallery-previous-next-base-size * 3;
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.65);
+    text-align: center;
+    opacity: 0;
+    z-index: 9999;
+    visibility: hidden;
+
+    .gelicon {
+        font-size: $gallery-previous-next-base-size;
+        color: #ffffff;
+    }
+}
+
+// a element adds specifity to trump .programmes-page
+a.gallery__previousnext {
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.gallery__previousnext--prev {
+    left: 0;
+}
+
+.gallery__previousnext--next {
+    right: 0;
+}
+
+.gallery--imgview {
+    .gallery__thumblist {
+        display: none;
+    }
+
+    &.gallery--initialised .gallery__thumblist {
+        display: block;
+    }
+}
+
+.gallery__thumblist {
+    clear: both;
+    margin-bottom: $wide-spacing;
+}
+
+.gallery__thumbnail {
+    position: relative;
+    display: block;
+    margin-bottom: $basic-spacing / 2;
+    box-sizing: border-box;
+}
+
+// .active class for current image
+.gallery__thumbnail.gallery__thumbnail--active {
+    border-width: 2px;
+    border-style: solid;
+    margin: -2px;
+    margin-bottom: ($basic-spacing / 2) - 2;
+}
+
+.gallery-extras {
+    // IE8 positions some stuff outside the grid without this...
+    overflow: hidden;
+    position: relative;
+}
+
+@include mq-range('bpw') {
+    .gallery__thumbnail {
+        margin-bottom: $wide-spacing / 2;
+    }
+
+    .gallery__thumbnail.gallery__thumbnail--active {
+        margin-bottom: ($wide-spacing / 2) - 2;
+    }
+
+    .gallery__previousnext {
+        margin-top: $gallery-previous-next-bpw-size * -1.5;
+        width: $gallery-previous-next-bpw-size * 3;
+        height: $gallery-previous-next-bpw-size * 3;
+        line-height: $gallery-previous-next-bpw-size * 3;
+
+        .gelicon {
+            font-size: $gallery-previous-next-bpw-size;
+        }
+    }
+
+    // Put caption over image
+    .gallery__caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #000000;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #ffffff;
+    }
+
+    // Bigger loading spinner
+    .gallery-slideshow__imgholder::before {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        margin: -20px 0 0 -20px;
+    }
+}
+
