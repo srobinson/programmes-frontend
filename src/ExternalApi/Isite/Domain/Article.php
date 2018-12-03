@@ -66,7 +66,7 @@ class Article
         $this->image = $image;
         $this->parents = $parents;
         $this->rowGroups = $rowGroups;
-        $this->setChildCound(0);
+        $this->setChildCount(0);
     }
 
     /**
