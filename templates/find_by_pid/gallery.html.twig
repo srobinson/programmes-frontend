@@ -3,26 +3,24 @@
 {% block title %}{{ meta_context.titlePrefix() }}{% endblock %}
 
 {% block twitter_tags %}
-    {% if isGallery %}
-        <meta name="twitter:card" content="gallery" />
-        <meta name="twitter:description" content="{{ gallery.getSynopses().getShortestSynopsis() }}" />
-        <meta name="twitter:image:alt" content="{{ gallery.getSynopses().getShortSynopsis() }}" />
-
-        {% for index, image in images %}
-            <meta name="twitter:image{{ index }}" content="{{ image.getUrl(560) }}" />
-        {% endfor %}
-    {% else %}
+    {% if hasImageHighlighted %}
         <meta name="twitter:card" content="photo" />
         <meta name="twitter:description" content="{{ image.getShortSynopsis() }}" />
-        <meta name="twitter:image" content="{{ image.getUrl(1200, 675) }}">
+        <meta name="twitter:image" content="{{ image.getUrl(560) }}">
         <meta name="twitter:image:alt" content="{{ image.getShortSynopsis() }}" />
+    {% else %}
+        <meta name="twitter:card" content="gallery" />
+        <meta name="twitter:description" content="{{ gallery.getSynopses().getMediumSynopsis() }}" />
+        {% for index, image in images|slice(0, 4) %}
+            <meta name="twitter:image{{ index }}" content="{{ image.getUrl(560) }}" />
+        {% endfor %}
     {% endif %}
-
-    <meta name="twitter:title" content="{{ meta_context.titlePrefix() }}" />
 
     {% if meta_context.canonicalUrl() %}
         <meta name="twitter:url" content="{{ meta_context.canonicalUrl() }}">
     {% endif %}
+
+    <meta name="twitter:title" content="{{ meta_context.titlePrefix() }}" />
 {% endblock %}
 
 {% block page_classes %}programmes-page text-base programmes-page--flush prog-layout{% endblock %}

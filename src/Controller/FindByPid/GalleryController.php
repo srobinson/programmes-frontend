@@ -31,7 +31,7 @@ class GalleryController extends BaseController
         $brand = $programme->getTleo();
         $network = $programme->getMasterBrand()->getNetwork()->getName();
         $galleries = $programmesAggregationService->findDescendantGalleries($brand, $siblingLimit);
-        $isGallery = empty($imagePid);
+        $hasImageHighlighted = !empty($imagePid);
 
         return $this->renderWithChrome('find_by_pid/gallery.html.twig', [
             'gallery' => $gallery,
@@ -42,8 +42,8 @@ class GalleryController extends BaseController
             'network' => $network,
             'galleries' => $galleries,
             'brand' => $brand,
-            'isGallery' => $isGallery,
-         ]);
+            'hasImageHighlighted' => $hasImageHighlighted,
+        ]);
     }
 
     public function getFirstImage(?string $imagePid, array $images): ?Image
