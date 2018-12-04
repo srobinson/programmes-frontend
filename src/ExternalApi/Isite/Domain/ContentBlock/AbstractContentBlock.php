@@ -17,4 +17,6 @@ abstract class AbstractContentBlock
     {
         return $this->title;
     }
+
+    abstract public function getType(): string;
 }

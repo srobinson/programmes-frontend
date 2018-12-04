@@ -39,4 +39,9 @@ class ClipStandAlone extends AbstractContentBlock
     {
         return $this->streamableVersion;
     }
+
+    public function getType(): string
+    {
+        return 'clipStandAlone';
+    }
 }

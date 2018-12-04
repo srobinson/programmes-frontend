@@ -27,4 +27,9 @@ class Table extends AbstractContentBlock
     {
         return $this->rows;
     }
+
+    public function getType(): string
+    {
+        return 'table';
+    }
 }

@@ -23,4 +23,9 @@ class ClipStream extends AbstractContentBlock
     {
         return $this->streamItems;
     }
+
+    public function getType(): string
+    {
+        return 'clipStream';
+    }
 }

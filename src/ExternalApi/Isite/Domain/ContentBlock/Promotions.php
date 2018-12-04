@@ -31,4 +31,9 @@ class Promotions extends AbstractContentBlock
     {
         return $this->layout;
     }
+
+    public function getType(): string
+    {
+        return 'promotion';
+    }
 }

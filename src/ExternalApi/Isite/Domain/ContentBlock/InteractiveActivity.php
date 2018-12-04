@@ -61,4 +61,9 @@ class InteractiveActivity extends AbstractContentBlock
     {
         return $this->height;
     }
+
+    public function getType(): string
+    {
+        return 'interactiveActivity';
+    }
 }

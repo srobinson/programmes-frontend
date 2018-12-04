@@ -30,4 +30,9 @@ class Telescope extends AbstractContentBlock
     {
         return $this->name;
     }
+
+    public function getType(): string
+    {
+        return 'telescope';
+    }
 }

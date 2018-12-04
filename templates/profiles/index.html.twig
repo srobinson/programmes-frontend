@@ -6,12 +6,14 @@
 {% block body %}
     <div class="programmes-page prog-layout__primary br-box-page">
         <h1><span class="context">{{ ds_shared('entityContext', coreEntity) }} </span>{{ tr('profiles') }}</h1>
-        <div class="br-box-page">
+        <div class="component br-box-page">
             {% include 'profiles/partials/profile_list.html.twig' with {
                 'profiles': profiles,
-                'programme': programme,
-                'paginatorPresenter': paginatorPresenter
+                'programme': programme
             } only %}
         </div>
+        {%- if paginatorPresenter -%}
+            {{ ds2013_presenter(paginatorPresenter) }}
+        {%- endif -%}
     </div>
 {% endblock %}

@@ -28,4 +28,9 @@ class Image extends AbstractContentBlock
     {
         return $this->imageUrl;
     }
+
+    public function getType(): string
+    {
+        return 'image';
+    }
 }

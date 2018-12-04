@@ -98,4 +98,9 @@ class Prose extends AbstractContentBlock
     {
         return $this->streamableVersion;
     }
+
+    public function getType(): string
+    {
+        return 'prose';
+    }
 }

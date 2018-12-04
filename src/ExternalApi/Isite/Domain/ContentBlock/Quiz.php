@@ -44,4 +44,9 @@ class Quiz extends AbstractContentBlock
     {
         return $this->htmlContent;
     }
+
+    public function getType(): string
+    {
+        return 'quiz';
+    }
 }

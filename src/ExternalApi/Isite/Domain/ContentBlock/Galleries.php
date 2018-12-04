@@ -20,4 +20,9 @@ class Galleries extends AbstractContentBlock
     {
         return $this->galleries;
     }
+
+    public function getType(): string
+    {
+        return 'galleries';
+    }
 }

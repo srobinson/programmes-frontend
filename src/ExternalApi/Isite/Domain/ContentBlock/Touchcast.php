@@ -18,4 +18,9 @@ class Touchcast extends AbstractContentBlock
     {
         return $this->touchcastId;
     }
+
+    public function getType(): string
+    {
+        return 'touchcast';
+    }
 }
