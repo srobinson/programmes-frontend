@@ -137,7 +137,7 @@ class GalleryDisplayPresenter extends Presenter
     {
         return $this->router->generate('programme_gallery', [
             'pid' =>  $this->getGallery()->getPid(),
-            'imagePid' => $image->getPid()
+            'imagePid' => $image->getPid(),
         ]);
     }
 
