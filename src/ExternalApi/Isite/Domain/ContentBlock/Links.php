@@ -24,4 +24,9 @@ class Links extends AbstractContentBlock
     {
         return $this->links;
     }
+
+    public function getType(): string
+    {
+        return 'links';
+    }
 }

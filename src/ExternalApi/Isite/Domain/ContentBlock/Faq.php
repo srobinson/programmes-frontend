@@ -27,4 +27,9 @@ class Faq extends AbstractContentBlock
     {
         return $this->questions;
     }
+
+    public function getType(): string
+    {
+        return 'faq';
+    }
 }

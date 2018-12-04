@@ -5,7 +5,7 @@
 {% endif %}
 
 <div
-    class="component component--box {{ container_classes }} {% block extraClasses %}{% endblock %}">
+    class="component component--box {{ container_classes }} {% block extraClasses %}{% endblock %}" data-content-block-type="{{ content_block.getBlock().getType() }}">
     {% if content_block.getBlock().getTitle() or block('defaultTitle') is not empty %}
         <div class="component__header {{ content_block.isInPrimaryColumn() ? 'br-box-page' : 'br-box-highlight'}}">
             <h2>
