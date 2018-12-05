@@ -23,10 +23,6 @@ class GalleryController extends BaseController
         $siblingLimit = 4;
         $images = $imagesService->findByGroup($gallery);
         $image = $this->getFirstImage($imagePid, $images);
-        $showFirstImage = false;
-        if ($imagePid) {
-            $showFirstImage = true;
-        }
         $programme = $gallery->getParent();
         $brand = $programme->getTleo();
         $network = $programme->getMasterBrand()->getNetwork()->getName();
@@ -38,7 +34,6 @@ class GalleryController extends BaseController
             'programme' => $programme,
             'image' => $image,
             'images' => $images,
-            'showFirstImage' => $showFirstImage,
             'network' => $network,
             'galleries' => $galleries,
             'brand' => $brand,
