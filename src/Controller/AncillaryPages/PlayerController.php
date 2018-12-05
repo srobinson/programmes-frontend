@@ -44,16 +44,6 @@ class PlayerController extends BaseController
 
         $context = new MetaContext($clip, $router->generate('programme_player', ['pid' => $clip->getPid()]));
 
-        $available = $clip->isExternallyEmbeddable() && $clip->isStreamable();
-        $unavailableMessage = '';
-        if (!$available) {
-            if ($clip->hasFutureAvailability()) {
-                $unavailableMessage = 'clip_availability_future';
-            } else {
-                $unavailableMessage = 'clip_availability_none';
-            }
-        }
-
         $linkedVersions = $versionsService->findLinkedVersionsForProgrammeItem($clip);
 
         $segmentEvents = [];
@@ -64,7 +54,7 @@ class PlayerController extends BaseController
         return $this->render(
             'ancillary_pages/player.html.twig',
             [
-                'available' => $available,
+                'embeddable' => $clip->isExternallyEmbeddable(),
                 'context' => $context,
                 'clip' => $clip,
                 'has_chrome' => $hasChrome,
@@ -72,7 +62,6 @@ class PlayerController extends BaseController
                 'streamable_version' => $linkedVersions['streamableVersion'],
                 'subtitle' => $subtitle,
                 'twitter_title' => $twitterTitle,
-                'unavailable_message' => $unavailableMessage,
             ]
         );
     }

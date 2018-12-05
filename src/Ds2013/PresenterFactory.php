@@ -9,8 +9,8 @@ use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStandalone\ClipStandalone
 use App\Ds2013\Presenters\Domain\ContentBlock\Clip\ClipStream\ClipStreamPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Faq\FaqPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Galleries\GalleriesPresenter;
-use App\Ds2013\Presenters\Domain\ContentBlock\InteractiveActivity\InteractiveActivityPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Image\ImagePresenter;
+use App\Ds2013\Presenters\Domain\ContentBlock\InteractiveActivity\InteractiveActivityPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Links\LinksPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Promotions\PromotionsPresenter;
 use App\Ds2013\Presenters\Domain\ContentBlock\Prose\ProsePresenter;
@@ -53,8 +53,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStandAlone;
 use App\ExternalApi\Isite\Domain\ContentBlock\ClipBlock\ClipStream;
 use App\ExternalApi\Isite\Domain\ContentBlock\Faq;
 use App\ExternalApi\Isite\Domain\ContentBlock\Galleries;
-use App\ExternalApi\Isite\Domain\ContentBlock\InteractiveActivity;
 use App\ExternalApi\Isite\Domain\ContentBlock\Image;
+use App\ExternalApi\Isite\Domain\ContentBlock\InteractiveActivity;
 use App\ExternalApi\Isite\Domain\ContentBlock\Links;
 use App\ExternalApi\Isite\Domain\ContentBlock\Promotions;
 use App\ExternalApi\Isite\Domain\ContentBlock\Prose;
@@ -150,26 +150,6 @@ class PresenterFactory
         return new CalendarPresenter(
             $date,
             $service,
-            $options
-        );
-    }
-
-    public function clipPlayoutPresenter(
-        Clip $clip,
-        ?Version $streamableVersion,
-        array $segmentEvents,
-        string $analyticsCounterName,
-        array $istatsAnalyticsLabels,
-        array $options = []
-    ) : ClipPlayoutPresenter {
-        return new ClipPlayoutPresenter(
-            $this,
-            $this->helperFactory->getStreamUrlHelper(),
-            $clip,
-            $streamableVersion,
-            $segmentEvents,
-            $analyticsCounterName,
-            $istatsAnalyticsLabels,
             $options
         );
     }
@@ -416,7 +396,7 @@ class PresenterFactory
 
     public function smpPresenter(
         ProgrammeItem $programmeItem,
-        Version $streamableVersion,
+        ?Version $streamableVersion,
         array $segmentEvents,
         ?string $analyticsCounterName,
         ?array $analyticsLabels,
@@ -431,6 +411,7 @@ class PresenterFactory
             $this->helperFactory->getSmpPlaylistHelper(),
             $this->router,
             $this->cosmosInfo,
+            $this->helperFactory->getStreamUrlHelper(),
             $options
         );
     }
