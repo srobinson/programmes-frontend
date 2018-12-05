@@ -11,9 +11,9 @@
         {% endif %}
     </div>
 {% endif %}
-{% if programme_body.hasReleaseDate() %}
+{% if programme_body.hasDisplayDate() %}
     <div class="programme__service micro ">
-        <time >{{ programme_body.getReleaseDate() }}</time>
+        <p>{{ programme_body.getDisplayDate() }}</p>
     </div>
 {% endif %}
 

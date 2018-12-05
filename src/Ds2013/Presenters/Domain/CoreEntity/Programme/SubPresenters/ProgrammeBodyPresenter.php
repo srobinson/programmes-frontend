@@ -7,6 +7,7 @@ use App\Ds2013\Presenters\Domain\CoreEntity\Programme\ProgrammePresenterBase;
 use App\DsShared\Helpers\LocalisedDaysAndMonthsHelper;
 use App\DsShared\Helpers\PlayTranslationsHelper;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
+use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\MasterBrand;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
@@ -108,20 +109,28 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
         return false;
     }
 
-    public function getReleaseDate(): string
+    public function hasDisplayDate(): bool
     {
-        // @TODO handle partial release dates correctly. See PROGRAMMES-6733
-        if (!$this->hasReleaseDate()) {
-            return '';
+        if ($this->options['show_release_date'] && $this->getDisplayDate()) {
+            return true;
         }
-        $releaseDate = new Chronos($this->programme->getReleaseDate());
-        return $this->localisedDaysAndMonthsHelper->getFormatedDay($releaseDate);
+        return false;
     }
 
-
-    public function hasReleaseDate(): bool
+    public function getDisplayDate(): string
     {
-        return ($this->getOption('show_release_date') && ($this->programme instanceof ProgrammeItem) && $this->programme->getReleaseDate());
+        if ($this->getOption('show_release_date') && $this->programme instanceof ProgrammeItem) {
+            if ($this->programme->getReleaseDate()) {
+                return $this->localisedDaysAndMonthsHelper->getFormatedDay(new Chronos($this->programme->getReleaseDate()));
+            }
+            if ($this->programme->getFirstBroadcastDate()) {
+                return $this->localisedDaysAndMonthsHelper->getFormatedDay($this->programme->getFirstBroadcastDate());
+            }
+            if ($this->programme->getStreamableFrom()) {
+                return $this->localisedDaysAndMonthsHelper->getFormatedDay($this->programme->getStreamableFrom());
+            }
+        }
+        return "";
     }
 
     public function getDisplayMasterbrand(): ?MasterBrand
