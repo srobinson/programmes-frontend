@@ -9,36 +9,40 @@
     <div class="prog-layout">
         {% block body_inner %}{% endblock %}
     </div>
-    {% if profile.getParent() %}
-        {% set parent = profile.getParent() %}
-        <div class="programmes-page programmes-page--stripe br-box-subtle">
-            <div class="prog-layout">
-                <div class="prog-layout__primary">
-                    {% if maxSiblings > 0 %}
-                        <div class="component component--box">
-                            <div class="component__header">
-                                <h2>
-                                    <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}">{{ parent.getTitle() }}</a>
-                                </h2>
-                            </div>
-                            <div class="component__body">
-                                <ul class="grid-wrapper highlight-box-wrapper highlight-box-wrapper--grid">
-                                    {%- for sibling in parent.getChildren() -%}
-                                        <li class="grid 1/2@bpb1 1/3@bpb2 1/3@bpw 1/4@bpw2 1/5@bpe">
-                                            {{ ds2013('profile', sibling, {'show_synopsis': false, 'heading_level': 'h3'}) }}
-                                        </li>
-                                    {%- endfor -%}
-                                </ul>
-                            </div>
+    {% if profile.getParents() %}
+        {% for parent in profile.getParents() %}
+                {% if maxSiblings > parent.getGroupSize() and parent.getGroupSize() is not null %}
+                    {% set maxSiblings = parent.getGroupSize()%}
+                {% endif %}
+                <div class="programmes-page programmes-page--stripe br-box-subtle">
+                    <div class="prog-layout">
+                        <div class="prog-layout__primary">
+                            {% if parent.getGroupSize() is not same as (0) %}
+                                <div class="component component--box">
+                                    <div class="component__header">
+                                        <h2>
+                                            <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}">{{ parent.getTitle() }}</a>
+                                        </h2>
+                                    </div>
+                                    <div class="component__body">
+                                        <ul class="grid-wrapper highlight-box-wrapper highlight-box-wrapper--grid">
+                                            {%- for sibling in parent.getChildren() -%}
+                                                <li class="grid 1/2@bpb1 1/3@bpb2 1/3@bpw 1/4@bpw2 1/5@bpe">
+                                                    {{ ds2013('profile', sibling, {'show_synopsis': false, 'heading_level': 'h3'}) }}
+                                                </li>
+                                            {%- endfor -%}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% set siblingCount = parent.getChildCount() %}
+                            {% if siblingCount > maxSiblings %}
+                                <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}" >See all from {{ parent.getTitle() }} ({{ siblingCount }})</a>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                    {% set siblingCount = parent.getChildCount() %}
-                    {% if siblingCount > maxSiblings %}
-                        <a href="{{ path('programme_profile', {'key': parent.getKey(), 'slug': parent.getSlug()}) }}" >See all from {{ parent.getTitle() }} ({{ siblingCount }})</a>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
-        </div>
+        {% endfor %}
     {% endif %}
 {% endblock %}
 
