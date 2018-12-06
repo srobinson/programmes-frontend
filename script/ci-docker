@@ -3,6 +3,9 @@
 set -e
 RESULT=0
 
+echo "Validating Cosmos dials..."
+cosmos-release check-dials
+
 # If we're not already using php71+, try and solve that
 if ! (php --version | grep -q "PHP 7.") ; then
     echo "You're not using PHP 7.1+, please install it."
