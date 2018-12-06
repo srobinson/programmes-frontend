@@ -43,7 +43,7 @@ class MetaContext
         string $canonicalUrl = '',
         bool $metaNoIndex = false,
         $overriddenDescription = null,
-        string $projectSpaceOverride = null
+        ?string $projectSpaceOverride = null
     ) {
         $this->canonicalUrl = $canonicalUrl;
         $this->context = $context;
