@@ -43,7 +43,7 @@ class ImageEntityPresenter extends ImagePresenter
         // height do not get forced to a particular ratio at all.
 
         $ratio = $this->getOption('ratio');
-        if ($ratio) {
+        if ($ratio && $ratio !== 'auto') {
             $height = (string) round($width / $ratio, 0);
             if ($this->getOption('is_bounded')) {
                 $height .= '_b';
