@@ -28,9 +28,10 @@ class ProfileMapper extends Mapper
         $tagline = $this->getString($formMetaData->tagline);
         $groupSize = null;
 
-        if(!empty($this->getString($formMetaData->group_size)) || $this->getString($formMetaData->group_size) === '0'){
-            $groupSize = (int) $this->getString($formMetaData->group_size);
+        if (!empty($this->getString($formMetaData->group_size)) || ($this->getString($formMetaData->group_size) === '0')) {
+            $groupSize = (int)$this->getString($formMetaData->group_size);
         }
+        
 
         $keyFacts = [];
         if (!empty($form->key_facts)) {

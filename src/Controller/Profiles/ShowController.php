@@ -72,20 +72,11 @@ class ShowController extends BaseController
         }
 
         // Calculate siblings display
-        $maxSiblings = self::MAX_LIST_DISPLAYED_ITEMS;
         $siblingsPromise = new FulfilledPromise(null);
-        if ($profile->getParent()) {
-            $groupSize = $profile->getParent()->getGroupSize();
-            if (!is_null($groupSize)) {
-                // number of siblings displayed cannot be more than the maximum
-                $maxSiblings = min(self::MAX_LIST_DISPLAYED_ITEMS, $groupSize);
-            }
-            // Get the siblings of the current profile
-            $queryLimit = ($maxSiblings > 0 ? $maxSiblings : 1);
+        if ($profile->getParents()) {
             $siblingsPromise = $isiteService
-                ->setChildrenOn([$profile->getParent()], $profile->getProjectSpace(), 1, $queryLimit);
+                ->setGroupChildrenOn($profile->getParents(), self::MAX_LIST_DISPLAYED_ITEMS);
         }
-
 
         if ($profile->isIndividual()) {
             $this->resolvePromises(['siblings' => $siblingsPromise]);
@@ -95,7 +86,7 @@ class ShowController extends BaseController
                 'projectSpace' => $projectSpace,
                 'profile' => $profile,
                 'programme' => $context,
-                'maxSiblings' => $maxSiblings,
+                'maxSiblings' => self::MAX_LIST_DISPLAYED_ITEMS,
             ]);
         }
 
@@ -122,7 +113,7 @@ class ShowController extends BaseController
             'profile' => $profile,
             'paginatorPresenter' => $paginator,
             'programme' => $context,
-            'maxSiblings' => $maxSiblings,
+            'maxSiblings' => self::MAX_LIST_DISPLAYED_ITEMS,
         ]);
     }
 
