@@ -1,10 +1,10 @@
 <ul class="grid-wrapper highlight-box-wrapper--grid@bpb1 highlight-box-wrapper--grid@bpw">
     {% for promotion in content_block.getBlock().getPromotions() %}
-    <li class="grid 1/2@bpb1 1/2@bpw{% if content_block.isInPrimaryColumn() %} 1/3@bpe{% endif %}">
+    <li class="grid 1/2@bpb1 1/2@bpw{{ content_block.getCssClasses }}">
         <div class="grid__inner">
             <div class="promotion block-link highlight-box--list-borderless promotion--grid@bpb1 highlight-box--grid@bpb1 promotion--grid@bpw highlight-box--grid@bpw br-keyline br-{{ content_block.getPositionType() }}-linkhover-onbg015--hover">
                 <div class="promotion__img one-whole">
-                    {{ ds_shared('image', promotion.promotedItemId, 320, '') }}
+                    {{ ds_shared('image', promotion.promotedItemId, 320, '', {'ratio': 'auto'}) }}
                 </div>
                 <div class="promotion__body br-box-{{ content_block.getPositionType() }}">
                     <div class="promotion__body__inner br-{{ content_block.getPositionType() }}-linkhover-onbg015--childhover">

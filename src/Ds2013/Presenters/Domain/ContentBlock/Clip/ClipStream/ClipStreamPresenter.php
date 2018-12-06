@@ -11,9 +11,9 @@ class ClipStreamPresenter extends ContentBlockPresenter
     /** @var ClipStream */
     protected $block;
 
-    public function __construct(ClipStream $stream, bool $inPrimaryColumn, array $options = [])
+    public function __construct(ClipStream $stream, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($stream, $inPrimaryColumn, $options);
+        parent::__construct($stream, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     /**

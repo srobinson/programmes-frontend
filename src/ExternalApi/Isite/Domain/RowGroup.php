@@ -28,4 +28,12 @@ class RowGroup
     {
         return $this->secondary;
     }
+
+    public function hasPrimaryBlocksOnly(): bool
+    {
+        if (!empty($this->getSecondaryBlocks())) {
+            return false;
+        }
+        return true;
+    }
 }

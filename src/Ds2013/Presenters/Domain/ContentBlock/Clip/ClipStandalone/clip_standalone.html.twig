@@ -13,7 +13,18 @@
 {% block blockContent %}
     <div id="clips-p{{ id }}-player" class="smp">
         <div class="stream__item-inner br-page-bg-onborder">
-            {{ ds2013('smp', content_block.getClip(), content_block.getStreamableVersion(), [], '', [], {'autoplay': 'false'}) }}
+            {{ ds2013(
+                'smp',
+                content_block.getClip(),
+                content_block.getStreamableVersion(),
+                [],
+                {
+                    'autoplay': false,
+                    'audio_to_playspace': false,
+                    'sizes': {1: 1/1, 770: 1/2, 1008: '490px'},
+                    'default_width': 480,
+                }
+            )}}
         </div>
     </div>
 

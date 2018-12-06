@@ -8,9 +8,9 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Links;
 
 class LinksPresenter extends ContentBlockPresenter
 {
-    public function __construct(Links $linksBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Links $linksBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($linksBlock, $inPrimaryColumn, $options);
+        parent::__construct($linksBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     public function extractExternalHost(string $url): ?string

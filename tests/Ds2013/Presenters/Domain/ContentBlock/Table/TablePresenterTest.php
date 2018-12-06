@@ -14,7 +14,7 @@ class TablePresenterTest extends TestCase
      */
     public function testCorrectCellClasses(bool $isPrimary, string $classes)
     {
-        $presenter = new TablePresenter($this->createMock(Table::class), $isPrimary);
+        $presenter = new TablePresenter($this->createMock(Table::class), $isPrimary, true);
         $this->assertSame($classes, $presenter->getCellClasses());
     }
 
@@ -31,7 +31,7 @@ class TablePresenterTest extends TestCase
      */
     public function testCorrectHeaderClasses(bool $isPrimary, string $classes)
     {
-        $presenter = new TablePresenter($this->createMock(Table::class), $isPrimary);
+        $presenter = new TablePresenter($this->createMock(Table::class), $isPrimary, true);
         $this->assertSame($classes, $presenter->getHeaderClasses());
     }
 

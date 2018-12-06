@@ -213,42 +213,28 @@ class ContentBlockMapper extends Mapper
             case 'clips':
                 $contentBlockData = $form->content;
                 if (count($contentBlockData->clips) > 1) {
-                    $streamableItems = [];
+                    $streamItems = [];
                     foreach ($contentBlockData->clips as $isiteClip) {
-                        if (isset($this->streamableVersions[$this->getString($isiteClip->pid)])) {
-                            $streamableItems[] = new StreamItem(
+                            $streamItems[] = new StreamItem(
                                 $this->getString($isiteClip->caption),
                                 $this->clips[$this->getString($isiteClip->pid)]
                             );
-                        }
                     }
-
-                    if (count($streamableItems) > 1) {
-                        $contentBlock = new ClipStream(
-                            $this->getString($contentBlockData->title),
-                            $streamableItems
-                        );
-                    } elseif (count($streamableItems) == 1) {
-                        $contentBlock = new ClipStandAlone(
-                            $this->getString($contentBlockData->title),
-                            $streamableItems[0]->getTitle(),
-                            $streamableItems[0]->getClip(),
-                            $this->streamableVersions[(string) $streamableItems[0]->getClip()->getPid()]
-                        );
-                    }
+                    // Content block with multiple clips in a carousel
+                    $contentBlock = new ClipStream(
+                        $this->getString($contentBlockData->title),
+                        $streamItems
+                    );
 
                     break;
                 }
-
-                // is not possible to create a block without one clip at least
-                if (isset($this->streamableVersions[$this->getString($contentBlockData->clips->pid)])) {
-                    $contentBlock = new ClipStandAlone(
-                        $this->getString($contentBlockData->title),
-                        $this->getString($contentBlockData->clips->caption),
-                        $this->clips[$this->getString($contentBlockData->clips->pid)],
-                        $this->streamableVersions[$this->getString($contentBlockData->clips->pid)]
-                    );
-                }
+                // Content block with single playable clip
+                $contentBlock = new ClipStandAlone(
+                    $this->getString($contentBlockData->title),
+                    $this->getString($contentBlockData->clips->caption),
+                    $this->clips[$this->getString($contentBlockData->clips->pid)],
+                    $this->streamableVersions[$this->getString($contentBlockData->clips->pid)] ?? null
+                );
 
                 break;
             case 'promotions':

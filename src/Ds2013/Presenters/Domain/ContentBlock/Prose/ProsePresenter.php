@@ -11,9 +11,9 @@ class ProsePresenter extends ContentBlockPresenter
     /** @var Prose */
     protected $block;
 
-    public function __construct(Prose $proseBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Prose $proseBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($proseBlock, $inPrimaryColumn, $options);
+        parent::__construct($proseBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     /**

@@ -24,7 +24,7 @@ class ClipStreamPresenterTest extends TestCase
             ]
         );
 
-        $presenter = new ClipStreamPresenter($carousel, true);
+        $presenter = new ClipStreamPresenter($carousel, true, true);
 
         $this->assertContainsOnlyInstancesOf(StreamItem::class, $presenter->getStreamItems());
         $this->assertEquals('title 1', $presenter->getTitle());
@@ -40,7 +40,7 @@ class ClipStreamPresenterTest extends TestCase
             ]
         );
 
-        $presenter = new ClipStreamPresenter($carousel, true);
+        $presenter = new ClipStreamPresenter($carousel, true, true);
 
         $this->assertEquals($featured, $presenter->getFeaturedStreamItem(), "The featured clip should be the first item in the stream");
     }

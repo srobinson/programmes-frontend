@@ -1,4 +1,5 @@
 {% extends "@Ds2013/Presenters/Domain/ContentBlock/content_block.html.twig" %}
+{% block defaultTitle %} {{ tr('related_links',content_block.getBlock().getLinks()|length) }} {% endblock %}
 
 {% block blockContent %}
     <ul class="no-margin-vertical list-spaced">

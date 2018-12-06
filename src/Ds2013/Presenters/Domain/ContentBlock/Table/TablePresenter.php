@@ -8,9 +8,9 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Table;
 
 class TablePresenter extends ContentBlockPresenter
 {
-    public function __construct(Table $tableBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Table $tableBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($tableBlock, $inPrimaryColumn, $options);
+        parent::__construct($tableBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     public function getCellClasses(): string

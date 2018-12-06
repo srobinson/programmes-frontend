@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Telescope;
 
 class TelescopePresenter extends ContentBlockPresenter
 {
-    public function __construct(Telescope $telescopeBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Telescope $telescopeBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($telescopeBlock, $inPrimaryColumn, $options);
+        parent::__construct($telescopeBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

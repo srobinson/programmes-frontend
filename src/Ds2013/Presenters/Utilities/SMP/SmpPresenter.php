@@ -5,6 +5,7 @@ namespace App\Ds2013\Presenters\Utilities\SMP;
 
 use App\Ds2013\Presenter;
 use App\DsShared\Helpers\SmpPlaylistHelper;
+use App\DsShared\Helpers\StreamableHelper;
 use App\ValueObject\CosmosInfo;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeItem;
@@ -19,8 +20,11 @@ class SmpPresenter extends Presenter
             0 => 640,
             695 => 976,
         ],
+        'srcsets' => [80, 160, 320, 480, 640, 768, 896, 976, 1008],
+        'default_width' => 640,
         'uas' => true,
         'autoplay' => true,
+        'audio_to_playspace' => true,
     ];
 
     /** @var ProgrammeItem */
@@ -47,15 +51,18 @@ class SmpPresenter extends Presenter
     /** @var CosmosInfo */
     private $cosmosInfo;
 
+    private $streamableHelper;
+
     public function __construct(
         ProgrammeItem $programmeItem,
-        Version $streamableVersion,
+        ?Version $streamableVersion,
         array $segmentEvents,
         ?string $analyticsCounterName,
         ?array $analyticsLabels,
         SmpPlaylistHelper $smpPlaylistHelper,
         UrlGeneratorInterface $router,
         CosmosInfo $cosmosInfo,
+        StreamableHelper $streamableHelper,
         array $options = []
     ) {
         parent::__construct($options);
@@ -67,6 +74,7 @@ class SmpPresenter extends Presenter
         $this->analyticsLabels = $analyticsLabels;
         $this->router = $router;
         $this->cosmosInfo = $cosmosInfo;
+        $this->streamableHelper = $streamableHelper;
     }
 
     public function getProgrammeItem(): ProgrammeItem
@@ -135,6 +143,14 @@ class SmpPresenter extends Presenter
         return [
             'uasConfig' => $this->options['uas'] ? $this->getUasConfig() : null,
         ];
+    }
+
+    public function shouldStreamViaPlayspace(): bool
+    {
+        if ($this->options['audio_to_playspace'] && $this->streamableHelper->shouldStreamViaPlayspace($this->programmeItem)) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -1,30 +1,70 @@
-{% if smp.getProgrammeItem().isStreamable() %}
-    <div class="episode-playout">
-        <div id="{{ smp.getContainerId() }}" class="smp">
-            {{-  ds_shared('imageEntity',
-                    smp.getProgrammeItem().getImage(),
-                    640,
-                    smp.getOption('sizes'),
-                    {
-                        'is_lazy_loaded': false,
-                        'srcsets' : [640, 976],
-                        'image_classes' : 'smp__holding',
-                    })
-            -}}
+{% import _self as self %}
 
-            <script>
-                require(['smp/smpFactory'], function (SmpFactory) {
-                    var factorySmp = new SmpFactory();
-                    factorySmp.runSmp({{ smp.getFactoryOptions() | json_encode | raw }}, {{ smp.getSmpConfig() | json_encode | raw }});
-                });
-            </script>
+<div class="playout">
+    {% if smp.getProgrammeItem().hasPlayableDestination() %}
+        {% if  smp.shouldStreamViaPlayspace() %}
+            {{  self.renderPlayerAsLink(smp.getProgrammeItem(), smp)}}
+        {% else %}
+            <div class="episode-playout">
+                <div id="{{ smp.getContainerId() }}" class="smp">
+                    {{-  ds_shared('imageEntity',
+                        smp.getProgrammeItem().getImage(),
+                        smp.getOption('default_width'),
+                        smp.getOption('sizes'),
+                        {
+                            'is_lazy_loaded': false,
+                            'srcsets' : smp.getOption('srcsets'),
+                            'image_classes' : 'smp__holding',
+                        })
+                    -}}
 
-            <div class="smp__overlay">
-                <div class="smp__message js-loading-message delta">
-                    <noscript>{{ tr('javascript_required') }}</noscript>
+                    <script>
+                        require(['smp/smpFactory'], function (SmpFactory) {
+                            var factorySmp = new SmpFactory();
+                            factorySmp.runSmp({{ smp.getFactoryOptions() | json_encode | raw }}, {{ smp.getSmpConfig() | json_encode | raw }});
+                        });
+                    </script>
+
+                    <div class="playout__overlay">
+                        <div class="playout__message js-loading-message delta">
+                            <noscript>{{ tr('javascript_required') }}</noscript>
+                        </div>
+                    </div>
                 </div>
+
+            </div>
+        {% endif %}
+    {% elseif  smp.getProgrammeItem().hasFutureAvailability() %}
+        {{ self.renderUnavailableAsLink( smp.getProgrammeItem(), 'clip_availability_future', smp)}}
+    {% else %}
+        {{ self.renderUnavailableAsLink(smp.getProgrammeItem(), 'clip_availability_none', smp)}}
+    {% endif %}
+</div>
+
+{% macro renderPlayerAsLink(programme, smp) %}
+    <a class="playout__blocklink" data-linktrack="sounds_clippage_playcurrent_calltoaction" href="{{ path('playspace_play', {pid: programme.getPid()}) }}">
+        {{ ds_shared(
+            'imageEntity',
+            programme.getImage(),
+            smp.getOption('default_width'),
+            smp.getOption('sizes'),
+            {'is_lazy_loaded': false }
+        ) }}
+
+        <div class="playout__overlay">
+            <div class="playout__message playout__message--icon br-highlight-bg-onbg--hover br-highlight-text-ontext--hover sounds">
+                <span class="playout__icon ">{{ gelicon('audio-visual', 'listen', 'gelicon--fill-container') }}</span>
+                <span class="playout__messagetext ">{{ tr('iplayer_listen_now') }}</span>
             </div>
         </div>
+    </a>
+{% endmacro %}
 
+{%  macro renderUnavailableAsLink(programme, unavailable_message, smp) %}
+    {{ ds_shared('imageEntity', programme.getImage(), smp.getOption('default_width'), smp.getOption('sizes') ,{'is_lazy_loaded': false}) }}
+    <div class="playout__overlay">
+        <div class="playout__message">
+            <span class="delta">{{ tr(unavailable_message) }}</span>
+        </div>
     </div>
-{% endif %}
+{% endmacro %}

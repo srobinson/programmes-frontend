@@ -19,7 +19,7 @@ class ImagePresenter extends Presenter
     protected $options = [
         'is_lazy_loaded' => true,
         'srcsets' => [80, 160, 320, 480, 640, 768, 896, 1008],
-        'ratio' => (16 / 9),
+        'ratio' => (16 / 9), // use "auto" for auto height
         'is_bounded' => false,
         'alt' => '',
         'image_classes' => '',
@@ -87,7 +87,7 @@ class ImagePresenter extends Presenter
         // height do not get forced to a particular ratio at all.
 
         $ratio = $this->getOption('ratio');
-        if ($ratio) {
+        if ($ratio && $ratio !== 'auto') {
             $height = (string) round($width / $ratio, 0);
             if ($this->getOption('is_bounded')) {
                 $height .= '_b';
@@ -118,8 +118,8 @@ class ImagePresenter extends Presenter
             }
         }
 
-        if (!is_numeric($options['ratio']) && !is_null($options['ratio'])) {
-            throw new InvalidOptionException("Option 'ratio' must be numeric or null");
+        if (!is_numeric($options['ratio']) && $options['ratio'] !== 'auto') {
+            throw new InvalidOptionException("Option 'ratio' must be numeric or auto");
         }
 
         if (!is_string($options['alt'])) {

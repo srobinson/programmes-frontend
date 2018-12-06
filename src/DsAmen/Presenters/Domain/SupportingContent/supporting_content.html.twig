@@ -7,7 +7,7 @@
     </div>
     {%- if supporting_content.showImage() -%}
         <div class="media__panel 1/2@gel2b br-box-subtle">
-            {{- ds_shared('imageEntity', supporting_content.getSupportingContent().getImage(), 336, { 0: 1/2, 1280: 1/4 }, {'is_lazy_loaded': false, ratio: null}) -}}
+            {{- ds_shared('imageEntity', supporting_content.getSupportingContent().getImage(), 336, { 0: 1/2, 1280: 1/4 }, {'is_lazy_loaded': false, 'ratio': 'auto'}) -}}
         </div>
     {%- endif -%}
 </div>

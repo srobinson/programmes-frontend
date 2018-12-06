@@ -53,7 +53,7 @@
             </div>
             <div class="grid 11/24@bpw2 11/24@bpe">
                 <div class="hidden visible@bpw2 visible@bpe component">
-                    {{ ds_shared('image', profile.getPortraitImage(), 336, '', {'ratio': null}) }}
+                    {{ ds_shared('image', profile.getPortraitImage(), 336, '', {'ratio': 'auto'}) }}
                 </div>
                 {% if profile.getOnwardJourneyBlock() %}
                     {{ ds2013('contentBlock', profile.getOnwardJourneyBlock(), false) }}

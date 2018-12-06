@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Quiz;
 
 class QuizPresenter extends ContentBlockPresenter
 {
-    public function __construct(Quiz $tableBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Quiz $tableBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($tableBlock, $inPrimaryColumn, $options);
+        parent::__construct($tableBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

@@ -12,9 +12,9 @@ class ClipStandalonePresenter extends ContentBlockPresenter
     /** @var ClipStandAlone */
     protected $block;
 
-    public function __construct(ClipStandAlone $block, bool $inPrimaryColumn, array $options = [])
+    public function __construct(ClipStandAlone $block, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($block, $inPrimaryColumn, $options);
+        parent::__construct($block, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     public function getClip(): Clip
@@ -27,7 +27,7 @@ class ClipStandalonePresenter extends ContentBlockPresenter
         return $this->block->getCaption();
     }
 
-    public function getStreamableVersion(): Version
+    public function getStreamableVersion(): ?Version
     {
         return $this->block->getStreamableVersion();
     }

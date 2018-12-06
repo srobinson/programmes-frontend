@@ -80,6 +80,11 @@ abstract class IsiteService
     ): PromiseInterface {
         /** @var string $project */
         $project = $programme->getOption('project_space');
+
+        if (!$project) {
+            return new FulfilledPromise(new IsiteResult($page, $limit, 0, []));
+        }
+
         $query = $this->getBaseQuery($project, $page, $limit);
         $query->setQuery([
             'and' => [

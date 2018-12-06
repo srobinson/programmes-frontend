@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Faq;
 
 class FaqPresenter extends ContentBlockPresenter
 {
-    public function __construct(Faq $faqBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Faq $faqBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($faqBlock, $inPrimaryColumn, $options);
+        parent::__construct($faqBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

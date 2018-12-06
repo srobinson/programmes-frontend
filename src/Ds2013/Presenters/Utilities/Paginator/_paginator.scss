@@ -51,7 +51,7 @@
 
 svg.pagination__next-previous {
     width: 14px;
-    height: 16px;
+    height: 22px;
     vertical-align: text-top;
 }
 
@@ -92,6 +92,10 @@ svg.pagination__next-previous {
             @include gel-font-size(15px, 15px);
         }
 
+        .pagination__spacer--hidden {
+            display: none;
+        }
+
         .pagination__page--offset1,
         .pagination__page--offset2,
         .pagination__page--nohide {
@@ -113,14 +117,6 @@ svg.pagination__next-previous {
         .pagination__page--nohide,
         .pagination__page--offset1,
         .pagination__page--offset2 {
-            display: inline-block;
-        }
-    }
-}
-
-@include mq-range('bpw1') {
-    .pagination {
-        .pagination__spacer--hidden {
             display: inline-block;
         }
     }

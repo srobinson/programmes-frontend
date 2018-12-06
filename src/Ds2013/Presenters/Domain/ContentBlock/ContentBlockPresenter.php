@@ -10,15 +10,17 @@ abstract class ContentBlockPresenter extends Presenter
 {
     /** @var AbstractContentBlock */
     protected $block;
-
     /** @var bool */
     protected $inPrimaryColumn;
+    /** @var bool */
+    protected $isPrimaryColumnFullWith;
 
-    public function __construct(AbstractContentBlock $block, bool $inPrimaryColumn, array $options = [])
+    public function __construct(AbstractContentBlock $block, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
         parent::__construct($options);
         $this->block = $block;
         $this->inPrimaryColumn = $inPrimaryColumn;
+        $this->isPrimaryColumnFullWith = $isPrimaryColumnFullWith;
     }
 
     public function getBlock(): AbstractContentBlock
@@ -34,5 +36,10 @@ abstract class ContentBlockPresenter extends Presenter
     public function isInPrimaryColumn(): bool
     {
         return $this->inPrimaryColumn;
+    }
+
+    public function isPrimaryColumnFullWith(): bool
+    {
+        return $this->isPrimaryColumnFullWith;
     }
 }

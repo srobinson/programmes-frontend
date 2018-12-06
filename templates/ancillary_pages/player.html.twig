@@ -104,18 +104,18 @@
             text-align: left;
         }
 
-        .smp {
+        .playout {
             position: relative;
         }
 
-        .smp__overlay {
+        .playout__overlay {
             position: absolute;
             left: 0;
             bottom: 0;
             margin: 0;
         }
 
-        .smp__message {
+        .playout__message {
             text-align: center;
             background: #000;
             color: #fff;
@@ -128,16 +128,16 @@
             vertical-align: middle;
         }
 
-        .smp__blocklink:hover .smp__message,
-        .smp__blocklink:active .smp__message,
-        .smp__blocklink:focus .smp__message {
+        .playout__blocklink:hover .playout__message,
+        .playout__blocklink:active .playout__message,
+        .playout__blocklink:focus .playout__message {
             text-decoration: none;
             background: #f54997 !important;
             color: white !important;
         }
 
         @media (min-width: 37.5em) {
-            .smp__message {
+            .playout__message {
                 padding: 16px;
             }
         }
@@ -146,22 +146,25 @@
 
 {% block body %}
     <div class="episode-playout">
-        {% if available %}
+        {% if embeddable %}
             {{ ds2013(
                 'smp',
                 clip,
                 streamable_version,
                 segment_events,
-                '',
-                {'app_name': 'programmes', 'prod_name': 'programmes'},
-                {'autoplay': has_chrome ? false : true, 'uas': false, 'sizes': {1: 1/1}}
+                {
+                    'autoplay': has_chrome ? false : true,
+                    'uas': false,
+                    'sizes': {1: 1/1},
+                    'audio_to_playspace': false
+                }
             ) }}
         {% else %}
             {{ ds_shared('imageEntity', clip.getImage(), 640, {1: 1/1} ,{'is_lazy_loaded': false}) }}
-            <div class="smp">
-                <div class="smp__overlay">
-                    <div class="smp__message delta">
-                        {{ tr(unavailable_message) }}
+            <div class="playout">
+                <div class="playout__overlay">
+                    <div class="playout__message delta">
+                        {{ tr('clip_availability_none') }}
                     </div>
                 </div>
             </div>

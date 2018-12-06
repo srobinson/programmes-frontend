@@ -19,6 +19,7 @@ class ClipStandalonePresenterTest extends TestCase
     {
         $presenter = new ClipStandalonePresenter(
             $this->clipStandAlone(),
+            true,
             true
         );
 

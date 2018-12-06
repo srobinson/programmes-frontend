@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Touchcast;
 
 class TouchcastPresenter extends ContentBlockPresenter
 {
-    public function __construct(Touchcast $touchcastBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Touchcast $touchcastBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($touchcastBlock, $inPrimaryColumn, $options);
+        parent::__construct($touchcastBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

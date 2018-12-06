@@ -17,7 +17,7 @@ class ClipStandAlone extends AbstractContentBlock
     /** @var Version */
     private $streamableVersion;
 
-    public function __construct(string $title, string $caption, Clip $clip, Version $streamableVersion)
+    public function __construct(string $title, string $caption, Clip $clip, ?Version $streamableVersion)
     {
         parent::__construct($title);
         $this->caption = $caption;
@@ -35,7 +35,7 @@ class ClipStandAlone extends AbstractContentBlock
         return $this->caption;
     }
 
-    public function getStreamableVersion(): Version
+    public function getStreamableVersion(): ?Version
     {
         return $this->streamableVersion;
     }

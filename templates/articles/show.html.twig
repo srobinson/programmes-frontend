@@ -23,7 +23,7 @@
 
                                     {% for block in row.getPrimaryBlocks() %}
                                         {% if block is not null %} {# Remove this line once all content block types are populated #}
-                                            {{ ds2013('contentBlock', block) }}
+                                            {{ ds2013('contentBlock', block, true, row.hasPrimaryBlocksOnly()) }}
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}

@@ -8,7 +8,18 @@
         {% endif %}
         <div {% if content_block.isInPrimaryColumn() %}class="1/2@bpw pull--{{ content_block.getBlock().getMediaPosition() }}-spaced@bpw"{% endif %}>
             {% if content_block.getBlock().getClip() is not empty %}
-                <div class="component smp">{{ ds2013('smp', content_block.getBlock().getClip(), content_block.getBlock().getStreamableVersion(), [], null, null, {'autoplay': 'false'} ) }}</div>
+                <div class="component smp">{{ ds2013(
+                        'smp',
+                        content_block.getBlock().getClip(),
+                        content_block.getBlock().getStreamableVersion(),
+                        [],
+                        {
+                            'autoplay': false,
+                            'audio_to_playspace': false,
+                            'sizes': {1: 1/1, 600: 1/2, 770: 1/4, 1008: '250px'},
+                            'default_width': 320,
+                        }
+                    ) }}</div>
             {% endif %}
             {% if content_block.getBlock().getImage() is not empty %}
                 <div class="component">

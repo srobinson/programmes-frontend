@@ -1,5 +1,5 @@
 includes:
-	- vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
 parameters:
     ignoreErrors:
         - '#Call to an undefined method DateTimeImmutable::\w*\(\).#'
@@ -15,4 +15,4 @@ parameters:
         - '#Call to an undefined method Tests\\App\\Translate\\TranslatableTraitTest::tr().#'
         - '#Call to an undefined method Tests\\App\\Translate\\TranslatableTraitTest::localDateIntl().#'
         - '#Call to an undefined method BBC\\ProgrammesPagesService\\Domain\\Entity\\CoreEntity::getGenres().#'
-        - '#Call to an undefined method BBC\\ProgrammesPagesService\\Domain\\Entity\\Programme::getReleaseDate()#'
+        - '#Call to an undefined method App\\ExternalApi\\Isite\\Domain\\ContentBlock\\AbstractContentBlock::getPromotions()#'

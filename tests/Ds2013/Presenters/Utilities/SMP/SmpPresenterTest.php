@@ -8,6 +8,7 @@ use App\Builders\VersionBuilder;
 use App\Ds2013\Presenters\Utilities\SMP\SmpPresenter;
 use App\DsShared\Helpers\GuidanceWarningHelper;
 use App\DsShared\Helpers\SmpPlaylistHelper;
+use App\DsShared\Helpers\StreamableHelper;
 use App\ValueObject\CosmosInfo;
 use BBC\ProgrammesPagesService\Domain\Enumeration\MediaTypeEnum;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
@@ -90,6 +91,7 @@ class SmpPresenterTest extends TestCase
             new SmpPlaylistHelper($this->createMock(GuidanceWarningHelper::class)),
             $stubRouter,
             $this->createMock(CosmosInfo::class),
+            $this->createMock(StreamableHelper::class),
             $options
         );
     }

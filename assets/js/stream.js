@@ -322,7 +322,7 @@ define(['jquery-1.9','rv-bootstrap', 'istats-1'], function ($, bootstrap, istats
             var children = this.container.find('.' + this.classes.item),
                 panel = this.container.find('.' + this.classes.panel),
                 win = this.container.find('.' + this.classes.window),
-                win_width = win.width(),
+                win_width = win[0].getBoundingClientRect().width,
                 max_width = parseInt(children.css('max-width')),
                 window_width = this.options.window_width,
                 panel_width = 0;
@@ -341,7 +341,7 @@ define(['jquery-1.9','rv-bootstrap', 'istats-1'], function ($, bootstrap, istats
                 panel_width = (window_width*(this.calc.child_count/this.calc.items_in_window));
             }
             panel.css('width', panel_width + '%');
-            this.calc.child_width_px = children.outerWidth();
+            this.calc.child_width_px = children[0].getBoundingClientRect().width;
 
             this.calc.gutter_px = ((win_width - (this.calc.child_width_px*this.calc.items_in_window)) / 2);
             this.calc.gutter = (this.calc.gutter_px / win_width) * 100;
