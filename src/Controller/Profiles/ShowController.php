@@ -5,6 +5,7 @@ namespace App\Controller\Profiles;
 
 use App\Controller\BaseController;
 use App\Controller\Helpers\IsiteKeyHelper;
+use App\Controller\IsiteBaseController;
 use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
 use App\ExternalApi\Isite\Domain\Profile;
 use App\ExternalApi\Isite\IsiteResult;
@@ -14,9 +15,9 @@ use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
 use GuzzleHttp\Promise\FulfilledPromise;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShowController extends BaseController
+class ShowController extends IsiteBaseController
 {
-    private const MAX_LIST_DISPLAYED_ITEMS = 48;
+    private const REDIRECT_ROUTE_NAME = 'programme_profile';
 
     public function __invoke(
         string $key,
@@ -26,43 +27,24 @@ class ShowController extends BaseController
         IsiteKeyHelper $isiteKeyHelper,
         CoreEntitiesService $coreEntitiesService
     ) {
-        $preview = false;
-        if ($request->query->has('preview') && $request->query->get('preview')) {
-            $preview = true;
+        $this->key = $key;
+        $this->slug = $slug;
+        $this->isiteKeyHelper = $isiteKeyHelper;
+        $this->coreEntitiesService = $coreEntitiesService;
+        $this->isiteService = $isiteService;
+        $this->preview = $this->getPreview($request);
+
+        if ($this->isiteKeyHelper->isKeyAGuid($this->key)) {
+            return $this->redirectToGuidUrl(self::REDIRECT_ROUTE_NAME);
+        }
+        $this->guid = $isiteKeyHelper->convertKeyToGuid($key);
+        $profile = $this->getIsiteObject();
+
+        if ($this->slug != $profile->getSlug()) {
+            return $this->redirectWith($profile->getKey(), $profile->getSlug(), $this->preview, self::REDIRECT_ROUTE_NAME);
         }
 
-        if ($isiteKeyHelper->isKeyAGuid($key)) {
-            return $this->redirectWith($isiteKeyHelper->convertGuidToKey($key), $slug, $preview);
-        }
-
-        $guid = $isiteKeyHelper->convertKeyToGuid($key);
-
-        /** @var IsiteResult $isiteResult */
-        $isiteResult = $isiteService->getByContentId($guid, $preview)->wait(true);
-
-        /** @var Profile $profile */
-        $profiles = $isiteResult->getDomainModels();
-        if (!$profiles) {
-            throw $this->createNotFoundException('No profiles found for guid');
-        }
-
-        $profile = reset($profiles);
-
-        if ($slug != $profile->getSlug()) {
-            return $this->redirectWith($profile->getKey(), $profile->getSlug(), $preview);
-        }
-
-        $context = null;
-        $parentPid = $profile->getParentPid();
-        if ($parentPid instanceof Pid) {
-            $context = $coreEntitiesService->findByPidFull($parentPid);
-
-            if ($context && $profile->getProjectSpace() !== $context->getOption('project_space')) {
-                throw $this->createNotFoundException('Project space Profile-Programme not matching');
-            }
-        }
-
-        $this->setContext($context);
+        $this->initContext($profile, $coreEntitiesService);
 
         if ('' !== $profile->getBrandingId()) {
             $this->setBrandingId($profile->getBrandingId());
@@ -89,7 +71,7 @@ class ShowController extends BaseController
 
             return $this->renderWithChrome('profiles/individual.html.twig', [
                 'profile' => $profile,
-                'programme' => $context,
+                'programme' => $this->context,
                 'maxSiblings' => $maxSiblings,
             ]);
         }
@@ -112,34 +94,12 @@ class ShowController extends BaseController
         $paginator = $this->getPaginator($profile);
 
         return $this->renderWithChrome('profiles/group.html.twig', [
+            'guid' => $this->guid,
+            'projectSpace' => $this->projectSpace,
             'profile' => $profile,
             'paginatorPresenter' => $paginator,
-            'programme' => $context,
+            'programme' => $this->context,
             'maxSiblings' => $maxSiblings,
         ]);
-    }
-
-    private function redirectWith(string $key, string $slug, bool $preview)
-    {
-        $params = ['key' => $key, 'slug' => $slug];
-
-        if ($preview) {
-            $params['preview'] = 'true';
-        }
-
-        return $this->cachedRedirectToRoute('programme_profile', $params, 301);
-    }
-
-    private function getPaginator(Profile $profile): ?PaginatorPresenter
-    {
-        if ($profile->getChildCount() <= self::MAX_LIST_DISPLAYED_ITEMS) {
-            return null;
-        }
-
-        return new PaginatorPresenter(
-            $this->getPage(),
-            self::MAX_LIST_DISPLAYED_ITEMS,
-            $profile->getChildCount()
-        );
     }
 }

@@ -38,13 +38,8 @@ class MetaContext
     /** @var  bool */
     private $metaNoIndex;
 
-    public function __construct(
-        $context = null,
-        string $canonicalUrl = '',
-        bool $metaNoIndex = false,
-        $overriddenDescription = null,
-        ?string $projectSpaceOverride = null
-    ) {
+    public function __construct($context = null, string $canonicalUrl = '', bool $metaNoIndex = false, $overriddenDescription = null)
+    {
         $this->canonicalUrl = $canonicalUrl;
         $this->context = $context;
         $this->metaNoIndex = $metaNoIndex;
@@ -65,10 +60,6 @@ class MetaContext
             if ($context->getNetwork()) {
                 $this->image = $context->getNetwork()->getImage();
             }
-        }
-
-        if (!is_null($projectSpaceOverride)) {
-            $this->projectSpace = $projectSpaceOverride;
         }
 
         if ($this->image === null) {
