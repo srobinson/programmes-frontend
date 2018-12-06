@@ -7,8 +7,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\ThirdParty;
 
 class ThirdPartyPresenter extends ContentBlockPresenter
 {
-    public function __construct(ThirdParty $thirdPartyBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(ThirdParty $thirdPartyBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($thirdPartyBlock, $inPrimaryColumn, $options);
+        parent::__construct($thirdPartyBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

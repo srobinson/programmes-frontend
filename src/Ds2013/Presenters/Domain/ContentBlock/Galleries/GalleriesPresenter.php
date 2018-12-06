@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Galleries;
 
 class GalleriesPresenter extends ContentBlockPresenter
 {
-    public function __construct(Galleries $galleriesBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Galleries $galleriesBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($galleriesBlock, $inPrimaryColumn, $options);
+        parent::__construct($galleriesBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

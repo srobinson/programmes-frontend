@@ -8,8 +8,8 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Image;
 
 class ImagePresenter extends ContentBlockPresenter
 {
-    public function __construct(Image $imageBlock, bool $inPrimaryColumn, array $options = [])
+    public function __construct(Image $imageBlock, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($imageBlock, $inPrimaryColumn, $options);
+        parent::__construct($imageBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 }

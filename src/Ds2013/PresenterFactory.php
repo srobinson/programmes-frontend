@@ -273,49 +273,50 @@ class PresenterFactory
     public function contentBlockPresenter(
         AbstractContentBlock $contentBlock,
         bool $inPrimaryColumn = true,
+        bool $isPrimaryColumnFullWith = false,
         array $options = []
     ): Presenter {
         if ($contentBlock instanceof Faq) {
-            return new FaqPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new FaqPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Galleries) {
-            return new GalleriesPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new GalleriesPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof InteractiveActivity) {
-            return new InteractiveActivityPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new InteractiveActivityPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Image) {
-            return new ImagePresenter($contentBlock, $inPrimaryColumn, $options);
+            return new ImagePresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Links) {
-            return new LinksPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new LinksPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Promotions) {
-            return new PromotionsPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new PromotionsPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Prose) {
-            return new ProsePresenter($contentBlock, $inPrimaryColumn, $options);
+            return new ProsePresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Quiz) {
-            return new QuizPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new QuizPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Table) {
-            return new TablePresenter($contentBlock, $inPrimaryColumn, $options);
+            return new TablePresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof ClipStream) {
-            return new ClipStreamPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new ClipStreamPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof ClipStandalone) {
-            return new ClipStandalonePresenter($contentBlock, $inPrimaryColumn, $options);
+            return new ClipStandalonePresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Telescope) {
-            return new TelescopePresenter($contentBlock, $inPrimaryColumn, $options);
+            return new TelescopePresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof ThirdParty) {
-            return new ThirdPartyPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new ThirdPartyPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
         if ($contentBlock instanceof Touchcast) {
-            return new TouchcastPresenter($contentBlock, $inPrimaryColumn, $options);
+            return new TouchcastPresenter($contentBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
         }
 
         throw new InvalidArgumentException(sprintf(

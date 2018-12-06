@@ -8,9 +8,9 @@ use App\ExternalApi\Isite\Domain\ContentBlock\InteractiveActivity;
 
 class InteractiveActivityPresenter extends ContentBlockPresenter
 {
-    public function __construct(InteractiveActivity $block, bool $inPrimaryColumn, array $options = [])
+    public function __construct(InteractiveActivity $block, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($block, $inPrimaryColumn, $options);
+        parent::__construct($block, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     public function getBBCDownloadsUrl(): string

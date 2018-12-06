@@ -12,9 +12,9 @@ class ClipStandalonePresenter extends ContentBlockPresenter
     /** @var ClipStandAlone */
     protected $block;
 
-    public function __construct(ClipStandAlone $block, bool $inPrimaryColumn, array $options = [])
+    public function __construct(ClipStandAlone $block, bool $inPrimaryColumn, bool $isPrimaryColumnFullWith, array $options = [])
     {
-        parent::__construct($block, $inPrimaryColumn, $options);
+        parent::__construct($block, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
 
     public function getClip(): Clip
