@@ -58,7 +58,7 @@ class ShowController extends BaseController
         }
 
         $this->setContext($context);
-        $this->setAtiContentId('isite', $guid);
+        $this->setAtiContentId($guid, 'isite');
 
         if ('' !== $article->getBrandingId()) {
             $this->setBrandingId($article->getBrandingId());
