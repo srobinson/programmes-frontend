@@ -66,7 +66,9 @@ use App\ExternalApi\Isite\Domain\ContentBlock\Touchcast;
 use App\ExternalApi\Isite\Domain\Profile;
 use App\ExternalApi\Recipes\Domain\Recipe;
 use App\Translate\TranslateProvider;
+use App\ValueObject\AnalyticsCounterName;
 use App\ValueObject\CosmosInfo;
+use App\ValueObject\IstatsAnalyticsLabels;
 use BBC\ProgrammesPagesService\Domain\Entity\Broadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
@@ -123,7 +125,14 @@ class PresenterFactory
     /** @var CosmosInfo */
     private $cosmosInfo;
 
+    /** @var SharedPresenterFactory  */
     private $presenterFactory;
+
+    /** @var AnalyticsCounterName */
+    private $analyticsCounterName;
+
+    /** @var IstatsAnalyticsLabels */
+    private $istatsAnalyticsLabels;
 
     public function __construct(
         SharedPresenterFactory $presenterFactory,
@@ -399,16 +408,14 @@ class PresenterFactory
         ProgrammeItem $programmeItem,
         ?Version $streamableVersion,
         array $segmentEvents,
-        ?string $analyticsCounterName,
-        ?array $analyticsLabels,
         array $options = []
     ): SmpPresenter {
         return new SmpPresenter(
             $programmeItem,
             $streamableVersion,
             $segmentEvents,
-            $analyticsCounterName,
-            $analyticsLabels,
+            $this->analyticsCounterName ? (string) $this->analyticsCounterName : null,
+            $this->istatsAnalyticsLabels ? $this->istatsAnalyticsLabels->getLabels() : null,
             $this->helperFactory->getSmpPlaylistHelper(),
             $this->router,
             $this->cosmosInfo,
@@ -564,5 +571,15 @@ class PresenterFactory
     public function relatedTopicsPresenter(array $relatedTopics, Programme $context, array $options = []): RelatedTopicsPresenter
     {
         return new RelatedTopicsPresenter($relatedTopics, $context, $options);
+    }
+
+    public function setAnalyticsCounterName(AnalyticsCounterName $analyticsCounterName): void
+    {
+        $this->analyticsCounterName = $analyticsCounterName;
+    }
+
+    public function setIstatsAnalyticsLabels(IstatsAnalyticsLabels $istatsAnalyticsLabels): void
+    {
+        $this->istatsAnalyticsLabels = $istatsAnalyticsLabels;
     }
 }

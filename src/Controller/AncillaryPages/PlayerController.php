@@ -5,7 +5,6 @@ namespace App\Controller\AncillaryPages;
 
 use App\Controller\BaseController;
 use App\DsShared\Helpers\TitleLogicHelper;
-use App\ValueObject\MetaContext;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Service\SegmentEventsService;
@@ -42,7 +41,12 @@ class PlayerController extends BaseController
             return $t->getTitle();
         }, $titleLogicHelper->getOrderedProgrammesForTitle($clip, null, 'item::ancestry')[1]));
 
-        $context = new MetaContext($clip, $router->generate('programme_player', ['pid' => $clip->getPid()]));
+        $this->setContext($clip);
+        $this->setIstatsProgsPageType('programme_player');
+        $context = $this->createMetaContextFromContext();
+        // These two functions set the stats context in the PresenterFactory for the SMP to use later
+        $this->createAnalyticsCounterNameFromContext();
+        $this->createIstatsAnalyticsLabelsFromContext();
 
         $linkedVersions = $versionsService->findLinkedVersionsForProgrammeItem($clip);
 
