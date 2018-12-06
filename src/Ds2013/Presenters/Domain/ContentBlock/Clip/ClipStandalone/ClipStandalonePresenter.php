@@ -27,7 +27,7 @@ class ClipStandalonePresenter extends ContentBlockPresenter
         return $this->block->getCaption();
     }
 
-    public function getStreamableVersion(): Version
+    public function getStreamableVersion(): ?Version
     {
         return $this->block->getStreamableVersion();
     }

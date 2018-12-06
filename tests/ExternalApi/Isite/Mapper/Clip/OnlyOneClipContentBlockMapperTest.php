@@ -46,6 +46,23 @@ class OnlyOneClipContentBlockMapperTest extends TestCase
         $this->assertInstanceOf(Clip::class, $block->getClip());
     }
 
+    public function testMapperCanCreateAnStandAloneForNonStreamableClip()
+    {
+        $this->givenClipsIndicatedByIsite = [
+            'p01f10w1' => $clip1 = ClipBuilder::any()->with(['pid' => new Pid('p01f10w1')])->build(),
+        ];
+        $this->givenStreamableVersions = [];
+
+        $isiteResponse = new SimpleXMLElement(file_get_contents(__DIR__ . '/one_clip.xml'));
+        $mapper = $this->mapper();
+        $mapper->preloadData([$isiteResponse]);
+        /** @var ClipStandAlone $block */
+        $block = $mapper->getDomainModel($isiteResponse->result);
+
+        $this->assertInstanceOf(ClipStandAlone::class, $block);
+        $this->assertInstanceOf(Clip::class, $block->getClip());
+    }
+
     public function mapper(): ContentBlockMapper
     {
         return new ContentBlockMapper(
