@@ -60,6 +60,9 @@ class ShowController extends BaseController
             if ($context && $profile->getProjectSpace() !== $context->getOption('project_space')) {
                 throw $this->createNotFoundException('Project space Profile-Programme not matching');
             }
+            $projectSpace = $context->getOption('project_space') ?? 'none';
+        } else {
+            $projectSpace = $profile->getProjectSpace();
         }
 
         $this->setContext($context);
@@ -88,6 +91,8 @@ class ShowController extends BaseController
             $this->resolvePromises(['siblings' => $siblingsPromise]);
 
             return $this->renderWithChrome('profiles/individual.html.twig', [
+                'guid' => $guid,
+                'projectSpace' => $projectSpace,
                 'profile' => $profile,
                 'programme' => $context,
                 'maxSiblings' => $maxSiblings,
@@ -112,6 +117,8 @@ class ShowController extends BaseController
         $paginator = $this->getPaginator($profile);
 
         return $this->renderWithChrome('profiles/group.html.twig', [
+            'guid' => $guid,
+            'projectSpace' => $projectSpace,
             'profile' => $profile,
             'paginatorPresenter' => $paginator,
             'programme' => $context,

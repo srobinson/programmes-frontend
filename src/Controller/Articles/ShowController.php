@@ -55,6 +55,9 @@ class ShowController extends BaseController
             if ($article->getProjectSpace() !== $context->getOption('project_space')) {
                 throw $this->createNotFoundException('Project space Article-Programme not matching');
             }
+            $projectSpace = $context->getOption('project_space') ?? 'none';
+        } else {
+            $projectSpace = $article->getProjectSpace();
         }
 
         $this->setContext($context);
@@ -73,6 +76,8 @@ class ShowController extends BaseController
         return $this->renderWithChrome(
             'articles/show.html.twig',
             [
+                'guid' => $guid,
+                'projectSpace' => $projectSpace,
                 'article' => $article,
                 'paginatorPresenter' => $paginator,
                 'programme' => $context,

@@ -22,7 +22,7 @@
         {% do dns_prefetch('https://fig.bbc.co.uk') %}
 
         <script>document.documentElement.className += ' has-js';</script>
-        <!-- iSite2 Project (Tenant space): {{ meta_context.getProjectSpace() }} -->
+        <!-- iSite2 Project (Tenant space): {% block project_space %}{{ meta_context.getProjectSpace() }}{% endblock %} -->
         {#
             bbcdotcom adverts requires synchronous fig loading.
             See https://navigation.api.bbc.co.uk/docs/fig.md#using-a-blocking-fig

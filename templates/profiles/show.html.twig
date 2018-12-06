@@ -2,8 +2,11 @@
 
 {% block title %}{{ meta_context.titlePrefix() }} - {{ tr('profiles') }}{% endblock %}
 {% block page_classes %}text-base{% endblock %}
+{% block project_space %}{{ projectSpace }}{% endblock %}
 
 {% block body %}
+    <!-- isite guid: {{ guid }} -->
+
     <div class="prog-layout">
         {% block body_inner %}{% endblock %}
     </div>
