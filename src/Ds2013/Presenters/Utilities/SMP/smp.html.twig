@@ -7,15 +7,18 @@
         {% else %}
             <div class="episode-playout">
                 <div id="{{ smp.getContainerId() }}" class="smp">
-                    {{-  ds_shared('imageEntity',
-                        smp.getProgrammeItem().getImage(),
-                        smp.getOption('default_width'),
-                        smp.getOption('sizes'),
-                        {
-                            'is_lazy_loaded': false,
-                            'srcsets' : smp.getOption('srcsets'),
-                            'image_classes' : 'smp__holding',
-                        })
+                    {{-
+                        ds_shared(
+                            'imageEntity',
+                            smp.getProgrammeItem().getImage(),
+                            smp.getOption('default_width'),
+                            smp.getOption('sizes'),
+                            {
+                                'is_lazy_loaded': false,
+                                'srcsets' : smp.getOption('srcsets'),
+                                'image_classes' : 'smp__holding',
+                            }
+                        )
                     -}}
 
                     <script>
