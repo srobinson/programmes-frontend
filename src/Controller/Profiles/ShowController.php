@@ -27,28 +27,35 @@ class ShowController extends IsiteBaseController
         IsiteKeyHelper $isiteKeyHelper,
         CoreEntitiesService $coreEntitiesService
     ) {
-        $this->key = $key;
-        $this->slug = $slug;
         $this->isiteKeyHelper = $isiteKeyHelper;
         $this->coreEntitiesService = $coreEntitiesService;
         $this->isiteService = $isiteService;
-        $this->preview = $this->getPreview($request);
 
-        if ($this->isiteKeyHelper->isKeyAGuid($this->key)) {
-            return $this->redirectToGuidUrl(self::REDIRECT_ROUTE_NAME);
+        $preview = $this->getPreview($request);
+        if ($this->isiteKeyHelper->isKeyAGuid($key)) {
+            return $this->redirectWith(
+                $this->isiteKeyHelper->convertGuidToKey($key),
+                $slug,
+                $preview,
+                self::REDIRECT_ROUTE_NAME
+            );
         }
-        $this->guid = $isiteKeyHelper->convertKeyToGuid($key);
-        $profile = $this->getIsiteObject();
 
-        if ($this->slug != $profile->getSlug()) {
-            return $this->redirectWith($profile->getKey(), $profile->getSlug(), $this->preview, self::REDIRECT_ROUTE_NAME);
+        $guid = $isiteKeyHelper->convertKeyToGuid($key);
+
+        /** @var Profile $profile */
+        $profile = $this->getIsiteObject($guid, $preview);
+
+        if ($slug != $profile->getSlug()) {
+            return $this->redirectWith(
+                $profile->getKey(),
+                $profile->getSlug(),
+                $preview,
+                self::REDIRECT_ROUTE_NAME
+            );
         }
-
         $this->initContext($profile, $coreEntitiesService);
-
-        if ('' !== $profile->getBrandingId()) {
-            $this->setBrandingId($profile->getBrandingId());
-        }
+        $this->initBranding($profile);
 
         // Calculate siblings display
         $maxSiblings = self::MAX_LIST_DISPLAYED_ITEMS;
@@ -70,6 +77,8 @@ class ShowController extends IsiteBaseController
             $this->resolvePromises(['siblings' => $siblingsPromise]);
 
             return $this->renderWithChrome('profiles/individual.html.twig', [
+                'guid' => $guid,
+                'projectSpace' => $this->projectSpace,
                 'profile' => $profile,
                 'programme' => $this->context,
                 'maxSiblings' => $maxSiblings,
@@ -94,7 +103,7 @@ class ShowController extends IsiteBaseController
         $paginator = $this->getPaginator($profile);
 
         return $this->renderWithChrome('profiles/group.html.twig', [
-            'guid' => $this->guid,
+            'guid' => $guid,
             'projectSpace' => $this->projectSpace,
             'profile' => $profile,
             'paginatorPresenter' => $paginator,

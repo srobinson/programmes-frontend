@@ -7,19 +7,15 @@ use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
 use App\ExternalApi\Isite\Domain\BaseIsiteObject;
 use App\ExternalApi\Isite\IsiteResult;
 use App\ExternalApi\Isite\Service\ArticleService;
+use App\ExternalApi\Isite\Service\ProfileService;
 use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class IsiteBaseController extends BaseController
 {
     protected const MAX_LIST_DISPLAYED_ITEMS = 48;
-
-    /** @var string */
-    protected $key;
-
-    /** @var string */
-    protected $slug;
 
     /** @var IsiteKeyHelper */
     protected $isiteKeyHelper;
@@ -30,29 +26,20 @@ class IsiteBaseController extends BaseController
     /** @var string */
     protected $projectSpace;
 
-    /** @var string */
-    protected $guid;
-
-    /** @var ArticleService */
+    /** @var ArticleService|ProfileService */
     protected $isiteService;
 
-    /** @var bool */
-    protected $preview;
-
-    protected function redirectToGuidUrl($routeName)
+    protected function initBranding(BaseIsiteObject $isiteObject): void
     {
-        return $this->redirectWith(
-            $this->isiteKeyHelper->convertGuidToKey($this->key),
-            $this->slug,
-            $this->preview,
-            $routeName
-        );
+        if ('' !== $isiteObject->getBrandingId()) {
+            $this->setBrandingId($isiteObject->getBrandingId());
+        }
     }
 
-    protected function getIsiteObject()
+    protected function getIsiteObject(string $guid, bool $preview): BaseIsiteObject
     {
         /** @var IsiteResult $isiteResult */
-        $isiteResult = $this->isiteService->getByContentId($this->guid, $this->preview)->wait(true);
+        $isiteResult = $this->isiteService->getByContentId($guid, $preview)->wait(true);
         $isiteObjects = $isiteResult->getDomainModels();
         if (!$isiteObjects) {
             throw $this->createNotFoundException('No resource found for guid');
@@ -61,7 +48,7 @@ class IsiteBaseController extends BaseController
         return reset($isiteObjects);
     }
 
-    protected function getPreview(Request $request)
+    protected function getPreview(Request $request): bool
     {
         if ($request->query->has('preview') && $request->query->get('preview')) {
             return true;
@@ -70,8 +57,12 @@ class IsiteBaseController extends BaseController
         return false;
     }
 
-    protected function redirectWith(string $key, string $slug, bool $preview, string $routeName)
-    {
+    protected function redirectWith(
+        string $key,
+        string $slug,
+        bool $preview,
+        string $routeName
+    ): RedirectResponse {
         $params = ['key' => $key, 'slug' => $slug];
 
         if ($preview) {
@@ -81,7 +72,7 @@ class IsiteBaseController extends BaseController
         return $this->cachedRedirectToRoute($routeName, $params, 301);
     }
 
-    protected function getPaginator($isiteObject): ?PaginatorPresenter
+    protected function getPaginator(BaseIsiteObject $isiteObject): ?PaginatorPresenter
     {
         if ($isiteObject->getChildCount() <= self::MAX_LIST_DISPLAYED_ITEMS) {
             return null;
@@ -94,7 +85,7 @@ class IsiteBaseController extends BaseController
         );
     }
 
-    protected function initContext(BaseIsiteObject $isiteObject, CoreEntitiesService $coreEntitiesService)
+    protected function initContext(BaseIsiteObject $isiteObject, CoreEntitiesService $coreEntitiesService): void
     {
         $context = null;
         $parentPid = $isiteObject->getParentPid();

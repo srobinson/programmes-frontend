@@ -26,46 +26,46 @@ class ShowController extends IsiteBaseController
         IsiteKeyHelper $isiteKeyHelper,
         CoreEntitiesService $coreEntitiesService
     ) {
-        $this->key = $key;
-        $this->slug = $slug;
         $this->isiteKeyHelper = $isiteKeyHelper;
         $this->coreEntitiesService = $coreEntitiesService;
         $this->isiteService = $isiteService;
-        $this->preview = $this->getPreview($request);
 
-        if ($this->isiteKeyHelper->isKeyAGuid($this->key)) {
-            return $this->redirectToGuidUrl(self::REDIRECT_ROUTE_NAME);
+        $preview = $this->getPreview($request);
+        if ($this->isiteKeyHelper->isKeyAGuid($key)) {
+            return $this->redirectWith(
+                $this->isiteKeyHelper->convertGuidToKey($key),
+                $slug,
+                $preview,
+                self::REDIRECT_ROUTE_NAME
+            );
         }
-        $this->guid = $isiteKeyHelper->convertKeyToGuid($key);
 
+        $guid = $isiteKeyHelper->convertKeyToGuid($key);
         try {
-            $article = $this->getIsiteObject();
+            $article = $this->getIsiteObject($guid, $preview);
         } catch (HasContactFormException $e) {
             return $this->cachedRedirectToRoute(
                 'article_with_contact_form',
                 [
-                    'key' => $this->key,
-                    'slug' => $this->slug,
+                    'key' => $key,
+                    'slug' => $slug,
                 ],
                 302,
                 3600
             );
         }
 
-        if ($this->slug !== $article->getSlug()) {
+        if ($slug !== $article->getSlug()) {
             return $this->redirectWith(
                 $article->getKey(),
                 $article->getSlug(),
-                $this->preview,
+                $preview,
                 self::REDIRECT_ROUTE_NAME
             );
         }
 
         $this->initContext($article, $coreEntitiesService);
-
-        if ('' !== $article->getBrandingId()) {
-            $this->setBrandingId($article->getBrandingId());
-        }
+        $this->initBranding($article);
 
         $parents = $article->getParents();
         $siblingPromise = $isiteService->setChildrenOn($parents, $article->getProjectSpace()); //if more than 48, extras are removed
@@ -77,7 +77,7 @@ class ShowController extends IsiteBaseController
         return $this->renderWithChrome(
             'articles/show.html.twig',
             [
-                'guid' => $this->guid,
+                'guid' => $guid,
                 'projectSpace' => $this->projectSpace,
                 'article' => $article,
                 'paginatorPresenter' => $paginator,
