@@ -55,6 +55,8 @@ class ShowController extends BaseController
             if ($article->getProjectSpace() !== $context->getOption('project_space')) {
                 throw $this->createNotFoundException('Project space Article-Programme not matching');
             }
+        } else {
+            $this->overrideProjectSpace($article->getProjectSpace());
         }
 
         $this->setContext($context);

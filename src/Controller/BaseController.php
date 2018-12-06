@@ -66,6 +66,9 @@ abstract class BaseController extends AbstractController
 
     protected $overridenDescription;
 
+    /** @var string */
+    protected $overridenProjectSpace;
+
     public static function getSubscribedServices()
     {
         return array_merge(parent::getSubscribedServices(), [
@@ -241,7 +244,13 @@ abstract class BaseController extends AbstractController
 
         $parameters = array_merge([
             'orb' => $orb,
-            'meta_context' => new MetaContext($this->context, $this->getCanonicalUrl(), $this->getMetaNoIndex(), $this->overridenDescription),
+            'meta_context' => new MetaContext(
+                $this->context,
+                $this->getCanonicalUrl(),
+                $this->getMetaNoIndex(),
+                $this->overridenDescription,
+                $this->overridenProjectSpace
+            ),
             'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabelsInstance, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
             'analytics_counter_name' => $analyticsCounterName,
             'istats_analytics_labels' => $istatsAnalyticsLabelsInstance->getLabels(),
@@ -307,6 +316,11 @@ abstract class BaseController extends AbstractController
     protected function setIstatsProgsPageType(string $label): void
     {
         $this->istatsProgsPageType = $label;
+    }
+
+    protected function overrideProjectSpace(string $projectSpace): void
+    {
+        $this->overridenProjectSpace = $projectSpace;
     }
 
     protected function request(): Request
