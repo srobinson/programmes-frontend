@@ -53,18 +53,15 @@ class ShowController extends BaseController
         }
 
         $context = null;
+        $projectSpace = $profile->getProjectSpace();
         $parentPid = $profile->getParentPid();
         if ($parentPid instanceof Pid) {
             $context = $coreEntitiesService->findByPidFull($parentPid);
 
-            if ($context && $profile->getProjectSpace() !== $context->getOption('project_space')) {
+            if ($context && ($profile->getProjectSpace() !== $context->getOption('project_space'))) {
                 throw $this->createNotFoundException('Project space Profile-Programme not matching');
             }
-            $projectSpace = $context->getOption('project_space') ?? 'none';
-        } else {
-            $projectSpace = $profile->getProjectSpace();
         }
-
         $this->setContext($context);
 
         if ('' !== $profile->getBrandingId()) {

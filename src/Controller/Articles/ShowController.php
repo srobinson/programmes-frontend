@@ -49,15 +49,13 @@ class ShowController extends BaseController
         }
 
         $context = null;
+        $projectSpace = $article->getProjectSpace();
         if (!empty($article->getParentPid())) {
             $context = $coreEntitiesService->findByPidFull($article->getParentPid());
 
-            if ($article->getProjectSpace() !== $context->getOption('project_space')) {
+            if ($context && ($article->getProjectSpace() !== $context->getOption('project_space'))) {
                 throw $this->createNotFoundException('Project space Article-Programme not matching');
             }
-            $projectSpace = $context->getOption('project_space') ?? 'none';
-        } else {
-            $projectSpace = $article->getProjectSpace();
         }
 
         $this->setContext($context);
