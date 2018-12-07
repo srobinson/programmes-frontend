@@ -33,6 +33,9 @@ class ShowController extends BaseController
             /** @var IsiteResult $isiteResult */
             $isiteResult = $isiteService->getByContentId($guid, $preview)->wait(true);
         } catch (HasContactFormException $e) {
+            if (!$slug) {
+                return $this->cachedRedirectToRoute('article_with_contact_form_noslug', ['key' => $key], 302, 3600);
+            }
             return $this->cachedRedirectToRoute('article_with_contact_form', ['key' => $key, 'slug' => $slug], 302, 3600);
         }
 
