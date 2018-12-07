@@ -182,10 +182,12 @@ class ContentBlockMapper extends Mapper
                         $galleries[] = $this->galleries[$galleryPid];
                     }
                 }
-                $contentBlock = new Galleries(
-                    $this->getString($contentBlockData->title),
-                    $galleries
-                );
+                if (count($galleries)) {
+                    $contentBlock = new Galleries(
+                        $this->getString($contentBlockData->title),
+                        $galleries
+                    );
+                }
                 break;
             case 'image':
                 $contentBlockData = $form->content;
@@ -229,12 +231,15 @@ class ContentBlockMapper extends Mapper
                     break;
                 }
                 // Content block with single playable clip
-                $contentBlock = new ClipStandAlone(
-                    $this->getString($contentBlockData->title),
-                    $this->getString($contentBlockData->clips->caption),
-                    $this->clips[$this->getString($contentBlockData->clips->pid)],
-                    $this->streamableVersions[$this->getString($contentBlockData->clips->pid)] ?? null
-                );
+                $clipIndex = $this->getString($contentBlockData->clips->pid);
+                if (isset($this->clips[$clipIndex])) {
+                    $contentBlock = new ClipStandAlone(
+                        $this->getString($contentBlockData->title),
+                        $this->getString($contentBlockData->clips->caption),
+                        $this->clips[$clipIndex],
+                        $this->streamableVersions[$this->getString($contentBlockData->clips->pid)] ?? null
+                    );
+                }
 
                 break;
             case 'promotions':
