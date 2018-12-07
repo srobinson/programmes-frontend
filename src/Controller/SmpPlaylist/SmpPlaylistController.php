@@ -11,17 +11,24 @@ use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use BBC\ProgrammesPagesService\Service\ProgrammesService;
 use BBC\ProgrammesPagesService\Service\SegmentEventsService;
 use BBC\ProgrammesPagesService\Service\VersionsService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SmpPlaylistController extends BaseController
 {
+    private const CACHE_SECONDS = 120;
+    private const JSONP_CALLBACK_KEY = 'callback';
+
     public function __invoke(
         string $pid,
         HelperFactory $helperFactory,
         ProgrammesService $programmesService,
         VersionsService $versionsService,
-        SegmentEventsService $segmentEventsService
+        SegmentEventsService $segmentEventsService,
+        Request $request
     ) {
+
         // Yes there is a reason for not using the ArgumentResolver, we want to avoid the redirect that it does
         // on programme options. It doesn't apply here.
         /** @var ProgrammeItem */
@@ -43,7 +50,13 @@ class SmpPlaylistController extends BaseController
         $smpPlaylistHelper = $helperFactory->getSmpPlaylistHelper();
         $playlistFeed = $smpPlaylistHelper->getLegacyJsonPlaylist($programmeItem, $streamableVersion, $segmentEvents, $allStreamableVersions);
 
-        $this->response()->headers->set('Content-Type', 'application/json');
-        return $this->response()->setContent(json_encode($playlistFeed));
+        $jsonResponse = new JsonResponse($playlistFeed);
+        $jsonResponse->setPublic()->setMaxAge(self::CACHE_SECONDS);
+        $jsonpCallback = $request->query->get(self::JSONP_CALLBACK_KEY);
+        if (!is_null($jsonpCallback)) {
+            $jsonResponse->setCallback($jsonpCallback);
+        }
+
+        return $jsonResponse;
     }
 }
