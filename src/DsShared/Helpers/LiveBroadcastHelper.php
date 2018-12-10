@@ -137,7 +137,7 @@ class LiveBroadcastHelper
 
         'bbc_radio_cymru_2'                     => ['playspace_live', ['sid' => 'bbc_radio_cymru_2']],
         'bbc_radio_solent_west_dorset'          => ['playspace_live', ['sid' => 'bbc_radio_solent_west_dorset']],
-        'bbc_radio_scotland_mw'                 => ['playspace_live', ['sid' => 'bbc_radio_scotland_me']],
+        'bbc_radio_scotland_mw'                 => ['playspace_live', ['sid' => 'bbc_radio_scotland_mw']],
         'bbc_world_service_west_africa'         => ['worldservice_news_west_africa', []],
         'cbeebies_radio'                        => ['playspace_live', ['sid' => 'cbeebies_radio']],
         'bbc_radio_two_eurovision'              => ['playspace_live', ['sid' => 'bbc_radio_two_eurovision']],
