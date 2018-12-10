@@ -4,7 +4,7 @@ parameters:
     app.feed_env.morph.lxpromo: 'test'
     app.electron.baseurl: 'https://api.test.bbc.co.uk/electron'
     app.favourites.baseurl: 'https://www.int.bbc.co.uk/modules/plugin/musicfavourite/init'
-    app.isite.baseurl: 'https://api.test.bbc.co.uk/isite2-content-reader'
+    app.isite.baseurl: 'https://api.live.bbc.co.uk/isite2-content-reader'
     app.ada.baseurl: 'https://ada.test.api.bbci.co.uk'
     app.recipes.baseurl: 'https://api.test.bbc.co.uk/food/recipes'
     app.morph.baseurl: 'https://morph.test.api.bbci.co.uk'
