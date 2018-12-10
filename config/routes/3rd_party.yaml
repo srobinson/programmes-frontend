@@ -83,6 +83,12 @@ article_with_contact_form:
     requirements: { key: '[a-zA-Z0-9-]{1,40}' }
     schemes: [https]
 
+article_with_contact_form_noslug:
+    path: /programmes/articles/{key}/contact
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
+    requirements: { key: '[a-zA-Z0-9-]{1,40}' }
+    schemes: [https]
+
 programme_topics:
     path: /programmes/{pid}/topics
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }

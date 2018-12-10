@@ -1,6 +1,6 @@
 {% extends 'base_ds2013.html.twig' %}
 
-{% block title %}{{ meta_context.titlePrefix() }} - {{ tr('features') }}{% endblock %}
+{% block title %}{{ meta_context.titlePrefix() ? meta_context.titlePrefix() ~ ' - ' : '' }}{{ article.getTitle() }}{% endblock %}
 {% block page_classes %}text-base{% endblock %}
 {% block project_space %}{{ projectSpace }}{% endblock %}
 
