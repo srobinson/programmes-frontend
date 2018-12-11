@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\ExternalApi\Isite\Mapper;
 
 use App\ExternalApi\Isite\Domain\Profile;
+use InvalidArgumentException;
 use SimpleXMLElement;
 
 class ProfileMapper extends Mapper
@@ -12,11 +13,22 @@ class ProfileMapper extends Mapper
     {
         $form = $this->getForm($isiteObject);
         $formMetaData = $this->getFormMetaData($isiteObject);
+        $resultMetaData = $this->getMetaData($isiteObject);
         $projectSpace = $this->getProjectSpace($formMetaData);
-        $key = $this->isiteKeyHelper->convertGuidToKey($this->getString($this->getMetaData($isiteObject)->guid));
+        $guid = $this->getString($resultMetaData->guid);
+        $key = $this->isiteKeyHelper->convertGuidToKey($guid);
+        if (!$this->isProfile($resultMetaData)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    "iSite form with guid %s attempted to be mapped as profile, but is not a profile, is a %s",
+                    $guid,
+                    (string) $resultMetaData->type
+                )
+            );
+        }
         $title = $this->getString($formMetaData->title);
         $type = $this->getString($formMetaData->type);
-        $fileId = $this->getString($this->getMetaData($isiteObject)->fileId); // NOTE: This is the metadata fileId, not the form data file_id
+        $fileId = $this->getString($resultMetaData->fileId); // NOTE: This is the metadata fileId, not the form data file_id
         $image = $this->getString($formMetaData->image);
         // @codingStandardsIgnoreStart
         // Ignored PHPCS cause of snake variable fields included in the xml
@@ -46,7 +58,14 @@ class ProfileMapper extends Mapper
         if (!empty($formMetaData->parents->parent->result)) {
             foreach ($formMetaData->parents as $parent) {
                 if ($this->isPublished($parent->parent)) {
-                    $parents[] = $this->mapperFactory->createProfileMapper()->getDomainModel($parent->parent->result);
+                    if ($this->isProfile($this->getMetaData($parent->parent->result))) {
+                        /**
+                         * iSite does not prevent you from adding other things than profiles (e.g. articles)
+                         * as parents of your article. Because of course it doesn't.
+                         * This filters those out
+                         */
+                        $parents[] = $this->mapperFactory->createProfileMapper()->getDomainModel($parent->parent->result);
+                    }
                 }
             }
         }
@@ -123,5 +142,10 @@ class ProfileMapper extends Mapper
             $blocks[] = $contentBlocksMapper->getDomainModel($block->result);
         }
         return $blocks;
+    }
+
+    private function isProfile(SimpleXMLElement $resultMetaData)
+    {
+        return (isset($resultMetaData->type) && ((string) $resultMetaData->type === 'programmes-profile'));
     }
 }

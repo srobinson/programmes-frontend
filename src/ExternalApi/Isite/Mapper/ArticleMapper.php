@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\ExternalApi\Isite\Mapper;
 
 use App\ExternalApi\Isite\Domain\Article;
+use InvalidArgumentException;
 use SimpleXMLElement;
 
 class ArticleMapper extends Mapper
@@ -13,9 +14,20 @@ class ArticleMapper extends Mapper
         $form = $this->getForm($isiteObject);
         $formMetaData = $this->getFormMetaData($isiteObject);
         $projectSpace = $this->getProjectSpace($formMetaData);
-        $key = $this->isiteKeyHelper->convertGuidToKey($this->getString($this->getMetaData($isiteObject)->guid));
+        $resultMetaData = $this->getMetaData($isiteObject);
+        $guid = $this->getString($resultMetaData->guid);
+        if (!$this->isArticle($resultMetaData)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    "iSite form with guid %s attempted to be mapped as article, but is not a article, is a %s",
+                    $guid,
+                    (string) $resultMetaData->type
+                )
+            );
+        }
+        $key = $this->isiteKeyHelper->convertGuidToKey($guid);
         $title = $this->getString($formMetaData->title);
-        $fileId = $this->getString($this->getMetaData($isiteObject)->fileId); // NOTE: This is the metadata fileId, not the form data file_id
+        $fileId = $this->getString($resultMetaData->fileId); // NOTE: This is the metadata fileId, not the form data file_id
         $image = $this->getString($formMetaData->image);
         // @codingStandardsIgnoreStart
         // Ignored PHPCS cause of snake variable fields included in the xml
@@ -28,7 +40,14 @@ class ArticleMapper extends Mapper
         if (!empty($formMetaData->parents->parent->result)) {
             foreach ($formMetaData->parents as $parent) {
                 if ($this->isPublished($parent->parent)) {
-                    $parents[] = $this->mapperFactory->createArticleMapper()->getDomainModel($parent->parent->result);
+                    if ($this->isArticle($this->getMetaData($parent->parent->result))) {
+                        /**
+                         * iSite does not prevent you from adding other things than articles (e.g. profiles)
+                         * as parents of your article. Because of course it doesn't.
+                         * This filters those out
+                         */
+                        $parents[] = $this->mapperFactory->createArticleMapper()->getDomainModel($parent->parent->result);
+                    }
                 }
             }
         }
@@ -40,5 +59,10 @@ class ArticleMapper extends Mapper
         // @codingStandardsIgnoreEnd
 
         return new Article($title, $key, $fileId, $projectSpace, $parentPid, $shortSynopsis, $brandingId, $image, $parents, $rowGroups, $bbcSite);
+    }
+
+    private function isArticle(SimpleXMLElement $resultMetaData)
+    {
+        return (isset($resultMetaData->type) && (string) $resultMetaData->type === 'programmes-article');
     }
 }
