@@ -214,13 +214,25 @@ class ContentBlockMapper extends Mapper
                 break;
             case 'clips':
                 $contentBlockData = $form->content;
-                if (count($contentBlockData->clips) > 1) {
+                // valid clips are already preloaded, compare the iSite results with the preloaded clips in order to
+                // have a list of all valid clips and determinate if we should display single clip or multi clip carouse
+                $validClipsPids = [];
+                foreach ($contentBlockData->clips as $clip) {
+                    if (isset($this->clips[$this->getString($clip->pid)])) {
+                        $validClipsPids[] = $clip->pid;
+                    }
+                }
+                // if there is more than 1 valid clip, use the multi carousel
+                if (count($validClipsPids) > 1) {
                     $streamItems = [];
                     foreach ($contentBlockData->clips as $isiteClip) {
+                        $clipIndex = $this->getString($isiteClip->pid);
+                        if (isset($this->clips[$clipIndex])) {
                             $streamItems[] = new StreamItem(
                                 $this->getString($isiteClip->caption),
-                                $this->clips[$this->getString($isiteClip->pid)]
+                                $this->clips[$clipIndex]
                             );
+                        }
                     }
                     // Content block with multiple clips in a carousel
                     $contentBlock = new ClipStream(
