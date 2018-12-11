@@ -313,9 +313,12 @@ abstract class BaseController extends AbstractController
         $this->atistatsExtraLabels = $labels;
     }
 
-    protected function setAtiContentId(string $identifier, string $authority = 'pips'): void
+    protected function setAtiContentId(?string $identifier, string $authority = 'pips'): void
     {
-        $this->atiContentId = 'urn:bbc:' . $authority . ':' . $identifier;
+        if($identifier) {
+            $identifier = ':' . $identifier;
+        }
+        $this->atiContentId = 'urn:bbc:' . $authority . $identifier;
     }
 
     protected function setIstatsProgsPageType(string $label): void
