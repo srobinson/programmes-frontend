@@ -17,6 +17,7 @@ class ShowController extends BaseController
 {
     public function __invoke(string $key, string $slug, Request $request, ArticleService $isiteService, IsiteKeyHelper $isiteKeyHelper, CoreEntitiesService $coreEntitiesService)
     {
+        $this->setIstatsProgsPageType('article_show');
         $preview = false;
         if ($request->query->has('preview') && $request->query->get('preview')) {
             $preview = true;
@@ -50,7 +51,9 @@ class ShowController extends BaseController
         if ($slug !== $article->getSlug()) {
             return $this->redirectWith($article->getKey(), $article->getSlug(), $preview);
         }
-
+        if ($article->getBbcSite()) {
+            $this->setIstatsExtraLabels(['bbc_site' => $article->getBbcSite()]);
+        }
         $context = null;
         $projectSpace = $article->getProjectSpace();
         if (!empty($article->getParentPid())) {

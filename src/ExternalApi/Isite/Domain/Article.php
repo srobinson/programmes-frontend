@@ -18,9 +18,10 @@ class Article extends BaseIsiteObject
         string $brandingId,
         string $image,
         array $parents,
-        array $rowGroups
+        array $rowGroups,
+        ?string $bbcSite
     ) {
-        parent::__construct($title, $fileId, $projectSpace, $parentPid, $brandingId, $image, $parents, $key, $shortSynopsis);
+        parent::__construct($title, $fileId, $projectSpace, $parentPid, $brandingId, $image, $parents, $key, $shortSynopsis, $bbcSite);
         $this->rowGroups = $rowGroups;
     }
 

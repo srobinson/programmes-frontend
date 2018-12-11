@@ -29,6 +29,7 @@ class ProfileBuilder extends AbstractBuilder
             'onwardJourneyBlock' => null,
             'tagline' => "This brand new sofa is only £399! (Other sofas are available)",
             'parents' => [],
+            'bbc_site' => null,
         ];
     }
 

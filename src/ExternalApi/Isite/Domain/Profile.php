@@ -49,9 +49,10 @@ class Profile extends BaseIsiteObject
         ?AbstractContentBlock $onwardJourneyBlock,
         ?string $tagline,
         array $parents,
+        ?string $bbcSite,
         ?int $groupSize = null
     ) {
-        parent::__construct($title, $fileId, $projectSpace, $parentPid, $brandingId, $image, $parents, $key, $shortSynopsis);
+        parent::__construct($title, $fileId, $projectSpace, $parentPid, $brandingId, $image, $parents, $key, $shortSynopsis, $bbcSite);
 
         $this->type = $type;
         $this->longSynopsis = $longSynopsis;

@@ -22,6 +22,7 @@ class ArticleMapper extends Mapper
         $shortSynopsis = $this->getString($formMetaData->short_synopsis);
         $parentPid = $this->getString($formMetaData->parent_pid);
         $brandingId = $this->getString($formMetaData->branding_id);
+        $bbcSite = $this->getString($formMetaData->bbc_site) ?: null;
 
         $parents = [];
         if (!empty($formMetaData->parents->parent->result)) {
@@ -38,6 +39,6 @@ class ArticleMapper extends Mapper
         }
         // @codingStandardsIgnoreEnd
 
-        return new Article($title, $key, $fileId, $projectSpace, $parentPid, $shortSynopsis, $brandingId, $image, $parents, $rowGroups);
+        return new Article($title, $key, $fileId, $projectSpace, $parentPid, $shortSynopsis, $brandingId, $image, $parents, $rowGroups, $bbcSite);
     }
 }

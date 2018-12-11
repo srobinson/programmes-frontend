@@ -26,6 +26,7 @@ class ProfileMapper extends Mapper
         $brandingId = $this->getString($formMetaData->branding_id);
         $imagePortrait = $this->getString($form->profile->image_portrait);
         $tagline = $this->getString($formMetaData->tagline);
+        $bbcSite = $this->getString($formMetaData->bbc_site) ?: null;
         $groupSize = null;
 
         if (!empty($this->getString($formMetaData->group_size)) || ($this->getString($formMetaData->group_size) === '0')) {
@@ -79,7 +80,26 @@ class ProfileMapper extends Mapper
         }
         // @codingStandardsIgnoreEnd
 
-        return new Profile($title, $key, $fileId, $type, $projectSpace, $parentPid, $shortSynopsis, $longSynopsis, $brandingId, $contentBlocks, $keyFacts, $image, $imagePortrait, $onwardJourneyBlock, $tagline, $parents, $groupSize);
+        return new Profile(
+            $title,
+            $key,
+            $fileId,
+            $type,
+            $projectSpace,
+            $parentPid,
+            $shortSynopsis,
+            $longSynopsis,
+            $brandingId,
+            $contentBlocks,
+            $keyFacts,
+            $image,
+            $imagePortrait,
+            $onwardJourneyBlock,
+            $tagline,
+            $parents,
+            $bbcSite,
+            $groupSize
+        );
     }
 
     public function getDomainModels($contentBlocksList): array

@@ -230,6 +230,25 @@ class AnalyticsCounterNameTest extends TestCase
         $this->assertEquals('programmes.the_planets.destiny.episode.b00744pm.page', (string) $analyticsCounterName);
     }
 
+    public function testCounterNameValueIsBuiltProperlyForArticle()
+    {
+        $programmeContext = $this->createConfiguredMock(Episode::class, [
+            'getType' => 'episode',
+            'getPid' => new Pid('b00744pm'), // destiny
+            'getTitle' => 'destiny',
+            'getParent' => $this->createConfiguredMock(Series::class, [
+                'getType' => 'series',
+                'getPid' => new Pid('b00xyv72'), // the planets
+                'getTitle' => 'the_planets',
+                'getParent' => null,
+            ]),
+        ]);
+
+        $analyticsCounterName = new AnalyticsCounterName($programmeContext, '/programmes/articles/5N50KLTDDbsBPVmdfwNjcBc/a-good-man-goes-to-war-jigsaw');
+
+        $this->assertEquals('programmes.the_planets.destiny.episode.b00744pm.articles.5n50kltddbsbpvmdfwnjcbc.a_good_man_goes_to_war_jigsaw.page', (string) $analyticsCounterName);
+    }
+
     public function testCounterNameIsBuildUsingDefaultBuilderForOtherContextTypes()
     {
         $analyticsCounterName = new AnalyticsCounterName(null, '/programmes/genres/childrens/activities');

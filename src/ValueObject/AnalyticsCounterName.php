@@ -95,8 +95,9 @@ class AnalyticsCounterName
         $partialString .= '.' . $context->getPid();
 
         // add the rest of the URL to the counter name
-        $restOfUrl = str_replace(['/programmes/', $context->getPid()], '', $relativePath);
+        $restOfUrl = str_replace(['/programmes', '/' . $context->getPid()], '', $relativePath);
         $restOfUrl = str_replace('/', '.', $restOfUrl);
+        $restOfUrl = $this->replaceDisallowedCharacters($restOfUrl);
         $partialString .= $restOfUrl;
         return $partialString;
     }

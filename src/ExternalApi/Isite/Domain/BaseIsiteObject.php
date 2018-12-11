@@ -40,6 +40,9 @@ abstract class BaseIsiteObject
     /** @var string|null */
     protected $shortSynopsis;
 
+    /** @var string|null */
+    private $bbcSite;
+
     public function __construct(
         string $title,
         string $fileId,
@@ -49,7 +52,8 @@ abstract class BaseIsiteObject
         string $image,
         array $parents,
         string $key,
-        ?string $shortSynopsis
+        ?string $shortSynopsis,
+        ?string $bbcSite
     ) {
         $this->title = $title;
         $this->fileId = $fileId;
@@ -60,6 +64,7 @@ abstract class BaseIsiteObject
         $this->parents = $parents;
         $this->key = $key;
         $this->shortSynopsis = $shortSynopsis;
+        $this->bbcSite = $bbcSite;
     }
 
     public function getFileId(): string
@@ -167,5 +172,10 @@ abstract class BaseIsiteObject
     public function setChildren(array $children)
     {
         $this->children = $children;
+    }
+
+    public function getBbcSite(): ?string
+    {
+        return $this->bbcSite;
     }
 }

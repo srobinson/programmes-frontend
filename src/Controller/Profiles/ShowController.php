@@ -26,6 +26,7 @@ class ShowController extends BaseController
         IsiteKeyHelper $isiteKeyHelper,
         CoreEntitiesService $coreEntitiesService
     ) {
+        $this->setIstatsProgsPageType('profiles_index');
         $preview = false;
         if ($request->query->has('preview') && $request->query->get('preview')) {
             $preview = true;
@@ -52,6 +53,9 @@ class ShowController extends BaseController
             return $this->redirectWith($profile->getKey(), $profile->getSlug(), $preview);
         }
 
+        if ($profile->getBbcSite()) {
+            $this->setIstatsExtraLabels(['bbc_site' => $profile->getBbcSite()]);
+        }
         $context = null;
         $projectSpace = $profile->getProjectSpace();
         $parentPid = $profile->getParentPid();
