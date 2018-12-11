@@ -55,8 +55,20 @@ class ProfileMapper extends Mapper
         //check if module is in the data
         if (!empty($form->profile->content_blocks)) {
             $blocks = $form->profile->content_blocks;
-            if (empty($blocks[0]->content_block->result)) {
+            if (isset($blocks[0]->content_block) && (string) $blocks[0]->content_block && strlen((string) $blocks[0]->content_block)) {
+                /**
+                 * Content blocks that have not been fetched look like:
+                 * <content_block>urn:isite:progs-drama:programmes-content-1539623978</content_block>
+                 * and the API needs to know the difference between "Not Fetched" and "Not existent"
+                 */
                 $contentBlocks = null; // Content blocks have not been fetched
+            } elseif (empty($blocks[0]->content_block->result)) {
+                /**
+                 * Content blocks that don't exist _can_ look like
+                 * <content_block/>
+                 * and the API needs to know the difference between "Not Fetched" and "Not existent"
+                 */
+                $contentBlocks = []; // No content blocks
             } else {
                 $contentBlocksList = [];
                 foreach ($blocks as $block) {
