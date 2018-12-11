@@ -54,9 +54,9 @@ class AtiAnalyticsLabels
             $destination = 'ws_programmes';
         }
 
-        if (in_array($this->appEnvironment, ['int', 'stage', 'sandbox', 'test'])) {
+//        if (in_array($this->appEnvironment, ['int', 'stage', 'sandbox', 'test'])) {
             $destination .= '_test';
-        }
+//        }
 
         return $destination;
     }
