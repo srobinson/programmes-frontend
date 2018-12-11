@@ -46,6 +46,7 @@ class HomeController extends BaseController
     ) {
         $this->setIstatsProgsPageType('home_index');
         $programmeCount = $this->countProgrammesAndGroups($em, $cache);
+        $this->setAtiContentId('', 'pips');
 
         $serviceTypes = ['TV', 'National Radio', 'Regional Radio', 'Local Radio'];
         $publishedNetworks = $networksService->findPublishedNetworksByType(

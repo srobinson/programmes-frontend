@@ -16,6 +16,7 @@ class IndexController extends BaseController
     public function __invoke(CoreEntity $coreEntity, ArticleService $isiteService)
     {
         $this->setContextAndPreloadBranding($coreEntity);
+        $this->setAtiContentId((string) $coreEntity->getPid(), 'pips');
 
         $articles = [];
         $parameters = ['coreEntity' => $coreEntity, 'articles' => $articles, 'paginatorPresenter' => null];

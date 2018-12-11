@@ -49,6 +49,7 @@ class ClipController extends BaseController
         $this->setIstatsReleaseYear($clip);
         $this->setParentIstats($clip);
         $this->setContextAndPreloadBranding($clip);
+        $this->setAtiContentId((string) $clip->getPid(), 'pips');
 
         $linkedVersions = $versionsService->findLinkedVersionsForProgrammeItem($clip);
 

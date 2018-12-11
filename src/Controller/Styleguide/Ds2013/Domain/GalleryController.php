@@ -33,6 +33,7 @@ class GalleryController extends BaseController
         }
 
         $gallery = $this->createGallery();
+        $this->setAtiContentId((string) $gallery->getPid(), 'pips');
 
         return $this->renderWithChrome('styleguide/ds2013/domain/gallery.html.twig', [
             'gallery' => $gallery,

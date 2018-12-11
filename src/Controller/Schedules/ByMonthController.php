@@ -25,6 +25,8 @@ class ByMonthController extends SchedulesBaseController
 
         $this->setIstatsProgsPageType('schedules_month');
         $this->setContextAndPreloadBranding($service);
+        $this->setAtiContentId((string) $service->getPid(), 'pips');
+
 
         $firstOfMonth = Date::createFromFormat('Y/m|', $date, ApplicationTime::getLocalTimeZone())->firstOfMonth();
         $viewData = ['first_of_month' => $firstOfMonth, 'service' => $service];

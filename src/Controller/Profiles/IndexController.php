@@ -15,6 +15,7 @@ class IndexController extends BaseController
     public function __invoke(CoreEntity $coreEntity, ProfileService $isiteService)
     {
         $this->setContextAndPreloadBranding($coreEntity);
+        $this->setAtiContentId((string) $coreEntity->getPid(), 'pips');
 
         /** @var Profile[] $profiles */
         $profiles = [];

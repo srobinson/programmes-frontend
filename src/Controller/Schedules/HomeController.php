@@ -51,7 +51,7 @@ class HomeController extends BaseController
     {
         $this->setBrandingId('br-08368');
         $this->setIstatsProgsPageType('programmes_schedule_index');
-
+        $this->setAtiContentId('', 'pips');
         $groups = [
             'TV' => [],
             'National Radio' => [],

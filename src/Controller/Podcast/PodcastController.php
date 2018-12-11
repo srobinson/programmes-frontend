@@ -40,6 +40,7 @@ class PodcastController extends BaseController
         }
 
         $this->setContextAndPreloadBranding($coreEntity);
+        $this->setAtiContentId((string) $coreEntity->getPid(), 'pips');
 
         $this->overridenDescription = 'Podcast downloads for ' . $coreEntity->getTitle();
         $podcast = $podcastsService->findByCoreEntity($coreEntity);

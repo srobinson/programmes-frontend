@@ -30,7 +30,7 @@ class ListController extends BaseController
     ) {
         $this->setIstatsProgsPageType(self::ISTATS_PAGE_ID);
         $this->setContextAndPreloadBranding($programme);
-
+        $this->setAtiContentId((string) $programme->getPid(), 'pips');
         $page = $this->getPage();
 
         $clips = $aggregationService->findStreamableDescendantClips(

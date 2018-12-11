@@ -27,7 +27,7 @@ class ShowController extends BaseController
         }
 
         $guid = $isiteKeyHelper->convertKeyToGuid($key);
-
+        $this->setAtiContentId($guid, 'isite');
         /** @var IsiteResult $isiteResult */
         $isiteResult = $isiteService->getByContentId($guid, $preview)->wait(true);
         /** @var Profile $profile */

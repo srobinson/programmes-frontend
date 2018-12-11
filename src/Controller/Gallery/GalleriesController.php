@@ -25,6 +25,8 @@ class GalleriesController extends BaseController
         }
 
         $this->setContextAndPreloadBranding($programme);
+        $this->setAtiContentId((string) $programme->getPid(), 'pips');
+
         $page = $this->getPage();
         $limit = 24;
 
